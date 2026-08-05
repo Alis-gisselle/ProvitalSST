@@ -1,0 +1,45 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
+ */
+package com.mycompany.provitalsst.servlets;
+
+import com.mycompany.provitalsst.modelo.Usuario;
+import java.io.IOException;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+@WebServlet(name = "DashboardServlet", urlPatterns = {"/dashboard"})
+public class DashboardServlet extends HttpServlet {
+
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        HttpSession session = request.getSession(false);
+        if (session == null || session.getAttribute("usuarioLogueado") == null) {
+            response.sendRedirect("login");
+            return;
+        }
+
+        Usuario usuario = (Usuario) session.getAttribute("usuarioLogueado");
+        request.setAttribute("usuario", usuario);
+
+        String vista;
+        switch (usuario.getRol()) {
+            case "admin":
+                vista = "dashboardAdmin.jsp";
+                break;
+            default:
+                vista = "dashboardAdmin.jsp"; // temporal, hasta armar los demás
+        }
+
+        RequestDispatcher rd = request.getRequestDispatcher(vista);
+        rd.forward(request, response);
+    }
+}

@@ -1,0 +1,67 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package com.mycompany.provitalsst.dao;
+
+import com.mycompany.provitalsst.conexiones.Conexion;
+import com.mycompany.provitalsst.modelo.Persona;
+import java.sql.*;
+
+public class PersonaDAO {
+
+    public Persona buscarPorId(int idPersona) {
+        String sql = "SELECT * FROM Persona WHERE idPersona = ?";
+        try (Connection con = Conexion.conectar();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, idPersona);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                Persona p = new Persona();
+                p.setIdPersona(rs.getInt("idPersona"));
+                p.setNombre(rs.getString("nombre"));
+                p.setApellido(rs.getString("apellido"));
+                p.setCi(rs.getInt("ci"));
+                p.setFechaNacimiento(rs.getDate("fechaNacimiento").toLocalDate());
+                p.setCategoria(rs.getString("categoria"));
+                return p;
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
+    // Devuelve "empleado", "colaborador", o null si no se encuentra en ninguna
+    public String determinarTipo(int idPersona) {
+        String sqlEmpleado = "SELECT idPersona FROM Empleado WHERE idPersona = ?";
+        String sqlColaborador = "SELECT idPersona FROM Colaborador WHERE idPersona = ?";
+        try (Connection con = Conexion.conectar()) {
+            try (PreparedStatement ps = con.prepareStatement(sqlEmpleado)) {
+                ps.setInt(1, idPersona);
+                if (ps.executeQuery().next()) return "empleado";
+            }
+            try (PreparedStatement ps = con.prepareStatement(sqlColaborador)) {
+                ps.setInt(1, idPersona);
+                if (ps.executeQuery().next()) return "colaborador";
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
+    // Nombre de la empresa, solo si es empleado
+    public String obtenerNombreEmpresa(int idPersona) {
+        String sql = "SELECT ec.Nombre FROM Empleado e JOIN EmpresaCliente ec ON e.idEmpresaCliente = ec.idEmpresaCliente WHERE e.idPersona = ?";
+        try (Connection con = Conexion.conectar();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, idPersona);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) return rs.getString("Nombre");
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+}
