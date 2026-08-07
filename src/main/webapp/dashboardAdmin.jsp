@@ -18,7 +18,7 @@
         .btn-provitall:hover { background-color: #5c8a38; border-color: #5c8a38; color: white; }
         h3, h5, h6 i { color: black; }
         .card-header-provitall { background-color: var(--verde-provitall); color: white; }
-        a { color:blue; text-decoration: none; }
+        a { color:black; text-decoration: none; }
         a:hover { color: #333; text-decoration: underline; }
     </style>
 </head>
