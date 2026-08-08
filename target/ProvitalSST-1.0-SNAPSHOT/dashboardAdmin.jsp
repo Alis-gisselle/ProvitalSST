@@ -20,6 +20,163 @@
         .card-header-provitall { background-color: var(--verde-provitall); color: white; }
         a { color:black; text-decoration: none; }
         a:hover { color: #333; text-decoration: underline; }
+        .alertas-container {
+            background: white;
+            border-radius: 12px;
+            padding: 18px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .alertas-titulo {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+
+        .alertas-titulo h5 {
+            margin: 0;
+            font-weight: 600;
+        }
+
+        .alertas-titulo h5 i {
+            color: var(--verde-provitall);
+        }
+
+        .ver-alertas {
+            color: #3b70b8;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .ver-alertas:hover {
+            text-decoration: underline;
+        }
+
+        .alerta-card {
+            border-radius: 12px;
+            overflow: hidden;
+            background: white;
+            border: 1px solid;
+            height: 100%;
+        }
+
+        .alerta-contenido {
+            padding: 18px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            min-height: 125px;
+        }
+
+        .alerta-icono {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            flex-shrink: 0;
+        }
+
+        .alerta-info h4 {
+            margin: 0;
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .alerta-info small {
+            font-size: 13px;
+            color: #555;
+        }
+
+        .alerta-detalles {
+            border-top: 1px solid;
+            padding: 10px;
+            text-align: center;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .alerta-detalles a {
+            text-decoration: none;
+        }
+
+
+        .alerta-roja {
+            border-color: #f2b8bd;
+        }
+
+        .alerta-roja .alerta-icono {
+            background-color: #fde2e4;
+            color: #dc3545;
+        }
+
+        .alerta-roja .alerta-info h4,
+        .alerta-roja .alerta-detalles a {
+            color: #dc3545;
+        }
+
+        .alerta-roja .alerta-detalles {
+            border-color: #f2b8bd;
+        }
+
+        .alerta-amarilla {
+            border-color: #ead9a0;
+        }
+
+        .alerta-amarilla .alerta-icono {
+            background-color: #fff3cd;
+            color: #d9a400;
+        }
+
+        .alerta-amarilla .alerta-info h4,
+        .alerta-amarilla .alerta-detalles a {
+            color: #d9a400;
+        }
+
+        .alerta-amarilla .alerta-detalles {
+            border-color: #ead9a0;
+        }
+
+        .alerta-azul {
+            border-color: #b8d0ed;
+        }
+
+        .alerta-azul .alerta-icono {
+            background-color: #e3efff;
+            color: #1769aa;
+        }
+
+        .alerta-azul .alerta-info h4,
+        .alerta-azul .alerta-detalles a {
+            color: #1769aa;
+        }
+
+        .alerta-azul .alerta-detalles {
+            border-color: #b8d0ed;
+        }
+
+
+        .alerta-verde {
+            border-color: #b8ddc5;
+        }
+
+        .alerta-verde .alerta-icono {
+            background-color: #e1f3e6;
+            color: #198754;
+        }
+
+        .alerta-verde .alerta-info h4,
+        .alerta-verde .alerta-detalles a {
+            color: #198754;
+        }
+
+        .alerta-verde .alerta-detalles {
+            border-color: #b8ddc5;
+        }
     </style>
 </head>
 <body class="bg-light">
@@ -33,33 +190,117 @@
     <div class="container mt-4">
         <h3 class="mb-4"><i class="bi bi-shield-check"></i> Panel de Administrador</h3>
 
-        <h5>Alertas</h5>
-        <div class="card mb-4">
-            <div class="card-body">
-                <div class="row text-center">
-                    <div class="col">
-                        <i class="bi bi-exclamation-triangle-fill text-danger fs-2"></i>
-                        <h4 class="mt-2">5</h4>
+    <div class="alertas-container mb-4">
+        <div class="alertas-titulo">
+            <h5>
+                <i class="bi bi-lightning-charge-fill"></i>
+                Alertas
+            </h5>
+        </div>
+
+        <div class="row g-3">
+
+        <div class="col-md-6 col-lg-3">
+            <div class="alerta-card alerta-roja">
+
+                <div class="alerta-contenido">
+                    <div class="alerta-icono">
+                        <i class="bi bi-exclamation-triangle-fill"></i>
+                    </div>
+
+                    <div class="alerta-info">
+                        <h4>${countVencidos}</h4>
                         <small>Certificados médicos vencidos</small>
                     </div>
-                    <div class="col">
-                        <i class="bi bi-person-badge fs-2" style="color: #FFD700;"></i>
-                        <h4 class="mt-2">12</h4>
+                </div>
+
+                <div class="alerta-detalles">
+                    <a href="alertas?tipo=vencidos">
+                        Ver detalles
+                        <i class="bi bi-arrow-right"></i>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- SIN FICHA MÉDICA -->
+        <div class="col-md-6 col-lg-3">
+            <div class="alerta-card alerta-amarilla">
+
+                <div class="alerta-contenido">
+                    <div class="alerta-icono">
+                        <i class="bi bi-person-fill"></i>
+                    </div>
+
+                    <div class="alerta-info">
+                        <h4>${countSinFicha}</h4> 
                         <small>Trabajadores sin ficha médica</small>
                     </div>
-                    <div class="col">
-                        <i class="bi bi-file-earmark-medical fs-2" style="color: #FFD700;"></i>
-                        <h4 class="mt-2">8</h4>
+                </div>
+
+                <div class="alerta-detalles">
+                    <a href="alertas?tipo=sinFicha">
+                        Ver detalles
+                        <i class="bi bi-arrow-right"></i>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ESTUDIOS PENDIENTES -->
+        <div class="col-md-6 col-lg-3">
+            <div class="alerta-card alerta-azul">
+
+                <div class="alerta-contenido">
+                    <div class="alerta-icono">
+                        <i class="bi bi-file-earmark-medical-fill"></i>
+                    </div>
+
+                    <div class="alerta-info">
+                        <h4>${countEstudios}</h4>
                         <small>Estudios pendientes de cargar</small>
                     </div>
-                    <div class="col">
-                        <i class="bi bi-check-circle fs-2" style="color: #FFD700;"></i>
-                        <h4 class="mt-2">20</h4>
+                </div>
+
+                <div class="alerta-detalles">
+                    <a href="alertas?tipo=estudios">
+                        Ver detalles
+                        <i class="bi bi-arrow-right"></i>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- PRÓXIMOS A VENCER -->
+        <div class="col-md-6 col-lg-3">
+            <div class="alerta-card alerta-verde">
+
+                <div class="alerta-contenido">
+                    <div class="alerta-icono">
+                        <i class="bi bi-check-circle-fill"></i>
+                    </div>
+
+                    <div class="alerta-info">
+                        <h4>${countProximos}</h4>
                         <small>Certificados próximos a vencer</small>
                     </div>
                 </div>
+
+                <div class="alerta-detalles">
+                    <a href="alertas?tipo=proximos">
+                        Ver detalles
+                        <i class="bi bi-arrow-right"></i>
+                    </a>
+                </div>
+
             </div>
         </div>
+
+    </div>
+</div>
 
         <h5>Menú</h5>
         <div class="row g-4">

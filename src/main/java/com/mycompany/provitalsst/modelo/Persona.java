@@ -17,6 +17,7 @@ public class Persona {
     private int ci;
     private LocalDate fechaNacimiento;
     private String categoria; // ahi tiene la opcion de admisional o manipulador
+    private String nombreEmpresa;
 
     public Persona() {
     }
@@ -30,6 +31,14 @@ public class Persona {
         this.categoria = categoria;
     }
 
+    public String getNombreEmpresa() {
+        return nombreEmpresa;
+    }
+
+    public void setNombreEmpresa(String nombreEmpresa) {
+        this.nombreEmpresa = nombreEmpresa;
+    }
+    
     public int getIdPersona() {
         return idPersona;
     }

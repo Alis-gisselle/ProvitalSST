@@ -1,5 +1,6 @@
 com\mycompany\provitalsst\dao\PuestoErgonomiaDAO.class
 com\mycompany\provitalsst\modelo\PuestoErgonomia.class
+com\mycompany\provitalsst\modelo\Alerta.class
 com\mycompany\provitalsst\dao\ColaboradorDAO.class
 com\mycompany\provitalsst\dao\CertifManipuladorDAO.class
 com\mycompany\provitalsst\servlets\CertifManipuladorServlet.class
@@ -9,6 +10,7 @@ com\mycompany\provitalsst\servlets\PersonaServlet.class
 com\mycompany\provitalsst\dao\EmpleadoDAO.class
 com\mycompany\provitalsst\modelo\CertifManipulador.class
 com\mycompany\provitalsst\util\GeneradorCertifMedPDF.class
+com\mycompany\provitalsst\servlets\AlertaServlet.class
 com\mycompany\provitalsst\dao\CertifMedDAO.class
 com\mycompany\provitalsst\modelo\MedicoLaboral.class
 com\mycompany\provitalsst\servlets\FichaEppServlet.class
@@ -32,6 +34,7 @@ com\mycompany\provitalsst\dao\HabitoDAO.class
 com\mycompany\provitalsst\modelo\Usuario.class
 com\mycompany\provitalsst\dao\AntecedenteLaboralDAO.class
 com\mycompany\provitalsst\modelo\Estudio.class
+com\mycompany\provitalsst\dao\AlertaDAO.class
 com\mycompany\provitalsst\dao\AntecedentePersonalDAO.class
 com\mycompany\provitalsst\modelo\RiesgoLaboral.class
 com\mycompany\provitalsst\dao\ZonaAfectadaDAO.class

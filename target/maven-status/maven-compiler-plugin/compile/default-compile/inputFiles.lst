@@ -1,4 +1,5 @@
 C:\Users\alis\Documents\NetBeansProjects\ProvitalSST\src\main\java\com\mycompany\provitalsst\conexiones\Conexion.java
+C:\Users\alis\Documents\NetBeansProjects\ProvitalSST\src\main\java\com\mycompany\provitalsst\dao\AlertaDAO.java
 C:\Users\alis\Documents\NetBeansProjects\ProvitalSST\src\main\java\com\mycompany\provitalsst\dao\AntecedenteLaboralDAO.java
 C:\Users\alis\Documents\NetBeansProjects\ProvitalSST\src\main\java\com\mycompany\provitalsst\dao\AntecedentePersonalDAO.java
 C:\Users\alis\Documents\NetBeansProjects\ProvitalSST\src\main\java\com\mycompany\provitalsst\dao\CertifManipuladorDAO.java
@@ -15,13 +16,13 @@ C:\Users\alis\Documents\NetBeansProjects\ProvitalSST\src\main\java\com\mycompany
 C:\Users\alis\Documents\NetBeansProjects\ProvitalSST\src\main\java\com\mycompany\provitalsst\dao\HabitoDAO.java
 C:\Users\alis\Documents\NetBeansProjects\ProvitalSST\src\main\java\com\mycompany\provitalsst\dao\MedicoLaboralDAO.java
 C:\Users\alis\Documents\NetBeansProjects\ProvitalSST\src\main\java\com\mycompany\provitalsst\dao\PersonaDAO.java
-C:\Users\alis\Documents\NetBeansProjects\ProvitalSST\src\main\java\com\mycompany\provitalsst\dao\pruebaDAO.java
 C:\Users\alis\Documents\NetBeansProjects\ProvitalSST\src\main\java\com\mycompany\provitalsst\dao\PuestoErgonomiaDAO.java
 C:\Users\alis\Documents\NetBeansProjects\ProvitalSST\src\main\java\com\mycompany\provitalsst\dao\RiesgoLaboralDAO.java
 C:\Users\alis\Documents\NetBeansProjects\ProvitalSST\src\main\java\com\mycompany\provitalsst\dao\TrastornoMusculoDAO.java
 C:\Users\alis\Documents\NetBeansProjects\ProvitalSST\src\main\java\com\mycompany\provitalsst\dao\UsuarioDAO.java
 C:\Users\alis\Documents\NetBeansProjects\ProvitalSST\src\main\java\com\mycompany\provitalsst\dao\ZonaAfectadaDAO.java
 C:\Users\alis\Documents\NetBeansProjects\ProvitalSST\src\main\java\com\mycompany\provitalsst\JakartaRestConfiguration.java
+C:\Users\alis\Documents\NetBeansProjects\ProvitalSST\src\main\java\com\mycompany\provitalsst\modelo\Alerta.java
 C:\Users\alis\Documents\NetBeansProjects\ProvitalSST\src\main\java\com\mycompany\provitalsst\modelo\AntecedenteLaboral.java
 C:\Users\alis\Documents\NetBeansProjects\ProvitalSST\src\main\java\com\mycompany\provitalsst\modelo\AntecedentePersonal.java
 C:\Users\alis\Documents\NetBeansProjects\ProvitalSST\src\main\java\com\mycompany\provitalsst\modelo\CertifManipulador.java
@@ -44,6 +45,7 @@ C:\Users\alis\Documents\NetBeansProjects\ProvitalSST\src\main\java\com\mycompany
 C:\Users\alis\Documents\NetBeansProjects\ProvitalSST\src\main\java\com\mycompany\provitalsst\modelo\Usuario.java
 C:\Users\alis\Documents\NetBeansProjects\ProvitalSST\src\main\java\com\mycompany\provitalsst\modelo\ZonaAfectada.java
 C:\Users\alis\Documents\NetBeansProjects\ProvitalSST\src\main\java\com\mycompany\provitalsst\resources\JakartaEE8Resource.java
+C:\Users\alis\Documents\NetBeansProjects\ProvitalSST\src\main\java\com\mycompany\provitalsst\servlets\AlertaServlet.java
 C:\Users\alis\Documents\NetBeansProjects\ProvitalSST\src\main\java\com\mycompany\provitalsst\servlets\CertifManipuladorServlet.java
 C:\Users\alis\Documents\NetBeansProjects\ProvitalSST\src\main\java\com\mycompany\provitalsst\servlets\CertifMedServlet.java
 C:\Users\alis\Documents\NetBeansProjects\ProvitalSST\src\main\java\com\mycompany\provitalsst\servlets\ColaboradorServlet.java

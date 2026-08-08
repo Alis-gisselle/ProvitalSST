@@ -4,6 +4,7 @@
  */
 package com.mycompany.provitalsst.servlets;
 
+import com.mycompany.provitalsst.dao.AlertaDAO;
 import com.mycompany.provitalsst.modelo.Usuario;
 import java.io.IOException;
 import javax.servlet.RequestDispatcher;
@@ -36,9 +37,14 @@ public class DashboardServlet extends HttpServlet {
                 vista = "dashboardAdmin.jsp";
                 break;
             default:
-                vista = "dashboardAdmin.jsp"; // temporal, hasta armar los demás
+                vista = "dashboardAdmin.jsp"; 
         }
-
+        AlertaDAO alertaDAO = new AlertaDAO();
+        request.setAttribute("countVencidos", alertaDAO.contarVencidos());
+        request.setAttribute("countProximos", alertaDAO.contarProximos());
+        request.setAttribute("countSinFicha", alertaDAO.contarSinFicha());
+        request.setAttribute("countEstudios", alertaDAO.contarEstudiosPendientes());
+        
         RequestDispatcher rd = request.getRequestDispatcher(vista);
         rd.forward(request, response);
     }
