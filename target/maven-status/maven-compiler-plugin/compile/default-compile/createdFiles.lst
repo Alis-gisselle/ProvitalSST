@@ -5,6 +5,7 @@ com\mycompany\provitalsst\dao\ColaboradorDAO.class
 com\mycompany\provitalsst\dao\CertifManipuladorDAO.class
 com\mycompany\provitalsst\servlets\CertifManipuladorServlet.class
 com\mycompany\provitalsst\servlets\FichaServlet.class
+com\mycompany\provitalsst\util\GeneradorFichaPDF.class
 com\mycompany\provitalsst\dao\FirmaFichaDAO.class
 com\mycompany\provitalsst\servlets\PersonaServlet.class
 com\mycompany\provitalsst\dao\EmpleadoDAO.class
@@ -59,6 +60,7 @@ com\mycompany\provitalsst\servlets\FichaAntecedenteLaboralServlet.class
 com\mycompany\provitalsst\servlets\FichaDatosPersonalesServlet.class
 com\mycompany\provitalsst\modelo\EPP.class
 com\mycompany\provitalsst\dao\DatosPersonalesFichaDAO.class
+com\mycompany\provitalsst\modelo\FichaCompleta.class
 com\mycompany\provitalsst\servlets\FichaExamenFisicoServlet.class
 com\mycompany\provitalsst\dao\RiesgoLaboralDAO.class
 com\mycompany\provitalsst\modelo\Persona.class

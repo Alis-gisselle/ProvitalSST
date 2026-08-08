@@ -35,6 +35,7 @@ C:\Users\alis\Documents\NetBeansProjects\ProvitalSST\src\main\java\com\mycompany
 C:\Users\alis\Documents\NetBeansProjects\ProvitalSST\src\main\java\com\mycompany\provitalsst\modelo\Estudio.java
 C:\Users\alis\Documents\NetBeansProjects\ProvitalSST\src\main\java\com\mycompany\provitalsst\modelo\ExamenFisico.java
 C:\Users\alis\Documents\NetBeansProjects\ProvitalSST\src\main\java\com\mycompany\provitalsst\modelo\Ficha.java
+C:\Users\alis\Documents\NetBeansProjects\ProvitalSST\src\main\java\com\mycompany\provitalsst\modelo\FichaCompleta.java
 C:\Users\alis\Documents\NetBeansProjects\ProvitalSST\src\main\java\com\mycompany\provitalsst\modelo\FirmaFicha.java
 C:\Users\alis\Documents\NetBeansProjects\ProvitalSST\src\main\java\com\mycompany\provitalsst\modelo\Habito.java
 C:\Users\alis\Documents\NetBeansProjects\ProvitalSST\src\main\java\com\mycompany\provitalsst\modelo\MedicoLaboral.java
@@ -72,4 +73,5 @@ C:\Users\alis\Documents\NetBeansProjects\ProvitalSST\src\main\java\com\mycompany
 C:\Users\alis\Documents\NetBeansProjects\ProvitalSST\src\main\java\com\mycompany\provitalsst\servlets\UsuarioServlet.java
 C:\Users\alis\Documents\NetBeansProjects\ProvitalSST\src\main\java\com\mycompany\provitalsst\util\GeneradorCertifManipuladorPDF.java
 C:\Users\alis\Documents\NetBeansProjects\ProvitalSST\src\main\java\com\mycompany\provitalsst\util\GeneradorCertifMedPDF.java
+C:\Users\alis\Documents\NetBeansProjects\ProvitalSST\src\main\java\com\mycompany\provitalsst\util\GeneradorFichaPDF.java
 C:\Users\alis\Documents\NetBeansProjects\ProvitalSST\src\main\java\com\mycompany\provitalsst\util\InspeccionarPDF.java

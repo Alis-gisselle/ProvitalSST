@@ -4,9 +4,25 @@
  */
 package com.mycompany.provitalsst.servlets;
 
+import com.mycompany.provitalsst.dao.AntecedenteLaboralDAO;
+import com.mycompany.provitalsst.dao.AntecedentePersonalDAO;
+import com.mycompany.provitalsst.dao.DatosPersonalesFichaDAO;
+import com.mycompany.provitalsst.dao.EPPDAO;
+import com.mycompany.provitalsst.dao.EmpleadoDAO;
+import com.mycompany.provitalsst.dao.ExamenFisicoDAO;
 import com.mycompany.provitalsst.dao.FichaDAO;
+import com.mycompany.provitalsst.dao.FirmaFichaDAO;
+import com.mycompany.provitalsst.dao.HabitoDAO;
 import com.mycompany.provitalsst.dao.PersonaDAO;
+import com.mycompany.provitalsst.dao.PuestoErgonomiaDAO;
+import com.mycompany.provitalsst.dao.RiesgoLaboralDAO;
+import com.mycompany.provitalsst.dao.TrastornoMusculoDAO;
+import com.mycompany.provitalsst.dao.ZonaAfectadaDAO;
 import com.mycompany.provitalsst.modelo.Ficha;
+import com.mycompany.provitalsst.modelo.FichaCompleta;
+import com.mycompany.provitalsst.modelo.Persona;
+import com.mycompany.provitalsst.util.GeneradorFichaPDF;
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDate;
@@ -26,6 +42,58 @@ public class FichaServlet extends HttpServlet {
 
     private final FichaDAO dao = new FichaDAO();
     private final PersonaDAO personaDAO = new PersonaDAO();
+    private final DatosPersonalesFichaDAO datosPersonalesDAO = new DatosPersonalesFichaDAO();
+    private final AntecedentePersonalDAO antecedentePersonalDAO = new AntecedentePersonalDAO();
+    private final HabitoDAO habitoDAO = new HabitoDAO();
+    private final AntecedenteLaboralDAO antecedenteLaboralDAO = new AntecedenteLaboralDAO();
+    private final PuestoErgonomiaDAO puestoErgonomiaDAO = new PuestoErgonomiaDAO();
+    private final RiesgoLaboralDAO riesgoLaboralDAO = new RiesgoLaboralDAO();
+    private final EPPDAO eppDAO = new EPPDAO();
+    private final TrastornoMusculoDAO trastornoMusculoDAO = new TrastornoMusculoDAO();
+    private final ZonaAfectadaDAO zonaAfectadaDAO = new ZonaAfectadaDAO();
+    private final ExamenFisicoDAO examenFisicoDAO = new ExamenFisicoDAO();
+    private final FirmaFichaDAO firmaFichaDAO = new FirmaFichaDAO();
+    private final EmpleadoDAO empleadoDAO = new EmpleadoDAO();
+
+    private void generarYDescargarPdf(HttpServletRequest request, HttpServletResponse response, int idFicha)
+        throws IOException {
+
+        Ficha ficha = dao.buscarPorId(idFicha);
+        Persona persona = personaDAO.buscarPorId(ficha.getIdPersona());
+        String tipo = personaDAO.determinarTipo(ficha.getIdPersona());
+
+        FichaCompleta d = new FichaCompleta();
+        d.setFicha(ficha);
+        d.setPersona(persona);
+        d.setDatosPersonales(datosPersonalesDAO.buscarPorId(idFicha));
+        d.setAntecedentePersonal(antecedentePersonalDAO.buscarPorId(idFicha));
+        d.setHabito(habitoDAO.buscarPorId(idFicha));
+        d.setAntecedenteLaboral(antecedenteLaboralDAO.buscarPorId(idFicha));
+        d.setPuestoErgonomia(puestoErgonomiaDAO.buscarPorId(idFicha));
+        d.setRiesgos(riesgoLaboralDAO.listarPorFicha(idFicha));
+        d.setEpp(eppDAO.buscarPorId(idFicha));
+        d.setTrastornoMusculo(trastornoMusculoDAO.buscarPorId(idFicha));
+        d.setZonas(zonaAfectadaDAO.listarPorFicha(idFicha));
+        d.setExamenFisico(examenFisicoDAO.buscarPorId(idFicha));
+        d.setFirma(firmaFichaDAO.buscarPorId(idFicha));
+
+        if ("empleado".equals(tipo)) {
+            d.setCargo(empleadoDAO.obtenerCargo(ficha.getIdPersona()));
+            d.setNombreEmpresa(personaDAO.obtenerNombreEmpresa(ficha.getIdPersona()));
+        }
+
+        String rutaPlantilla = getServletContext().getRealPath("/WEB-INF/plantillas/ficha.pdf");
+        String carpetaSalida = getServletContext().getRealPath("/uploads/fichas");
+        new File(carpetaSalida).mkdirs();
+        String rutaSalida = carpetaSalida + File.separator + "ficha_" + idFicha + ".pdf";
+
+        try {
+            GeneradorFichaPDF.generar(rutaPlantilla, rutaSalida, d);
+            response.sendRedirect("uploads/fichas/ficha_" + idFicha + ".pdf");
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -57,6 +125,11 @@ public class FichaServlet extends HttpServlet {
             int idPersona = Integer.parseInt(request.getParameter("idPersona"));
             dao.eliminar(idFicha);
             response.sendRedirect("ficha?idPersona=" + idPersona);
+            return;
+        }
+        if ("descargar".equals(accion)) {
+            int idFicha = Integer.parseInt(request.getParameter("idFicha"));
+            generarYDescargarPdf(request, response, idFicha);
             return;
         }
 

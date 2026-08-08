@@ -38,6 +38,7 @@
                             <a href="ficha?accion=eliminar&idFicha=${f.idFicha}&idPersona=${persona.idPersona}"
                                 class="btn btn-sm btn-danger"
                                 onclick="return confirm('¿Seguro que deseas eliminar esta ficha completa? Esta acción no se puede deshacer.');">Eliminar</a>
+                            <a href="ficha?accion=descargar&idFicha=${f.idFicha}" target="_blank" class="btn btn-sm btn-success">Descargar PDF</a>
                         </td>
                     </tr>
                 </c:forEach>

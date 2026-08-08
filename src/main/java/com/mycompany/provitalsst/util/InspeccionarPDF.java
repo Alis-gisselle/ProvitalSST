@@ -9,13 +9,22 @@ import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.interactive.form.PDAcroForm;
 import org.apache.pdfbox.pdmodel.interactive.form.PDField;
 import java.io.File;
+import org.apache.pdfbox.pdmodel.interactive.form.PDCheckBox;
+import org.apache.pdfbox.pdmodel.interactive.form.PDRadioButton;
 
 public class InspeccionarPDF {
     public static void main(String[] args) throws Exception {
-        try (PDDocument doc = Loader.loadPDF(new File("C:\\Users\\alis\\Documents\\NetBeansProjects\\ProvitalSST\\src\\main\\webapp\\WEB-INF\\plantillas\\certifManipulador.pdf"))) {
+        try (PDDocument doc = Loader.loadPDF(new File("C:\\Users\\alis\\Documents\\NetBeansProjects\\ProvitalSST\\src\\main\\webapp\\WEB-INF\\plantillas\\ficha.pdf"))) {
             PDAcroForm form = doc.getDocumentCatalog().getAcroForm();
             for (PDField field : form.getFields()) {
-                System.out.println("Campo: [" + field.getFullyQualifiedName() + "]  Tipo: " + field.getClass().getSimpleName());
+                String tipo = field.getClass().getSimpleName();
+                String valores = "";
+                if (field instanceof PDCheckBox cb) {
+                    valores = " -> valores: " + cb.getOnValues();
+                } else if (field instanceof PDRadioButton rb) {
+                    valores = " -> valores: " + rb.getOnValues();
+                }
+                System.out.println("Campo: [" + field.getFullyQualifiedName() + "]  Tipo: " + tipo + valores);
             }
         }
     }
