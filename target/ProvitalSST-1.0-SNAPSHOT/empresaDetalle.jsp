@@ -11,6 +11,33 @@
 <head>
     <title>Empleados - ${empresa.nombre}</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        :root {
+            --verde-principal: #075B42;
+            --verde-claro: #E8F5EF;
+            --verde-boton: #087F4F;
+            --fondo: #F8FAFC;
+            --texto: #172B3A;
+        }
+        body { background-color: var(--fondo); color: var(--texto); }
+        .breadcrumb-custom a { color: var(--verde-principal); text-decoration: none; }
+        .icono-circulo {
+            width: 64px; height: 64px; border-radius: 50%;
+            background-color: var(--verde-claro); color: var(--verde-principal);
+            display: flex; align-items: center; justify-content: center; font-size: 28px; flex-shrink: 0;
+        }
+        .btn-provital { background-color: var(--verde-boton); border-color: var(--verde-boton); color: white; }
+        .btn-provital:hover { background-color: #066a41; border-color: #066a41; color: white; }
+        table thead { background-color: var(--verde-principal); color: white; }
+        .avatar-iniciales {
+            width: 38px; height: 38px; border-radius: 50%;
+            background-color: var(--verde-claro); color: var(--verde-principal);
+            display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 13px;
+        }
+        .badge-manipulador { background-color: #f3e8fd; color: #8a3ffc; }
+        .badge-admisional { background-color: #e3efff; color: #1769aa; }
+    </style>
 </head>
 <body>
     <div class="container mt-4">
