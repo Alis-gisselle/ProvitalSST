@@ -71,6 +71,7 @@
                     <div class="col">
                         <input type="text" name="buscar" class="form-control" placeholder="Buscar por nombre o CI..." value="${buscar}" />
                     </div>
+                  
                     <div class="col-auto">
                         <button type="submit" class="btn btn-provital">Buscar</button>
                     </div>
