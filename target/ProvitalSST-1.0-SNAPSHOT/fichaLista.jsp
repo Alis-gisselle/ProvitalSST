@@ -16,9 +16,9 @@
     <div class="container mt-4">
         <a href="persona?id=${persona.idPersona}" class="btn btn-secondary btn-sm mb-3">← Volver</a>
         <h2>Fichas Médicas de ${persona.nombre} ${persona.apellido}</h2>
-
-        <a href="ficha?accion=nueva&idPersona=${persona.idPersona}" class="btn btn-primary mb-3">+ Nueva Ficha</a>
-
+        <c:if test="${!soloLectura}">
+            <a href="ficha?accion=nueva&idPersona=${persona.idPersona}" class="btn btn-primary mb-3">+ Nueva Ficha</a>
+        </c:if>
         <table class="table table-striped table-bordered">
             <thead class="table-dark">
                 <tr>
@@ -35,10 +35,10 @@
                         <td>${f.fecha}</td>
                         <td>${f.tipoEvaluacion}</td>
                         <td>
-                            <a href="ficha?accion=eliminar&idFicha=${f.idFicha}&idPersona=${persona.idPersona}"
-                                class="btn btn-sm btn-danger"
-                                onclick="return confirm('¿Seguro que deseas eliminar esta ficha completa? Esta acción no se puede deshacer.');">Eliminar</a>
                             <a href="ficha?accion=descargar&idFicha=${f.idFicha}" target="_blank" class="btn btn-sm btn-success">Descargar PDF</a>
+                            <c:if test="${!soloLectura}">
+                                <a href="ficha?accion=eliminar&idFicha=${f.idFicha}&idPersona=${persona.idPersona}" class="btn btn-sm btn-danger" onclick="return confirm('¿Seguro?');">Eliminar</a>
+                            </c:if>
                         </td>
                     </tr>
                 </c:forEach>

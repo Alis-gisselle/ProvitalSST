@@ -21,6 +21,7 @@ import com.mycompany.provitalsst.dao.ZonaAfectadaDAO;
 import com.mycompany.provitalsst.modelo.Ficha;
 import com.mycompany.provitalsst.modelo.FichaCompleta;
 import com.mycompany.provitalsst.modelo.Persona;
+import com.mycompany.provitalsst.modelo.Usuario;
 import com.mycompany.provitalsst.util.GeneradorFichaPDF;
 import java.io.File;
 import java.io.IOException;
@@ -32,6 +33,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -98,10 +100,35 @@ public class FichaServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession(false);
+        Usuario usuarioLogueado = (session != null) ? (Usuario) session.getAttribute("usuarioLogueado") : null;
+        if (usuarioLogueado == null) {
+            response.sendRedirect("login");
+            return;
+        }
+        boolean soloLectura = "colaborador".equals(usuarioLogueado.getRol());
+        request.setAttribute("soloLectura", soloLectura);
 
         String accion = request.getParameter("accion");
 
+        if ("eliminar".equals(accion)) {
+            if (soloLectura) {
+                response.sendRedirect("ficha?idPersona=" + request.getParameter("idPersona"));
+                return;
+            }
+            int idFicha = Integer.parseInt(request.getParameter("idFicha"));
+            int idPersona = Integer.parseInt(request.getParameter("idPersona"));
+            dao.eliminar(idFicha);
+            response.sendRedirect("ficha?idPersona=" + idPersona);
+            return;
+        }
+      
+
         if ("nueva".equals(accion)) {
+            if (soloLectura){
+                response.sendRedirect("ficha?idPersona="+ request.getParameter("idPersona"));
+                return;
+            }
             int idPersona = Integer.parseInt(request.getParameter("idPersona"));
             request.setAttribute("idPersona", idPersona);
             request.setAttribute("datos", null);
@@ -111,6 +138,10 @@ public class FichaServlet extends HttpServlet {
         }
 
         if ("editar".equals(accion)) {
+            if (soloLectura){
+                response.sendRedirect("ficha?idPersona="+ request.getParameter("idPersona").toString());
+                return;
+            }
             int idFicha = Integer.parseInt(request.getParameter("idFicha"));
             Ficha ficha = dao.buscarPorId(idFicha);
             request.setAttribute("idPersona", ficha.getIdPersona());
@@ -144,7 +175,13 @@ public class FichaServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        
+        HttpSession session = request.getSession(false);
+        Usuario usuarioLogueado = (session != null) ? (Usuario) session.getAttribute("usuarioLogueado") : null;
+        if (usuarioLogueado == null || "colaborador".equals(usuarioLogueado.getRol())) {
+            response.sendRedirect("login");
+            return;
+        }
         String idFichaEditarParam = request.getParameter("idFichaEditar");
 
         Ficha f = new Ficha();

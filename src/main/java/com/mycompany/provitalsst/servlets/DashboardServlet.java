@@ -5,6 +5,7 @@
 package com.mycompany.provitalsst.servlets;
 
 import com.mycompany.provitalsst.dao.AlertaDAO;
+import com.mycompany.provitalsst.dao.ColaboradorDAO;
 import com.mycompany.provitalsst.modelo.Usuario;
 import java.io.IOException;
 import javax.servlet.RequestDispatcher;
@@ -36,8 +37,14 @@ public class DashboardServlet extends HttpServlet {
             case "admin":
                 vista = "dashboardAdmin.jsp";
                 break;
+            case "colaborador":
+                ColaboradorDAO colabDAO = new ColaboradorDAO();
+                Integer idPersona = colabDAO.obtenerIdPersonaPorUsuario(usuario.getIdUsuario());
+                response.sendRedirect("persona?id=" + idPersona);
+                return; 
             default:
-                vista = "dashboardAdmin.jsp"; 
+                 vista = "dashboardAdmin.jsp";
+               
         }
         AlertaDAO alertaDAO = new AlertaDAO();
         request.setAttribute("countVencidos", alertaDAO.contarVencidos());

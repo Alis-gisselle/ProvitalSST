@@ -9,6 +9,7 @@ import com.mycompany.provitalsst.dao.MedicoLaboralDAO;
 import com.mycompany.provitalsst.dao.PersonaDAO;
 import com.mycompany.provitalsst.modelo.CertifManipulador;
 import com.mycompany.provitalsst.modelo.Persona;
+import com.mycompany.provitalsst.modelo.Usuario;
 import com.mycompany.provitalsst.util.GeneradorCertifManipuladorPDF;
 import java.io.File;
 import java.io.IOException;
@@ -19,6 +20,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -36,9 +38,22 @@ public class CertifManipuladorServlet extends HttpServlet {
 protected void doGet(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
 
-    String accion = request.getParameter("accion");
+        HttpSession session = request.getSession(false);
+        Usuario usuarioLogueado = (session != null) ? (Usuario) session.getAttribute("usuarioLogueado") : null;
+        if (usuarioLogueado == null) {
+            response.sendRedirect("login");
+            return;
+        }
+        boolean soloLectura = "colaborador".equals(usuarioLogueado.getRol());
+        request.setAttribute("soloLectura", soloLectura);
+
+        String accion = request.getParameter("accion");
 
     if ("eliminar".equals(accion)) {
+        if (soloLectura) {
+                response.sendRedirect("certifManipulador?idPersona=" + request.getParameter("idPersona"));
+                return;
+            }
         int id = Integer.parseInt(request.getParameter("id"));
         int idPersona = Integer.parseInt(request.getParameter("idPersona"));
         dao.eliminar(id);
@@ -85,6 +100,12 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response)
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession(false);
+        Usuario usuarioLogueado = (session != null) ? (Usuario) session.getAttribute("usuarioLogueado") : null;
+        if (usuarioLogueado == null || "colaborador".equals(usuarioLogueado.getRol())) {
+            response.sendRedirect("login");
+            return;
+        }
 
         CertifManipulador c = new CertifManipulador();
         c.setAptitud(request.getParameter("aptitud"));

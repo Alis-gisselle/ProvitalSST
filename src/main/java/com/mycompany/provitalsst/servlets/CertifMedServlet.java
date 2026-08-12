@@ -18,8 +18,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.mycompany.provitalsst.dao.EmpleadoDAO;
 import com.mycompany.provitalsst.modelo.Persona;
+import com.mycompany.provitalsst.modelo.Usuario;
 import com.mycompany.provitalsst.util.GeneradorCertifMedPDF;
 import java.io.File;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -37,9 +39,22 @@ public class CertifMedServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
 
+        HttpSession session = request.getSession(false);
+        Usuario usuarioLogueado = (session != null) ? (Usuario) session.getAttribute("usuarioLogueado") : null;
+        if (usuarioLogueado == null) {
+            response.sendRedirect("login");
+            return;
+        }
+        boolean soloLectura = "colaborador".equals(usuarioLogueado.getRol());
+        request.setAttribute("soloLectura", soloLectura);
+
         String accion = request.getParameter("accion");
 
         if ("eliminar".equals(accion)) {
+            if (soloLectura) {
+                response.sendRedirect("certifMed?idPersona=" + request.getParameter("idPersona"));
+                return;
+            }
             int id = Integer.parseInt(request.getParameter("id"));
             int idPersona = Integer.parseInt(request.getParameter("idPersona"));
             dao.eliminar(id);
@@ -48,6 +63,7 @@ public class CertifMedServlet extends HttpServlet {
         }
 
         if ("descargar".equals(accion)) {
+            
             int idCert = Integer.parseInt(request.getParameter("id"));
             generarYDescargarPdf(request, response, idCert);
             return;
@@ -65,6 +81,12 @@ public class CertifMedServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession(false);
+        Usuario usuarioLogueado = (session != null) ? (Usuario) session.getAttribute("usuarioLogueado") : null;
+        if (usuarioLogueado == null || "colaborador".equals(usuarioLogueado.getRol())) {
+            response.sendRedirect("login");
+            return;
+        }
 
         CertifMed c = new CertifMed();
         c.setTipoEvaluacion(request.getParameter("tipoEvaluacion"));

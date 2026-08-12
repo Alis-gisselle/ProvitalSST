@@ -177,4 +177,18 @@ public class ColaboradorDAO {
         c.setCorreo(rs.getString("correo"));
         return c;
     }
+    
+    public Integer obtenerIdPersonaPorUsuario(int idUsuario) {
+        String sql = "SELECT idPersona FROM Colaborador WHERE idUsuario = ?";
+        try (Connection con = Conexion.conectar();
+            PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, idUsuario);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) 
+                return rs.getInt("idPersona");
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
 }

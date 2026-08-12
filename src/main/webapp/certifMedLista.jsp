@@ -19,6 +19,7 @@
 
         <div class="card mb-4">
             <div class="card-body">
+                <c:if test="${!soloLectura}">
                 <h5>Nuevo Certificado</h5>
                 <form action="certifMed" method="post">
                     <input type="hidden" name="idPersona" value="${persona.idPersona}" />
@@ -64,6 +65,7 @@
 
                     <button type="submit" class="btn btn-primary">Guardar Certificado</button>
                 </form>
+                </c:if>
             </div>
         </div>
 
@@ -90,9 +92,9 @@
                         
                         <td>
                             <a href="certifMed?accion=descargar&id=${cert.idCertifMed}" target="_blank" class="btn btn-sm btn-success">Descargar PDF</a>
-                            <a href="certifMed?accion=eliminar&id=${cert.idCertifMed}&idPersona=${persona.idPersona}"
-                               class="btn btn-sm btn-danger"
-                               onclick="return confirm('¿Seguro que deseas eliminar este certificado?');">Eliminar</a>
+                            <c:if test="${!soloLectura}">
+                                <a href="certifMed?accion=eliminar&id=${cert.idCertifMed}&idPersona=${persona.idPersona}" class="btn btn-sm btn-danger" onclick="return confirm('¿Seguro que deseas eliminar este certificado?');">Eliminar</a>
+                            </c:if>
                         </td>
                     </tr>
                 </c:forEach>

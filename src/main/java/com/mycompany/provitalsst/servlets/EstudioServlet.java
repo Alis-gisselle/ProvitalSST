@@ -8,6 +8,7 @@ import com.mycompany.provitalsst.dao.EstudioDAO;
 import com.mycompany.provitalsst.dao.MedicoLaboralDAO;
 import com.mycompany.provitalsst.dao.PersonaDAO;
 import com.mycompany.provitalsst.modelo.Estudio;
+import com.mycompany.provitalsst.modelo.Usuario;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
@@ -18,6 +19,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
 /**
@@ -37,26 +39,24 @@ public class EstudioServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
 
+        HttpSession session = request.getSession(false);
+        Usuario usuarioLogueado = (session != null) ? (Usuario) session.getAttribute("usuarioLogueado") : null;
+        if (usuarioLogueado == null) {
+            response.sendRedirect("login");
+            return;
+        }
+        boolean soloLectura = "colaborador".equals(usuarioLogueado.getRol());
+        request.setAttribute("soloLectura", soloLectura);
+
         String accion = request.getParameter("accion");
 
         if ("eliminar".equals(accion)) {
-            int idEstudio = Integer.parseInt(request.getParameter("id"));
-            int idPersona = Integer.parseInt(request.getParameter("idPersona"));
-
-            Estudio estudio = dao.buscarPorId(idEstudio);
-        if (estudio != null) {
-            String rutaCarpeta = getServletContext().getRealPath("/uploads/estudios");
-            File archivo = new File(rutaCarpeta, estudio.getArchivoPdf());
-            if (archivo.exists()) {
-                archivo.delete();
+            if (soloLectura) { response.sendRedirect("estudio?idPersona=" + request.getParameter("idPersona")); return; }
+                int idEstudio = Integer.parseInt(request.getParameter("id"));
+                int idPersona = Integer.parseInt(request.getParameter("idPersona"));
+                Estudio estudio = dao.buscarPorId(idEstudio);
             }
-            dao.eliminar(idEstudio);
-        }
-
-        response.sendRedirect("estudio?idPersona=" + idPersona);
-        return;
-        }
-
+       
         int idPersona = Integer.parseInt(request.getParameter("idPersona"));
         request.setAttribute("persona", personaDAO.buscarPorId(idPersona));
         request.setAttribute("listaEstudios", dao.listarPorPersona(idPersona));
@@ -69,7 +69,12 @@ public class EstudioServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        HttpSession session = request.getSession(false);
+        Usuario usuarioLogueado = (session != null) ? (Usuario) session.getAttribute("usuarioLogueado") : null;
+        if (usuarioLogueado == null || "colaborador".equals(usuarioLogueado.getRol())) {
+            response.sendRedirect("login");
+            return;
+        }
         int idPersona = Integer.parseInt(request.getParameter("idPersona"));
         int idMedicoLaboral = Integer.parseInt(request.getParameter("idMedicoLaboral"));
 
