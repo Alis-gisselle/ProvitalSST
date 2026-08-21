@@ -119,7 +119,7 @@
                             <div class="alerta-contenido">
                                 <div class="alerta-icono"><i class="bi bi-person-fill"></i></div>
                                 <div class="alerta-info">
-                                    <h4>${countSinFicha != null ? countVencidos : 0}</h4>
+                                    <h4>${countSinFicha != null ? countSinFicha : 0}</h4>
                                     <small>Trabajadores sin ficha médica</small>
                                 </div>
                             </div>
@@ -134,7 +134,7 @@
                             <div class="alerta-contenido">
                                 <div class="alerta-icono"><i class="bi bi-file-earmark-medical-fill"></i></div>
                                 <div class="alerta-info">
-                                    <h4>${countEstudios != null ? countVencidos : 0}</h4>
+                                    <h4>${countPendientes != null ? countPendientes : 0}</h4>
                                     <small>Estudios pendientes de cargar</small>
                                 </div>
                             </div>
@@ -149,7 +149,7 @@
                             <div class="alerta-contenido">
                                 <div class="alerta-icono"><i class="bi bi-check-circle-fill"></i></div>
                                 <div class="alerta-info">
-                                    <h4>${countProximos != null ? countVencidos : 0}</h4>
+                                    <h4>${countProximos != null ? countProximos : 0}</h4>
                                     <small>Certificados próximos a vencer</small>
                                 </div>
                             </div>
