@@ -81,6 +81,7 @@
                                     <option value="" ${empty usuario ? 'selected' : ''} disabled>-- Seleccione --</option>
                                     <option value="admin" ${usuario.rol == 'admin' ? 'selected' : ''}>Admin</option>
                                     <option value="rrhh" ${usuario.rol == 'rrhh' ? 'selected' : ''}>RRHH</option>
+                                    <option value="medico" ${usuario.rol == 'medico' ? 'selected' : ''}>Médico</option>
                                 </select>
                                 <div class="invalid-feedback">Seleccione un rol.</div>
                             </div>

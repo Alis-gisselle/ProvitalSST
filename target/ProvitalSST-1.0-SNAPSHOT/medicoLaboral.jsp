@@ -1,17 +1,15 @@
 <%-- 
-    Document   : DashboardAdmin
-    Created on : 1 ago. 2026, 14:44:06
-    Author     : alis
+    Document   : medicoLaboral
+    Created on : 16 ago. 2026, 3:22:30 p. m.
+    Author     : Vivobook / PROVITAL SST
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#0056b3">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Admin - Provital SST</title>
+    <title>Médico Ocupacional - Provital SST</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
     <style>
@@ -26,17 +24,16 @@
         .navbar-provital { background-color: var(--verde-principal) !important; }
         .btn-provital { background-color: var(--verde-boton); border-color: var(--verde-boton); color: white; }
         .btn-provital:hover { background-color: #066a41; border-color: #066a41; color: white; }
-        .btn-outline-provital{color:var(--verde-principal); border-color: var(--verde-principal); }
+        .btn-outline-provital { color: var(--verde-principal); border-color: var(--verde-principal); }
         .btn-outline-provital:hover { background-color: var(--verde-claro); color: var(--verde-principal); }
         a.ver-detalles { color: inherit; font-weight: 600; text-decoration: none; font-size: 14px; }
         a.ver-detalles:hover { text-decoration: underline; }
-        
 
         .alerta-card { border-radius: 12px; overflow: hidden; height: 100%; }
-        .alerta-roja {background-color: #FDF8F8; border-color: #F9E6E8 !important;}
-        .alerta-amarilla {background-color: #FFFDF8; border-color: #FDF7EA !important;}
-        .alerta-azul {background-color: #F8FBFE; border-color: #E2ECF8 !important;}
-        .alerta-verde {background-color: #F7FAF8; border-color: #E7F1EC !important;}
+        .alerta-roja { background-color: #FDF8F8; border-color: #F9E6E8 !important; }
+        .alerta-amarilla { background-color: #FFFDF8; border-color: #FDF7EA !important; }
+        .alerta-azul { background-color: #F8FBFE; border-color: #E2ECF8 !important; }
+        .alerta-verde { background-color: #F7FAF8; border-color: #E7F1EC !important; }
         .alerta-contenido { padding: 18px; display: flex; align-items: center; gap: 15px; }
         .alerta-icono { width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; }
         .alerta-info h4 { margin: 0; font-size: 28px; font-weight: 700; }
@@ -60,23 +57,28 @@
         .menu-item-icon { width: 42px; height: 42px; border-radius: 8px; background-color: var(--verde-claro); color: var(--verde-principal); display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
         .menu-item-texto small { color: #777; }
         .menu-item-chevron { margin-left: auto; color: #aaa; }
+        .card-custom { border-radius: 12px; border: none; }
     </style>
 </head>
 <body class="bg-light">
+
+    <!-- Navbar superior con colores de Provital SST -->
     <nav class="navbar navbar-dark navbar-provital">
         <div class="container-fluid px-4">
-            <span class="navbar-brand"><i class="bi bi-shield-fill-check"></i>PROVITAL SST</span>
-            <span class="text-white small">${usuario.correo}</span>
+            <span class="navbar-brand"><i class="bi bi-heart-pulse-fill"></i> PROVITAL SST</span>
+            <span class="text-white small">Dr(a). ${usuario.correo}</span>
         </div>
     </nav>
 
     <div class="container mt-4">
-    <div class="d-flex justify-content-between align-items-start mb-4">
+
+        <!-- Encabezado con bienvenida al médico -->
+        <div class="d-flex justify-content-between align-items-start mb-4">
             <div class="d-flex gap-3">
-                <i class="bi bi-shield-check fs-2" style="color: var(--verde-principal);"></i>
+                <i class="bi bi-person-badge-fill fs-2" style="color: var(--verde-principal);"></i>
                 <div>
-                    <h2 class="fw-bold mb-0">Panel de Administrador</h2>
-                    <p class="text-muted mb-0">Bienvenido al sistema Provital SST. Desde aquí puedes gestionar todos los módulos.</p>
+                    <h2 class="fw-bold mb-0">Portal del Médico Ocupacional</h2>
+                    <p class="text-muted mb-0">Gestión de fichas médicas, evaluación de estudios y certificación para manipuladores de alimentos.</p>
                 </div>
             </div>
             <a href="logout" class="btn btn-outline-provital">
@@ -84,22 +86,23 @@
             </a>
         </div>
 
+        <!-- Sección de Alertas / Tarjetas KPI idénticas a DashboardAdmin -->
         <div class="card border-0 shadow-sm mb-4">
             <div class="card-body">
-                <h5 class="mb-3"><i class="bi bi-lightning-charge-fill" style="color: var(--verde-boton);"></i> Alertas</h5>
+                <h5 class="mb-3"><i class="bi bi-lightning-charge-fill" style="color: var(--verde-boton);"></i> Estado de Atenciones</h5>
 
                 <div class="row g-3">
                     <div class="col-md-6 col-lg-3">
-                        <div class="alerta-card alerta-roja border">
+                        <div class="alerta-card alerta-azul border">
                             <div class="alerta-contenido">
-                                <div class="alerta-icono"><i class="bi bi-exclamation-triangle-fill"></i></div>
+                                <div class="alerta-icono"><i class="bi bi-person-lines-fill"></i></div>
                                 <div class="alerta-info">
-                                    <h4>${countVencidos}</h4>
-                                    <small>Certificados médicos vencidos</small>
+                                    <h4>${countPorAtender != null ? countPorAtender : 0}</h4>
+                                    <small>Pacientes por atender</small>
                                 </div>
                             </div>
                             <div class="alerta-detalles">
-                                <a href="alertas?tipo=vencidos" class="ver-detalles">Ver detalles <i class="bi bi-arrow-right"></i></a>
+                                <a href="medico?filtro=pendientes" class="ver-detalles">Ver lista <i class="bi bi-arrow-right"></i></a>
                             </div>
                         </div>
                     </div>
@@ -107,29 +110,29 @@
                     <div class="col-md-6 col-lg-3">
                         <div class="alerta-card alerta-amarilla border">
                             <div class="alerta-contenido">
-                                <div class="alerta-icono"><i class="bi bi-person-fill"></i></div>
+                                <div class="alerta-icono"><i class="bi bi-file-earmark-medical-fill"></i></div>
                                 <div class="alerta-info">
-                                    <h4>${countSinFicha}</h4>
-                                    <small>Trabajadores sin ficha médica</small>
+                                    <h4>${countEstudiosPendientes != null ? countEstudiosPendientes : 0}</h4>
+                                    <small>Estudios por revisar</small>
                                 </div>
                             </div>
                             <div class="alerta-detalles">
-                                <a href="alertas?tipo=sinFicha" class="ver-detalles">Ver detalles <i class="bi bi-arrow-right"></i></a>
+                                <a href="estudios?filtro=por_revisar" class="ver-detalles">Ver estudios <i class="bi bi-arrow-right"></i></a>
                             </div>
                         </div>
                     </div>
 
                     <div class="col-md-6 col-lg-3">
-                        <div class="alerta-card alerta-azul border">
+                        <div class="alerta-card alerta-roja border">
                             <div class="alerta-contenido">
-                                <div class="alerta-icono"><i class="bi bi-file-earmark-medical-fill"></i></div>
+                                <div class="alerta-icono"><i class="bi bi-exclamation-triangle-fill"></i></div>
                                 <div class="alerta-info">
-                                    <h4>${countEstudios}</h4>
-                                    <small>Estudios pendientes de cargar</small>
+                                    <h4>${countObservados != null ? countObservados : 0}</h4>
+                                    <small>Casos observados / No Apto</small>
                                 </div>
                             </div>
                             <div class="alerta-detalles">
-                                <a href="alertas?tipo=estudios" class="ver-detalles">Ver detalles <i class="bi bi-arrow-right"></i></a>
+                                <a href="medico?filtro=observados" class="ver-detalles">Ver detalles <i class="bi bi-arrow-right"></i></a>
                             </div>
                         </div>
                     </div>
@@ -139,81 +142,77 @@
                             <div class="alerta-contenido">
                                 <div class="alerta-icono"><i class="bi bi-check-circle-fill"></i></div>
                                 <div class="alerta-info">
-                                    <h4>${countProximos}</h4>
-                                    <small>Certificados próximos a vencer</small>
+                                    <h4>${countCertificadosHoy != null ? countCertificadosHoy : 0}</h4>
+                                    <small>Certificados dictaminados hoy</small>
                                 </div>
                             </div>
                             <div class="alerta-detalles">
-                                <a href="alertas?tipo=proximos" class="ver-detalles">Ver detalles <i class="bi bi-arrow-right"></i></a>
+                                <a href="medico?filtro=hoy" class="ver-detalles">Ver historial <i class="bi bi-arrow-right"></i></a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-    </div>
+        </div>
 
-        <h5 class="mb-3">Menú</h5>
+        <!-- Módulo de Accesos Rápidos (Estructura menu-card idéntica) -->
+        <h5 class="mb-3">Menú Médico</h5>
         <div class="row g-4 mb-4">
+            <!-- Columna 1: Fichas Médicas -->
             <div class="col-md-4">
                 <div class="menu-card shadow-sm">
-                    <div class="menu-card-header"><i class="bi bi-building"></i> Empresas</div>
-                    <a href="empresa" class="menu-item">
-                        <div class="menu-item-icon"><i class="bi bi-building"></i></div>
-                        <div class="menu-item-texto">
-                            <div>Ver / Gestionar Empresas</div>
-                            <small>Consulta y administra las empresas registradas.</small>
-                        </div>
-                        <i class="bi bi-chevron-right menu-item-chevron"></i>
-                    </a>
-                    <a href="empresa?accion=nuevo" class="menu-item">
+                    <div class="menu-card-header"><i class="bi bi-journal-medical"></i> Fichas Médicas</div>
+                    <a href="colaboradorLista.jsp" class="menu-item">
                         <div class="menu-item-icon"><i class="bi bi-plus-square"></i></div>
                         <div class="menu-item-texto">
-                            <div>Registrar Empresa</div>
-                            <small>Registra una nueva empresa en el sistema.</small>
+                            <div>Nueva Ficha Médica</div>
+                            <small>Inicia una nueva anamnesis y examen físico.</small>
+                        </div>
+                        <i class="bi bi-chevron-right menu-item-chevron"></i>
+                    </a>
+                    <a href="fichaMedica" class="menu-item">
+                        <div class="menu-item-icon"><i class="bi bi-card-checklist"></i></div>
+                        <div class="menu-item-texto">
+                            <div>Historial de Fichas</div>
+                            <small>Consulta expedientes médicos cargados.</small>
                         </div>
                         <i class="bi bi-chevron-right menu-item-chevron"></i>
                     </a>
                 </div>
             </div>
 
+            <!-- Columna 2: Estudios y Laboratorios -->
             <div class="col-md-4">
                 <div class="menu-card shadow-sm">
-                    <div class="menu-card-header"><i class="bi bi-people"></i> Colaboradores</div>
-                    <a href="colaborador" class="menu-item">
-                        <div class="menu-item-icon"><i class="bi bi-people"></i></div>
+                    <div class="menu-card-header"><i class="bi bi-vial"></i> Estudios de Laboratorio</div>
+                    <a href="estudioLista.jsp" class="menu-item">
+                        <div class="menu-item-icon"><i class="bi bi-search"></i></div>
                         <div class="menu-item-texto">
-                            <div>Ver / Gestionar Colaboradores</div>
-                            <small>Consulta y administra los colaboradores registrados.</small>
-                        </div>
-                        <i class="bi bi-chevron-right menu-item-chevron"></i>
-                    </a>
-                    <a href="colaborador?accion=nuevo" class="menu-item">
-                        <div class="menu-item-icon"><i class="bi bi-person-plus"></i></div>
-                        <div class="menu-item-texto">
-                            <div>Registrar Colaborador</div>
-                            <small>Registra un nuevo colaborador en el sistema.</small>
+                            <div>Revisar Estudios</div>
+                            <small>Laboratorios, imágenes, es</small>
                         </div>
                         <i class="bi bi-chevron-right menu-item-chevron"></i>
                     </a>
                 </div>
             </div>
 
+            <!-- Columna 3: Certificados de Aptitud -->
             <div class="col-md-4">
                 <div class="menu-card shadow-sm">
-                    <div class="menu-card-header"><i class="bi bi-gear"></i> Configuración</div>
-                    <a href="medico" class="menu-item">
-                        <div class="menu-item-icon"><i class="bi bi-person-badge"></i></div>
+                    <div class="menu-card-header"><i class="bi bi-award"></i> Aptitud y Certificados</div>
+                    <a href="certificacion" class="menu-item">
+                        <div class="menu-item-icon"><i class="bi bi-file-earmark-check"></i></div>
                         <div class="menu-item-texto">
-                            <div>Médicos Laborales</div>
-                            <small>Gestiona los médicos laborales del sistema.</small>
+                            <div>Emitir Certificado</div>
+                            <small>Dictamina si el trabajador es APTO.</small>
                         </div>
                         <i class="bi bi-chevron-right menu-item-chevron"></i>
                     </a>
-                    <a href="usuario" class="menu-item">
-                        <div class="menu-item-icon"><i class="bi bi-shield-lock"></i></div>
+                    <a href="certificacion?accion=historial" class="menu-item">
+                        <div class="menu-item-icon"><i class="bi bi-clock-history"></i></div>
                         <div class="menu-item-texto">
-                            <div>Usuarios del Sistema</div>
-                            <small>Administra los usuarios y roles del sistema.</small>
+                            <div>Certificados Emitidos</div>
+                            <small>Consulta y reimprime certificados emitidos.</small>
                         </div>
                         <i class="bi bi-chevron-right menu-item-chevron"></i>
                     </a>
@@ -221,15 +220,20 @@
             </div>
         </div>
 
+
     </div>
-                                    <script>
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('sw.js')
-        .then(reg => console.log('PWA lista, scope:', reg.scope))
-        .catch(err => console.error('Error al registrar PWA:', err));
-    });
-  }
-</script>
+
+    <!-- Script para filtro directo en tabla -->
+    <script>
+        document.getElementById('buscador').addEventListener('keyup', function() {
+            let valor = this.value.toLowerCase();
+            let filas = document.querySelectorAll('#tablaPacientes tbody tr');
+            
+            filas.forEach(fila => {
+                let texto = fila.textContent.toLowerCase();
+                fila.style.display = texto.includes(valor) ? '' : 'none';
+            });
+        });
+    </script>
 </body>
 </html>

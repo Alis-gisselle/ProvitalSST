@@ -66,6 +66,7 @@ com\mycompany\provitalsst\dao\RiesgoLaboralDAO.class
 com\mycompany\provitalsst\modelo\Persona.class
 com\mycompany\provitalsst\modelo\AntecedentePersonal.class
 com\mycompany\provitalsst\servlets\UsuarioServlet.class
+com\mycompany\provitalsst\servlets\RRHHServlet.class
 com\mycompany\provitalsst\JakartaRestConfiguration.class
 com\mycompany\provitalsst\servlets\ColaboradorServlet.class
 com\mycompany\provitalsst\servlets\EmpleadoServlet.class

@@ -37,6 +37,13 @@ public class DashboardServlet extends HttpServlet {
             case "admin":
                 vista = "dashboardAdmin.jsp";
                 break;
+            case "rrhh":
+                RequestDispatcher rd = request.getRequestDispatcher("/rrhh");
+                rd.forward(request, response);
+                return; // Importante para detener la ejecución aquí
+            case "medico":
+                vista = "medicoLaboral.jsp"; 
+                break;
             case "colaborador":
                 ColaboradorDAO colabDAO = new ColaboradorDAO();
                 Integer idPersona = colabDAO.obtenerIdPersonaPorUsuario(usuario.getIdUsuario());

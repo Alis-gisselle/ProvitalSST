@@ -45,7 +45,7 @@ public class CertifMedServlet extends HttpServlet {
             response.sendRedirect("login");
             return;
         }
-        boolean soloLectura = "colaborador".equals(usuarioLogueado.getRol());
+        boolean soloLectura = "colaborador".equals(usuarioLogueado.getRol()) || "rrhh".equals(usuarioLogueado.getRol());
         request.setAttribute("soloLectura", soloLectura);
 
         String accion = request.getParameter("accion");

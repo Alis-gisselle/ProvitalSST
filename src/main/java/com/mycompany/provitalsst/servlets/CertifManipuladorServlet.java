@@ -44,7 +44,7 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response)
             response.sendRedirect("login");
             return;
         }
-        boolean soloLectura = "colaborador".equals(usuarioLogueado.getRol());
+        boolean soloLectura = "colaborador".equals(usuarioLogueado.getRol()) || "rrhh".equals(usuarioLogueado.getRol());
         request.setAttribute("soloLectura", soloLectura);
 
         String accion = request.getParameter("accion");

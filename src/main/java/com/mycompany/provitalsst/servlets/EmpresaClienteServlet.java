@@ -8,6 +8,7 @@ import com.mycompany.provitalsst.dao.EmpresaClienteDAO;
 import com.mycompany.provitalsst.dao.EmpleadoDAO;
 import com.mycompany.provitalsst.modelo.EmpresaCliente;
 import com.mycompany.provitalsst.modelo.Empleado;
+import com.mycompany.provitalsst.modelo.Usuario;
 import java.io.IOException;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
@@ -16,6 +17,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 @WebServlet(name = "EmpresaClienteServlet", urlPatterns = {"/empresa"})
 public class EmpresaClienteServlet extends HttpServlet {
@@ -26,7 +28,19 @@ public class EmpresaClienteServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession(false);
+        Usuario usuarioLogueado = (session != null) ? (Usuario) session.getAttribute("usuarioLogueado") : null;
 
+        // 1. Validar que la sesión sea válida y pertenezca a RRHH o Admin
+        if (usuarioLogueado == null || (!"admin".equals(usuarioLogueado.getRol()) && !"rrhh".equals(usuarioLogueado.getRol()))) {
+            response.sendRedirect("login");
+            return;
+        }
+
+        // 2. Establecer la marca de solo lectura para la vista
+        boolean soloLectura = "rrhh".equals(usuarioLogueado.getRol());
+        request.setAttribute("soloLectura", soloLectura);
+        
         String accion = request.getParameter("accion");
         if (accion == null) accion = "listar";
 

@@ -5,7 +5,9 @@
 package com.mycompany.provitalsst.servlets;
 
 import com.mycompany.provitalsst.dao.ColaboradorDAO;
+import com.mycompany.provitalsst.dao.EmpleadoDAO;
 import com.mycompany.provitalsst.dao.PersonaDAO;
+import com.mycompany.provitalsst.modelo.Empleado;
 import com.mycompany.provitalsst.modelo.Persona;
 import com.mycompany.provitalsst.modelo.Usuario;
 import java.io.IOException;
@@ -37,14 +39,29 @@ public class PersonaServlet extends HttpServlet {
             response.sendRedirect("login");
             return;
         }
-
+       
         int id = Integer.parseInt(request.getParameter("id"));
 
-        if ("colaborador".equals(usuarioLogueado.getRol())) {
+        if ("rrhh".equalsIgnoreCase(usuarioLogueado.getRol())) {
+            EmpleadoDAO empleadoDAO = new EmpleadoDAO();
+            Empleado empleado = empleadoDAO.buscarPorId(id); // Se pasa la variable entera 'id'
+
+            Integer idEmpresaEmpleado = (empleado != null) ? empleado.getIdEmpresaCliente() : null;
+            Integer idEmpresaRRHH = usuarioLogueado.getIdEmpresaCliente();
+
+            //Deniega si el empleado no existe o si las empresas no coinciden
+            if (empleado == null || idEmpresaRRHH == null || !idEmpresaRRHH.equals(idEmpresaEmpleado)) {
+                response.sendRedirect("dashboard");
+                return;
+            }
+        }
+
+        if ("colaborador".equalsIgnoreCase(usuarioLogueado.getRol())) {
             ColaboradorDAO colabDAO = new ColaboradorDAO();
             Integer idPropio = colabDAO.obtenerIdPersonaPorUsuario(usuarioLogueado.getIdUsuario());
-            if (idPropio == null || idPropio != id) {
-                response.sendRedirect("dashboard"); // intenta ver a otra persona: lo rechaza
+
+            if (idPropio == null || !idPropio.equals(id)) {
+                response.sendRedirect("dashboard");
                 return;
             }
         }

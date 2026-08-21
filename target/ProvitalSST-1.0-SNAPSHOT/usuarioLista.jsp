@@ -40,6 +40,8 @@
         table thead { background-color: var(--verde-principal); color: white; }
         .badge-admin { background-color: #fde2e4; color: #dc3545; }
         .badge-rrhh { background-color: #e3efff; color: #1769aa; }
+        .badge-medico { background-color: var(--verde-claro, #E8F5EF); color: var(--verde-principal, #075B42); }
+        .badge-colaborador { background-color: #fff3cd; color: #d9a400; }
     </style>
 </head>
 <body>
@@ -80,13 +82,15 @@
                         <tr>
                             <td><i class="bi bi-envelope text-muted me-1"></i> ${u.correo}</td>
                             <td>
-                                <span class="badge rounded-pill ${u.rol == 'admin' ? 'badge-admin' : 'badge-rrhh'}">
-                                    ${u.rol == 'admin' ? 'Admin' : 'RRHH'}
+                                <span class="badge rounded-pill ${u.rol == 'admin' ? 'badge-admin' : (u.rol == 'rrhh' ? 'badge-rrhh' : (u.rol == 'medico' ? 'badge-medico' : 'badge-colaborador'))}">
+                                    ${u.rol == 'admin' ? 'Admin' : (u.rol == 'rrhh' ? 'RRHH' : (u.rol == 'medico' ? 'Médico' : 'Colaborador'))}
                                 </span>
                             </td>
                             <td>${u.idEmpresaCliente != null ? u.idEmpresaCliente : '-'}</td>
                             <td>
-                                <a href="usuario?accion=editar&id=${u.idUsuario}" class="btn btn-sm btn-outline-warning"><i class="bi bi-pencil"></i> Editar</a>
+                                <a href="usuario?accion=editar&id=${u.idUsuario}" class="btn btn-sm btn-outline-warning">
+                                    <i class="bi bi-pencil"></i> Editar
+                                </a>
                                 <a href="usuario?accion=eliminar&id=${u.idUsuario}"
                                    class="btn btn-sm btn-outline-danger"
                                    onclick="return confirm('¿Seguro que deseas eliminar este usuario?');">

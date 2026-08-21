@@ -8,8 +8,12 @@
 <!DOCTYPE html>
 <html lang="es">
   <head>
+        <!-- Configuración PWA -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0056b3">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="utf-8">
-    <title>Formulario Login</title>
+    <title>Inicio de Sesión</title>
     <link rel="stylesheet" href="css/login.css">
     <link rel="icon" type="image/png" href="imagenes/logo-entero.png">
   </head>
@@ -22,5 +26,15 @@
       <input class="buttons" type="submit" value="Ingresar">
     </section>
     </form>
+      <script>
+        if ('serviceWorker' in navigator) {
+          window.addEventListener('load', () => {
+            navigator.serviceWorker.register('sw.js')
+              .then(reg => console.log('Service Worker registrado con éxito:', reg.scope))
+              .catch(err => console.error('Error al registrar Service Worker:', err));
+          });
+        }
+      </script>
+      
   </body>
 </html>

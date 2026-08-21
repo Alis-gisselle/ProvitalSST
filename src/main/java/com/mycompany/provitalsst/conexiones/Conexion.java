@@ -13,7 +13,7 @@ public class Conexion {
 
             String url = "jdbc:mysql://localhost:3306/ProvitalSST";
             String usuario = "root";
-            String contraseña = "admin";
+            String contraseña = "root";
 
             con = DriverManager.getConnection(url, usuario, contraseña);
 
