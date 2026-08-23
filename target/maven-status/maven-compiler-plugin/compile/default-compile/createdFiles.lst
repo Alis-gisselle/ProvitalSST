@@ -28,6 +28,7 @@ com\mycompany\provitalsst\modelo\TrastornoMusculo.class
 com\mycompany\provitalsst\servlets\EstudioServlet.class
 com\mycompany\provitalsst\servlets\DashboardServlet.class
 com\mycompany\provitalsst\servlets\CertifMedServlet.class
+com\mycompany\provitalsst\servlets\panelMedServlet.class
 com\mycompany\provitalsst\modelo\EmpresaCliente.class
 com\mycompany\provitalsst\servlets\LogoutServlet.class
 com\mycompany\provitalsst\conexiones\Conexion.class

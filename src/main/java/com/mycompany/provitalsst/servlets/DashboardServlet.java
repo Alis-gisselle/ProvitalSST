@@ -42,8 +42,9 @@ public class DashboardServlet extends HttpServlet {
                 rd.forward(request, response);
                 return; // Importante para detener la ejecución aquí
             case "medico":
-                vista = "medicoLaboral.jsp"; 
-                break;
+            RequestDispatcher rdMedico = request.getRequestDispatcher("/panelMed2");
+            rdMedico.forward(request, response);
+            return; // Importante para detener la ejecución aquí
             case "colaborador":
                 ColaboradorDAO colabDAO = new ColaboradorDAO();
                 Integer idPersona = colabDAO.obtenerIdPersonaPorUsuario(usuario.getIdUsuario());

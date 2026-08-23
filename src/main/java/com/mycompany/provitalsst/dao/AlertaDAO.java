@@ -165,7 +165,7 @@ public class AlertaDAO {
         return 0;
     }
 
-    // Listas detalladas filtradas por Empresa
+    //listas para empresas
     public List<Alerta> listarVencidosPorEmpresa(int idEmpresa) {
         return listarCertificadosPorCondicionYEmpresa("f_venc < CURDATE()", idEmpresa);
     }
