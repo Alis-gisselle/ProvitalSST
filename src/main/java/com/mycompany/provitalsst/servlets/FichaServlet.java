@@ -106,7 +106,7 @@ public class FichaServlet extends HttpServlet {
             response.sendRedirect("login");
             return;
         }
-        boolean soloLectura = "colaborador".equals(usuarioLogueado.getRol()) || "rrhh".equals(usuarioLogueado.getRol());
+        boolean soloLectura = "colaborador".equals(usuarioLogueado.getRol()) || "rrhh".equals(usuarioLogueado.getRol()) || "medico".equals(usuarioLogueado.getRol());
         request.setAttribute("soloLectura", soloLectura);
 
         String accion = request.getParameter("accion");
