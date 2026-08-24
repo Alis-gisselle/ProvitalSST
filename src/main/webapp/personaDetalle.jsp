@@ -155,7 +155,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>  
         <script>
         if ('serviceWorker' in navigator) {
           window.addEventListener('load', () => {

@@ -165,7 +165,7 @@ public class AlertaDAO {
         return 0;
     }
 
-    // Listas detalladas filtradas por Empresa
+    //listas para empresas
     public List<Alerta> listarVencidosPorEmpresa(int idEmpresa) {
         return listarCertificadosPorCondicionYEmpresa("f_venc < CURDATE()", idEmpresa);
     }
@@ -209,7 +209,7 @@ public class AlertaDAO {
         }
         return lista;
     }
-        // Contar personas sin ficha técnica filtrando por empresa
+    // Contar personas sin ficha técnica filtrando por empresa
     public int contarSinFichaPorEmpresa(int idEmpresa) {
         String sql = "SELECT COUNT(*) FROM Persona p " +
                      "JOIN Empleado e ON p.idPersona = e.idPersona " +
@@ -239,5 +239,48 @@ public class AlertaDAO {
             ex.printStackTrace();
         }
         return 0;
+    }
+    // Listar personas sin ficha técnica por empresa
+    public List<Persona> listarSinFichaPorEmpresa(int idEmpresa) {
+        String sql = "SELECT p.*, ec.Nombre AS nombreEmpresa FROM Persona p " +
+                     "JOIN Empleado e ON p.idPersona = e.idPersona " +
+                     "LEFT JOIN EmpresaCliente ec ON e.idEmpresaCliente = ec.idEmpresaCliente " +
+                     "WHERE e.idEmpresaCliente = ? AND p.categoria = 'admisional' " +
+                     "AND p.idPersona NOT IN (SELECT idPersona FROM Ficha)";
+        return listarPersonasPorEmpresa(sql, idEmpresa);
+    }
+
+    // Listar personas con estudios pendientes por empresa
+    public List<Persona> listarEstudiosPendientesPorEmpresa(int idEmpresa) {
+        String sql = "SELECT p.*, ec.Nombre AS nombreEmpresa FROM Persona p " +
+                     "JOIN Empleado e ON p.idPersona = e.idPersona " +
+                     "LEFT JOIN EmpresaCliente ec ON e.idEmpresaCliente = ec.idEmpresaCliente " +
+                     "WHERE e.idEmpresaCliente = ? " +
+                     "AND p.idPersona NOT IN (SELECT idPersona FROM Estudio)";
+        return listarPersonasPorEmpresa(sql, idEmpresa);
+    }
+
+    // Auxiliar para listar personas pasando el parámetro idEmpresa
+    private List<Persona> listarPersonasPorEmpresa(String sql, int idEmpresa) {
+        List<Persona> lista = new ArrayList<>();
+        try (Connection con = Conexion.conectar();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, idEmpresa);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Persona p = new Persona();
+                    p.setIdPersona(rs.getInt("idPersona"));
+                    p.setNombre(rs.getString("nombre"));
+                    p.setApellido(rs.getString("apellido"));
+                    p.setCi(rs.getInt("ci"));
+                    p.setCategoria(rs.getString("categoria"));
+                    p.setNombreEmpresa(rs.getString("nombreEmpresa"));
+                    lista.add(p);
+                }
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return lista;
     }
 }
