@@ -11,6 +11,7 @@
 <head>
     <title>Ficha - Paso 9: Trastornos Musculoesqueléticos</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="icon" type="image/png" href="imagenes/logo-entero.png">
 </head>
 <body>
     <div class="container mt-4" style="max-width: 700px;">

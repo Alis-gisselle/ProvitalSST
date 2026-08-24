@@ -4,6 +4,7 @@
  */
 package com.mycompany.provitalsst.servlets;
 
+import com.mycompany.provitalsst.conexiones.Conexion;
 import com.mycompany.provitalsst.dao.CertifManipuladorDAO;
 import com.mycompany.provitalsst.dao.MedicoLaboralDAO;
 import com.mycompany.provitalsst.dao.PersonaDAO;
@@ -13,6 +14,8 @@ import com.mycompany.provitalsst.modelo.Usuario;
 import com.mycompany.provitalsst.util.GeneradorCertifManipuladorPDF;
 import java.io.File;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -21,6 +24,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import net.sf.jasperreports.engine.JRException;
 
 /**
  *
@@ -78,24 +82,22 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response)
 
     private void generarYDescargarPdf(HttpServletRequest request, HttpServletResponse response, int idCert)
         throws IOException {
-
-        CertifManipulador cert = dao.buscarPorId(idCert);
-        Persona persona = personaDAO.buscarPorId(cert.getIdPersona());
-        String tipo = personaDAO.determinarTipo(cert.getIdPersona());
-        String nombreEmpresa = tipo.equals("empleado") ? personaDAO.obtenerNombreEmpresa(cert.getIdPersona()) : null;
-
-        String rutaPlantilla = getServletContext().getRealPath("/WEB-INF/plantillas/certifManipulador.pdf");
+        
+        String rutaJasper = getServletContext().getRealPath("/WEB-INF/reportes/CertifManipulador.jasper");
         String carpetaSalida = getServletContext().getRealPath("/uploads/certificados");
         new File(carpetaSalida).mkdirs();
         String rutaSalida = carpetaSalida + File.separator + "certifManip_" + idCert + ".pdf";
 
-        try {
-            GeneradorCertifManipuladorPDF.generar(rutaPlantilla, rutaSalida, cert, persona, nombreEmpresa);
+        try (Connection con = Conexion.conectar()) {
+            GeneradorCertifManipuladorPDF.generar(rutaJasper, rutaSalida, idCert, con);
             response.sendRedirect("uploads/certificados/certifManip_" + idCert + ".pdf");
-        } catch (IOException ex) {
+        } catch (JRException | SQLException ex) {
             ex.printStackTrace();
         }
+        
+        
     }
+
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
