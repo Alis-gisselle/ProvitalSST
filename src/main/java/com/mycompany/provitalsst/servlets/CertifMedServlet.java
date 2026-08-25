@@ -4,6 +4,7 @@
  */
 package com.mycompany.provitalsst.servlets;
 
+import com.mycompany.provitalsst.conexiones.Conexion;
 import com.mycompany.provitalsst.dao.CertifMedDAO;
 import com.mycompany.provitalsst.dao.MedicoLaboralDAO;
 import com.mycompany.provitalsst.dao.PersonaDAO;
@@ -21,7 +22,10 @@ import com.mycompany.provitalsst.modelo.Persona;
 import com.mycompany.provitalsst.modelo.Usuario;
 import com.mycompany.provitalsst.util.GeneradorCertifMedPDF;
 import java.io.File;
+import java.sql.Connection;
+import java.sql.SQLException;
 import javax.servlet.http.HttpSession;
+import net.sf.jasperreports.engine.JRException;
 
 /**
  *
@@ -106,20 +110,15 @@ public class CertifMedServlet extends HttpServlet {
     private void generarYDescargarPdf(HttpServletRequest request, HttpServletResponse response, int idCert)
     throws IOException {
 
-        CertifMed cert = dao.buscarPorId(idCert);
-        Persona persona = personaDAO.buscarPorId(cert.getIdPersona());
-        String tipo = personaDAO.determinarTipo(cert.getIdPersona());
-        String cargo = tipo.equals("empleado") ? empleadoDAO.obtenerCargo(cert.getIdPersona()) : "Independiente";
-
-        String rutaPlantilla = getServletContext().getRealPath("/WEB-INF/plantillas/certifMed.pdf");
+        String rutaJasper = getServletContext().getRealPath("/WEB-INF/reportes/CertifMed.jasper");
         String carpetaSalida = getServletContext().getRealPath("/uploads/certificados");
         new File(carpetaSalida).mkdirs();
         String rutaSalida = carpetaSalida + File.separator + "certif_" + idCert + ".pdf";
 
-        try {
-            GeneradorCertifMedPDF.generar(rutaPlantilla, rutaSalida, cert, persona, cargo);
+        try (Connection con = Conexion.conectar()) {
+            GeneradorCertifMedPDF.generar(rutaJasper, rutaSalida, idCert, con);
             response.sendRedirect("uploads/certificados/certif_" + idCert + ".pdf");
-        } catch (IOException ex) {
+        } catch (JRException | SQLException ex) {
             ex.printStackTrace();
         }
     }
