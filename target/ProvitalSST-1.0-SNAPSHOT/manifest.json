@@ -3,12 +3,12 @@
   "name": "Provital SST - Salud Ocupacional",
   "icons": [
     {
-      "src": "imagenes/logo-entero.png",
+      "src": "imagenes/logo-verde.png",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "imagenes/logo-entero.png",
+      "src": "imagenes/logo-verde.png",
       "type": "image/png",
       "sizes": "512x512"
     }
