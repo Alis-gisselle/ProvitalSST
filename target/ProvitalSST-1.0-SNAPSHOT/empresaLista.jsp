@@ -46,7 +46,9 @@
     <nav class="navbar navbar-dark navbar-provitall mb-4">
         <div class="container">
             <span class="navbar-brand"><i class="bi bi-heart-pulse-fill"></i> Provital SST</span>
-            <a href="logout" class="btn btn-outline-light btn-sm">Salir</a>
+            <a href="logout" class="btn btn-outline-light btn-sm">
+                <i class="bi bi-box-arrow-right"></i> Cerrar Sesión
+            </a>
         </div>
     </nav>
     <div class="container mt-4">

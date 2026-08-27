@@ -51,6 +51,8 @@
         }
         .btn-accion { background-color: var(--verde-principal); border-color: var(--verde-principal); color: white; width: 100%; }
         .btn-accion:hover { background-color: #05412f; border-color: #05412f; color: white; }
+        .btn-outline-provital { color: white;; border-color: white;; }
+        .btn-outline-provital:hover { background-color: var(--verde-claro); color: var(--verde-principal); }
     </style>
 </head>
 <body>
@@ -63,6 +65,9 @@
                     <div class="fw-semibold">${nombreRolMostrar}</div>
                     <div>${correoUsuario}</div>
                 </div>
+                <a href="logout" class="btn btn-outline-provital">
+                    <i class="bi bi-box-arrow-right"></i> Cerrar Sesión
+                </a>
             </div>
         </div>
     </nav>
@@ -130,7 +135,7 @@
                     <h6 class="fw-bold">Estudios</h6>
                     <p class="text-muted small">Consulta, gestiona y sube los estudios médicos.</p>
                     <a href="estudio?idPersona=${persona.idPersona}" class="btn btn-accion">
-                        Ver / Subir Estudios <i class="bi bi-chevron-right"></i>
+                        Ver / Crear Estudios <i class="bi bi-chevron-right"></i>
                     </a>
                 </div>
             </div>
