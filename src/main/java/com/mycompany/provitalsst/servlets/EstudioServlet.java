@@ -51,12 +51,16 @@ public class EstudioServlet extends HttpServlet {
         String accion = request.getParameter("accion");
 
         if ("eliminar".equals(accion)) {
-            if (soloLectura) { response.sendRedirect("estudio?idPersona=" + request.getParameter("idPersona")); return; }
+            if (soloLectura) { 
+                response.sendRedirect("estudio?idPersona=" + request.getParameter("idPersona")); return; }
                 int idEstudio = Integer.parseInt(request.getParameter("id"));
                 int idPersona = Integer.parseInt(request.getParameter("idPersona"));
                 Estudio estudio = dao.buscarPorId(idEstudio);
-            }
-       
+                dao.eliminar(idEstudio);
+                response.sendRedirect("estudio?idPersona=" + idPersona);
+                return;
+                }
+        
         int idPersona = Integer.parseInt(request.getParameter("idPersona"));
         request.setAttribute("persona", personaDAO.buscarPorId(idPersona));
         request.setAttribute("listaEstudios", dao.listarPorPersona(idPersona));
