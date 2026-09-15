@@ -56,6 +56,7 @@
                     <th>Acciones</th>
                 </tr>
             </thead>
+
             <tbody>
                 <c:forEach var="est" items="${listaEstudios}">
                     <tr>
