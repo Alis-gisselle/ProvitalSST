@@ -14,6 +14,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<% request.setAttribute("paginaActiva", "configuracion"); %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -46,62 +47,68 @@
     </style>
 </head>
 <body>
-    <div class="container mt-4">
-        <nav class="breadcrumb-custom small mb-3">
-            <a href="dashboard">Dashboard</a> <i class="bi bi-chevron-right small mx-1"></i>
-            <a href="configuracion">Configuración</a> <i class="bi bi-chevron-right small mx-1"></i>
-            <span class="text-muted">Usuarios</span>
-        </nav>
+    <div class="layout-admin">
+        <jsp:include page="sidebar.jsp" />
+        <div class="contenido-admin">
+            <jsp:include page="topbar.jsp" />
+                <div class="container mt-4">
+                    <nav class="breadcrumb-custom small mb-3">
+                        <a href="dashboard">Dashboard</a> <i class="bi bi-chevron-right small mx-1"></i>
+                        <a href="configuracion">Configuración</a> <i class="bi bi-chevron-right small mx-1"></i>
+                        <span class="text-muted">Usuarios</span>
+                    </nav>
 
-        <div class="d-flex gap-3 mb-4">
-            <div class="icono-circulo"><i class="bi bi-shield-lock"></i></div>
-            <div>
-                <h2 class="fw-bold mb-0">Usuarios del Sistema</h2>
-                <p class="text-muted mb-0">Administra los usuarios y roles del sistema.</p>
-            </div>
-        </div>
+                    <div class="d-flex gap-3 mb-4">
+                        <div class="icono-circulo"><i class="bi bi-shield-lock"></i></div>
+                        <div>
+                            <h2 class="fw-bold mb-0">Usuarios del Sistema</h2>
+                            <p class="text-muted mb-0">Administra los usuarios y roles del sistema.</p>
+                        </div>
+                    </div>
 
-        <div class="d-flex gap-2 mb-4">
-            <a href="configuracion" class="btn btn-outline-secondary"><i class="bi bi-arrow-left"></i> Volver a Configuración</a>
-            <a href="usuario?accion=nuevo" class="btn btn-provital">
-                <i class="bi bi-plus-lg"></i> Nuevo Usuario
-            </a>
-        </div>
+                    <div class="d-flex gap-2 mb-4">
+                        <a href="configuracion" class="btn btn-outline-secondary"><i class="bi bi-arrow-left"></i> Volver a Configuración</a>
+                        <a href="usuario?accion=nuevo" class="btn btn-provital">
+                            <i class="bi bi-plus-lg"></i> Nuevo Usuario
+                        </a>
+                    </div>
 
-        <div class="card border-0 shadow-sm">
-            <table class="table table-hover mb-0">
-                <thead>
-                    <tr>
-                        <th>Correo</th>
-                        <th>Rol</th>
-                        <th>Empresa (si RRHH)</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <c:forEach var="u" items="${listaUsuarios}">
-                        <tr>
-                            <td><i class="bi bi-envelope text-muted me-1"></i> ${u.correo}</td>
-                            <td>
-                                <span class="badge rounded-pill ${u.rol == 'admin' ? 'badge-admin' : (u.rol == 'rrhh' ? 'badge-rrhh' : (u.rol == 'medico' ? 'badge-medico' : 'badge-colaborador'))}">
-                                    ${u.rol == 'admin' ? 'Admin' : (u.rol == 'rrhh' ? 'RRHH' : (u.rol == 'medico' ? 'Médico' : 'Colaborador'))}
-                                </span>
-                            </td>
-                            <td>${u.idEmpresaCliente != null ? u.idEmpresaCliente : '-'}</td>
-                            <td>
-                                <a href="usuario?accion=editar&id=${u.idUsuario}" class="btn btn-sm btn-outline-warning">
-                                    <i class="bi bi-pencil"></i> Editar
-                                </a>
-                                <a href="usuario?accion=eliminar&id=${u.idUsuario}"
-                                   class="btn btn-sm btn-outline-danger"
-                                   onclick="return confirm('¿Seguro que deseas eliminar este usuario?');">
-                                    <i class="bi bi-trash"></i> Eliminar
-                                </a>
-                            </td>
-                        </tr>
-                    </c:forEach>
-                </tbody>
-            </table>
+                    <div class="card border-0 shadow-sm">
+                        <table class="table table-hover mb-0">
+                            <thead>
+                                <tr>
+                                    <th>Correo</th>
+                                    <th>Rol</th>
+                                    <th>Empresa (si RRHH)</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <c:forEach var="u" items="${listaUsuarios}">
+                                    <tr>
+                                        <td><i class="bi bi-envelope text-muted me-1"></i> ${u.correo}</td>
+                                        <td>
+                                            <span class="badge rounded-pill ${u.rol == 'admin' ? 'badge-admin' : (u.rol == 'rrhh' ? 'badge-rrhh' : (u.rol == 'medico' ? 'badge-medico' : 'badge-colaborador'))}">
+                                                ${u.rol == 'admin' ? 'Admin' : (u.rol == 'rrhh' ? 'RRHH' : (u.rol == 'medico' ? 'Médico' : 'Colaborador'))}
+                                            </span>
+                                        </td>
+                                        <td>${u.idEmpresaCliente != null ? u.idEmpresaCliente : '-'}</td>
+                                        <td>
+                                            <a href="usuario?accion=editar&id=${u.idUsuario}" class="btn btn-sm btn-outline-warning">
+                                                <i class="bi bi-pencil"></i> Editar
+                                            </a>
+                                            <a href="usuario?accion=eliminar&id=${u.idUsuario}"
+                                               class="btn btn-sm btn-outline-danger"
+                                               onclick="return confirm('¿Seguro que deseas eliminar este usuario?');">
+                                                <i class="bi bi-trash"></i> Eliminar
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
         </div>
     </div>
 </body>

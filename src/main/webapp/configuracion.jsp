@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<% request.setAttribute("paginaActiva", "configuracion"); %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -37,44 +38,50 @@
     </style>
 </head>
 <body>
-    <div class="container mt-4">
-        <nav class="breadcrumb-custom small mb-3">
-            <a href="dashboard">Dashboard</a> <i class="bi bi-chevron-right small mx-1"></i>
-            <span class="text-muted">Configuración</span>
-        </nav>
+    <div class="layout-admin">
+        <jsp:include page="sidebar.jsp" />
+        <div class="contenido-admin">
+            <jsp:include page="topbar.jsp" />
+                <div class="container mt-4">
+                    <nav class="breadcrumb-custom small mb-3">
+                        <a href="dashboard">Dashboard</a> <i class="bi bi-chevron-right small mx-1"></i>
+                        <span class="text-muted">Configuración</span>
+                    </nav>
 
-        <div class="d-flex gap-3 mb-4">
-            <div class="icono-circulo"><i class="bi bi-gear"></i></div>
-            <div>
-                <h2 class="fw-bold mb-0">Configuración</h2>
-                <p class="text-muted mb-0">Administra médicos laborales y usuarios del sistema.</p>
-            </div>
-        </div>
-
-        <a href="dashboard" class="btn btn-outline-secondary mb-4"><i class="bi bi-arrow-left"></i> Volver al Dashboard</a>
-
-        <div class="row g-4">
-            <div class="col-md-6">
-                <a href="medico" class="menu-card shadow-sm p-4 d-flex align-items-center gap-3">
-                    <div class="menu-card-icon"><i class="bi bi-person-badge"></i></div>
-                    <div>
-                        <h5 class="mb-1">Médicos Laborales</h5>
-                        <p class="text-muted mb-0 small">Gestiona los médicos laborales del sistema.</p>
+                    <div class="d-flex gap-3 mb-4">
+                        <div class="icono-circulo"><i class="bi bi-gear"></i></div>
+                        <div>
+                            <h2 class="fw-bold mb-0">Configuración</h2>
+                            <p class="text-muted mb-0">Administra médicos laborales y usuarios del sistema.</p>
+                        </div>
                     </div>
-                    <i class="bi bi-chevron-right ms-auto text-muted"></i>
-                </a>
-            </div>
 
-            <div class="col-md-6">
-                <a href="usuario" class="menu-card shadow-sm p-4 d-flex align-items-center gap-3">
-                    <div class="menu-card-icon"><i class="bi bi-shield-lock"></i></div>
-                    <div>
-                        <h5 class="mb-1">Usuarios del Sistema</h5>
-                        <p class="text-muted mb-0 small">Administra los usuarios y roles del sistema.</p>
+                    <a href="dashboard" class="btn btn-outline-secondary mb-4"><i class="bi bi-arrow-left"></i> Volver al Dashboard</a>
+
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <a href="medico" class="menu-card shadow-sm p-4 d-flex align-items-center gap-3">
+                                <div class="menu-card-icon"><i class="bi bi-person-badge"></i></div>
+                                <div>
+                                    <h5 class="mb-1">Médicos Laborales</h5>
+                                    <p class="text-muted mb-0 small">Gestiona los médicos laborales del sistema.</p>
+                                </div>
+                                <i class="bi bi-chevron-right ms-auto text-muted"></i>
+                            </a>
+                        </div>
+
+                        <div class="col-md-6">
+                            <a href="usuario" class="menu-card shadow-sm p-4 d-flex align-items-center gap-3">
+                                <div class="menu-card-icon"><i class="bi bi-shield-lock"></i></div>
+                                <div>
+                                    <h5 class="mb-1">Usuarios del Sistema</h5>
+                                    <p class="text-muted mb-0 small">Administra los usuarios y roles del sistema.</p>
+                                </div>
+                                <i class="bi bi-chevron-right ms-auto text-muted"></i>
+                            </a>
+                        </div>
                     </div>
-                    <i class="bi bi-chevron-right ms-auto text-muted"></i>
-                </a>
-            </div>
+                </div>
         </div>
     </div>
 </body>

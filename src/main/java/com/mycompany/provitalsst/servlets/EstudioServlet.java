@@ -87,6 +87,8 @@ public class EstudioServlet extends HttpServlet {
         String nombreArchivo = "estudio_" + idPersona + "_" + System.currentTimeMillis() + ".pdf";
 
         String rutaCarpeta = getServletContext().getRealPath("/uploads/estudios");
+             
+        System.out.println("Ruta de guardado: "+ rutaCarpeta);
         File carpeta = new File(rutaCarpeta);
         if (!carpeta.exists()) {
             carpeta.mkdirs();

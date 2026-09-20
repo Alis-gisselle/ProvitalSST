@@ -47,9 +47,11 @@ public class GeneradorFichaPDF {
             setTexto(form, "ci", String.valueOf(d.getPersona().getCi()));
             int edad = Period.between(d.getPersona().getFechaNacimiento(), LocalDate.now()).getYears();
             setTexto(form, "edad", String.valueOf(edad));
-            setTexto(form, "fecha", d.getFicha().getFecha().format(FMT));
+            setTexto(form, "fecha", d.getPersona().getFechaNacimiento().format(FMT));
             setTexto(form, "cargo", d.getCargo() != null ? d.getCargo() : "");
             setRadio(form, "admisional", d.getFicha().getTipoEvaluacion());
+            setTexto(form, "n_ficha", d.getFicha().getNumeroFicha());
+            setTexto(form, "fecha_ficha", d.getFicha().getFecha().format(FMT));
 
            
             DatosPersonalesFicha dp = d.getDatosPersonales();
@@ -61,9 +63,8 @@ public class GeneradorFichaPDF {
                 setRadio(form, "primaria", dp.getGradoFormacion());
                 setTexto(form, "telefono", dp.getTelefono());
                 setTexto(form, "domicilio", dp.getDomicilio());
-                setTexto(form, "contacto_emergencia",
-                    (dp.getContactoEmergencia() != null ? dp.getContactoEmergencia() : "") +
-                    (dp.getTelefonoEmergencia() != null ? " - " + dp.getTelefonoEmergencia() : ""));
+                setTexto(form, "contacto_emergencia", dp.getContactoEmergencia());
+                setTexto(form, "Telefono", dp.getTelefonoEmergencia());
                 if (dp.getNumHijos() != null) setTexto(form, "n_hijos", String.valueOf(dp.getNumHijos()));
                 setTexto(form, "hijos_edades", dp.getEdadesHijos());
             }
@@ -206,9 +207,8 @@ public class GeneradorFichaPDF {
             FirmaFicha firma = d.getFirma();
             if (firma != null) {
                 setTexto(form, "ci_2", firma.getCiTrabajador());
-                if (firma.getFechaFirmaTrabajador() != null) setTexto(form, "fecha_declaracion", firma.getFechaFirmaTrabajador().format(FMT));
                 setTexto(form, "ci_tecnico", firma.getCiTecnico());
-                if (firma.getFechaFirmaTecnico() != null) setTexto(form, "fecha_tecnicofirma", firma.getFechaFirmaTecnico().format(FMT));
+                
             }
 
             form.flatten();
