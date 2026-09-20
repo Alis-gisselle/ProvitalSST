@@ -108,17 +108,22 @@ public class CertifMedServlet extends HttpServlet {
     
     private final EmpleadoDAO empleadoDAO = new EmpleadoDAO();
     private void generarYDescargarPdf(HttpServletRequest request, HttpServletResponse response, int idCert)
-    throws IOException {
+        throws IOException {
 
-        String rutaJasper = getServletContext().getRealPath("/WEB-INF/reportes/CertifMed.jasper");
+        CertifMed cert = dao.buscarPorId(idCert);
+        Persona persona = personaDAO.buscarPorId(cert.getIdPersona());
+        String tipo = personaDAO.determinarTipo(cert.getIdPersona());
+        String cargo = tipo.equals("empleado") ? empleadoDAO.obtenerCargo(cert.getIdPersona()) : null;
+
+        String rutaPlantilla = getServletContext().getRealPath("/WEB-INF/plantillas/certifMed.pdf");
         String carpetaSalida = getServletContext().getRealPath("/uploads/certificados");
         new File(carpetaSalida).mkdirs();
         String rutaSalida = carpetaSalida + File.separator + "certif_" + idCert + ".pdf";
 
-        try (Connection con = Conexion.conectar()) {
-            GeneradorCertifMedPDF.generar(rutaJasper, rutaSalida, idCert, con);
+        try {
+            GeneradorCertifMedPDF.generar(rutaPlantilla, rutaSalida, cert, persona, cargo);
             response.sendRedirect("uploads/certificados/certif_" + idCert + ".pdf");
-        } catch (JRException | SQLException ex) {
+        } catch (IOException ex) {
             ex.printStackTrace();
         }
     }

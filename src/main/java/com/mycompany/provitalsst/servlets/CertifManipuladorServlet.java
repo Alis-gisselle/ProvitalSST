@@ -82,20 +82,23 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response)
 
     private void generarYDescargarPdf(HttpServletRequest request, HttpServletResponse response, int idCert)
         throws IOException {
-        
-        String rutaJasper = getServletContext().getRealPath("/WEB-INF/reportes/CertifManipulador.jasper");
+
+        CertifManipulador cert = dao.buscarPorId(idCert);
+        Persona persona = personaDAO.buscarPorId(cert.getIdPersona());
+        String tipo = personaDAO.determinarTipo(cert.getIdPersona());
+        String nombreEmpresa = tipo.equals("empleado") ? personaDAO.obtenerNombreEmpresa(cert.getIdPersona()) : null;
+
+        String rutaPlantilla = getServletContext().getRealPath("/WEB-INF/plantillas/certifManipulador.pdf");
         String carpetaSalida = getServletContext().getRealPath("/uploads/certificados");
         new File(carpetaSalida).mkdirs();
         String rutaSalida = carpetaSalida + File.separator + "certifManip_" + idCert + ".pdf";
 
-        try (Connection con = Conexion.conectar()) {
-            GeneradorCertifManipuladorPDF.generar(rutaJasper, rutaSalida, idCert, con);
+        try {
+            GeneradorCertifManipuladorPDF.generar(rutaPlantilla, rutaSalida, cert, persona, nombreEmpresa);
             response.sendRedirect("uploads/certificados/certifManip_" + idCert + ".pdf");
-        } catch (JRException | SQLException ex) {
+        } catch (IOException ex) {
             ex.printStackTrace();
         }
-        
-        
     }
 
 
