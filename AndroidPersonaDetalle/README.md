@@ -3,6 +3,10 @@
 Módulo Android nativo en Java que implementa la pantalla equivalente a
 `src/main/webapp/personaDetalle.jsp`.
 
+La aplicación inicia con una pantalla de acceso que valida el formato del correo
+y una contraseña de al menos seis caracteres. Mientras no exista una API REST
+en el sistema web, el acceso es local y abre datos de demostración.
+
 ## Abrirlo
 
 1. Abrir la carpeta `AndroidPersonaDetalle` desde Android Studio.

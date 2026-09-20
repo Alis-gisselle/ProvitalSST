@@ -1,0 +1,27 @@
+R_DEF: Internal format may change without notice
+local
+color blanco
+color fondo
+color texto
+color verde_boton
+color verde_claro
+color verde_principal
+drawable bg_avatar
+drawable bg_card
+drawable bg_icon
+id btnCertificado
+id btnEstudios
+id btnFicha
+id btnVolver
+id cardFicha
+id filaEmpresa
+id tvCategoria
+id tvCi
+id tvEmpresa
+id tvIniciales
+id tvNombre
+id tvTipo
+id tvTitulo
+layout activity_persona_detalle
+string app_name
+style Theme.ProvitalSST
