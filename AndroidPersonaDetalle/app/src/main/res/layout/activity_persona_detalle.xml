@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/fondo"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/verde_principal"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingEnd="20dp"
+            android:paddingStart="20dp"
+            android:paddingVertical="18dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="✚  PROVITAL SST"
+                android:textColor="@color/blanco"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="🔔"
+                android:textSize="20sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnVolver"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="← Volver al dashboard"
+                android:textColor="@color/verde_principal"
+                app:strokeColor="@color/verde_principal" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/bg_card"
+                android:elevation="3dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="20dp">
+
+                <TextView
+                    android:id="@+id/tvIniciales"
+                    android:layout_width="110dp"
+                    android:layout_height="110dp"
+                    android:background="@drawable/bg_avatar"
+                    android:gravity="center"
+                    android:textColor="@color/verde_principal"
+                    android:textSize="34sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="18dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvTitulo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/texto"
+                        android:textSize="24sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvNombre"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:visibility="gone" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="14dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+                        <TextView android:layout_width="24dp" android:layout_height="wrap_content" android:text="▣" android:textColor="@color/verde_principal" />
+                        <TextView android:layout_width="76dp" android:layout_height="wrap_content" android:text="CI" android:textColor="@color/texto" android:textStyle="bold" />
+                        <TextView android:id="@+id/tvCi" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:textColor="@color/texto" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+                        <TextView android:layout_width="24dp" android:layout_height="wrap_content" android:text="●" android:textColor="@color/verde_principal" />
+                        <TextView android:layout_width="76dp" android:layout_height="wrap_content" android:text="Tipo" android:textColor="@color/texto" android:textStyle="bold" />
+                        <TextView android:id="@+id/tvTipo" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:textColor="@color/texto" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/filaEmpresa"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+                        <TextView android:layout_width="24dp" android:layout_height="wrap_content" android:text="⌂" android:textColor="@color/verde_principal" />
+                        <TextView android:layout_width="76dp" android:layout_height="wrap_content" android:text="Empresa" android:textColor="@color/texto" android:textStyle="bold" />
+                        <TextView android:id="@+id/tvEmpresa" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:textColor="@color/texto" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+                        <TextView android:layout_width="24dp" android:layout_height="wrap_content" android:text="◆" android:textColor="@color/verde_principal" />
+                        <TextView android:layout_width="76dp" android:layout_height="wrap_content" android:text="Categoría" android:textColor="@color/texto" android:textStyle="bold" />
+                        <TextView android:id="@+id/tvCategoria" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:textColor="@color/texto" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/cardFicha"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:background="@drawable/bg_card"
+                android:elevation="2dp"
+                android:orientation="vertical"
+                android:padding="20dp">
+                <TextView android:layout_width="56dp" android:layout_height="56dp" android:background="@drawable/bg_icon" android:gravity="center" android:text="⚕" android:textColor="@color/verde_principal" android:textSize="28sp" />
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="14dp" android:text="Ficha médica" android:textColor="@color/texto" android:textSize="18sp" android:textStyle="bold" />
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="6dp" android:text="Consulta, crea y descarga la ficha médica ocupacional." android:textColor="#61707A" />
+                <com.google.android.material.button.MaterialButton android:id="@+id/btnFicha" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="16dp" android:text="Ver / crear ficha  ›" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:background="@drawable/bg_card"
+                android:elevation="2dp"
+                android:orientation="vertical"
+                android:padding="20dp">
+                <TextView android:layout_width="56dp" android:layout_height="56dp" android:background="@drawable/bg_icon" android:gravity="center" android:text="▤" android:textColor="@color/verde_principal" android:textSize="28sp" />
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="14dp" android:text="Estudios" android:textColor="@color/texto" android:textSize="18sp" android:textStyle="bold" />
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="6dp" android:text="Consulta, gestiona y sube los estudios médicos." android:textColor="#61707A" />
+                <com.google.android.material.button.MaterialButton android:id="@+id/btnEstudios" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="16dp" android:text="Ver / crear estudios  ›" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/bg_card"
+                android:elevation="2dp"
+                android:orientation="vertical"
+                android:padding="20dp">
+                <TextView android:layout_width="56dp" android:layout_height="56dp" android:background="@drawable/bg_icon" android:gravity="center" android:text="✓" android:textColor="@color/verde_principal" android:textSize="30sp" />
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="14dp" android:text="Certificado" android:textColor="@color/texto" android:textSize="18sp" android:textStyle="bold" />
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="6dp" android:text="Crea o visualiza los certificados médicos." android:textColor="#61707A" />
+                <com.google.android.material.button.MaterialButton android:id="@+id/btnCertificado" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="16dp" android:text="Ver / crear certificado  ›" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

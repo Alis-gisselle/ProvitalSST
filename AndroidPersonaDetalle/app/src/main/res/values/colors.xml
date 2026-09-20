@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="verde_principal">#075B42</color>
+    <color name="verde_boton">#087F4F</color>
+    <color name="verde_claro">#E8F5EF</color>
+    <color name="fondo">#F8FAFC</color>
+    <color name="texto">#172B3A</color>
+    <color name="blanco">#FFFFFF</color>
+</resources>
