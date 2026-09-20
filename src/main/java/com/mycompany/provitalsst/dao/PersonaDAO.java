@@ -13,7 +13,7 @@ import java.util.List;
 public class PersonaDAO {
 
     public Persona buscarPorId(int idPersona) {
-        String sql = "SELECT * FROM Persona WHERE idPersona = ?";
+        String sql = "SELECT * FROM persona WHERE idPersona = ?";
         try (Connection con = Conexion.conectar();
              PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, idPersona);
@@ -36,8 +36,8 @@ public class PersonaDAO {
 
     // Devuelve "empleado", "colaborador", o null si no se encuentra en ninguna
     public String determinarTipo(int idPersona) {
-        String sqlEmpleado = "SELECT idPersona FROM Empleado WHERE idPersona = ?";
-        String sqlColaborador = "SELECT idPersona FROM Colaborador WHERE idPersona = ?";
+        String sqlEmpleado = "SELECT idPersona FROM empleado WHERE idPersona = ?";
+        String sqlColaborador = "SELECT idPersona FROM colaborador WHERE idPersona = ?";
         try (Connection con = Conexion.conectar()) {
             try (PreparedStatement ps = con.prepareStatement(sqlEmpleado)) {
                 ps.setInt(1, idPersona);
@@ -55,7 +55,7 @@ public class PersonaDAO {
 
     // Nombre de la empresa, solo si es empleado
     public String obtenerNombreEmpresa(int idPersona) {
-        String sql = "SELECT ec.Nombre FROM Empleado e JOIN EmpresaCliente ec ON e.idEmpresaCliente = ec.idEmpresaCliente WHERE e.idPersona = ?";
+        String sql = "SELECT ec.Nombre FROM empleado e JOIN EmpresaCliente ec ON e.idEmpresaCliente = ec.idEmpresaCliente WHERE e.idPersona = ?";
         try (Connection con = Conexion.conectar();
              PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, idPersona);

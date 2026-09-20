@@ -63,6 +63,7 @@ com\mycompany\provitalsst\modelo\EPP.class
 com\mycompany\provitalsst\dao\DatosPersonalesFichaDAO.class
 com\mycompany\provitalsst\modelo\FichaCompleta.class
 com\mycompany\provitalsst\servlets\FichaExamenFisicoServlet.class
+com\mycompany\provitalsst\servlets\ApiLoginServlet.class
 com\mycompany\provitalsst\dao\RiesgoLaboralDAO.class
 com\mycompany\provitalsst\modelo\Persona.class
 com\mycompany\provitalsst\modelo\AntecedentePersonal.class

@@ -3,9 +3,11 @@
 Módulo Android nativo en Java que implementa la pantalla equivalente a
 `src/main/webapp/personaDetalle.jsp`.
 
-La aplicación inicia con una pantalla de acceso que valida el formato del correo
-y una contraseña de al menos seis caracteres. Mientras no exista una API REST
-en el sistema web, el acceso es local y abre datos de demostración.
+La aplicación inicia sesión contra el endpoint `/api/login` del servidor web,
+que consulta MySQL mediante `UsuarioDAO`. Android nunca recibe las credenciales
+de MySQL ni se conecta a la base directamente. Configure `ApiConfig.BASE_URL`
+para el Tomcat donde esté desplegado el WAR (en el emulador, `10.0.2.2` es la PC).
+La sesión HTTP se conserva al abrir las JSP de ficha, estudios y certificados.
 
 ## Abrirlo
 

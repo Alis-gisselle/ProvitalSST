@@ -10,7 +10,7 @@ import java.util.List;
 public class UsuarioDAO {
 
     public Usuario autenticar(String correo, String contrasenia) {
-        String sql = "SELECT * FROM Usuario WHERE correo = ? AND contrasenia = ?";
+        String sql = "SELECT * FROM usuario WHERE correo = ? AND contrasenia = ?";
         try (Connection con = Conexion.conectar();
              PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setString(1, correo);
@@ -26,7 +26,7 @@ public class UsuarioDAO {
     }
 
     public boolean insertar(Usuario u) {
-        String sql = "INSERT INTO Usuario (correo, contrasenia, rol, idEmpresaCliente) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO usuario (correo, contrasenia, rol, idEmpresaCliente) VALUES (?, ?, ?, ?)";
         try (Connection con = Conexion.conectar();
              PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setString(1, u.getCorreo());
@@ -45,7 +45,7 @@ public class UsuarioDAO {
     }
 
     public Usuario buscarPorId(int id) {
-        String sql = "SELECT * FROM Usuario WHERE idUsuario=?";
+        String sql = "SELECT * FROM usuario WHERE idUsuario=?";
         try (Connection con = Conexion.conectar();
              PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, id);
@@ -61,7 +61,7 @@ public class UsuarioDAO {
 
     public List<Usuario> listarTodos() {
         List<Usuario> lista = new ArrayList<>();
-        String sql = "SELECT * FROM Usuario";
+        String sql = "SELECT * FROM usuario";
         try (Connection con = Conexion.conectar();
              PreparedStatement ps = con.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
@@ -85,7 +85,7 @@ public class UsuarioDAO {
         return u;
     }
     public boolean actualizar(Usuario u) {
-        String sql = "UPDATE Usuario SET correo=?, rol=?, idEmpresaCliente=? WHERE idUsuario=?";
+        String sql = "UPDATE usuario SET correo=?, rol=?, idEmpresaCliente=? WHERE idUsuario=?";
         try (Connection con = Conexion.conectar();
             PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setString(1, u.getCorreo());
@@ -104,7 +104,7 @@ public class UsuarioDAO {
     }
 
     public boolean eliminar(int idUsuario) {
-        String sql = "DELETE FROM Usuario WHERE idUsuario=?";
+        String sql = "DELETE FROM usuario WHERE idUsuario=?";
         try (Connection con = Conexion.conectar();
             PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, idUsuario);

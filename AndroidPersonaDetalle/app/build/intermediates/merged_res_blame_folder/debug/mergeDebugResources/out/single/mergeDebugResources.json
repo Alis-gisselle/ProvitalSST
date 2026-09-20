@@ -1,18 +1,26 @@
 [
     {
-        "merged": "com.provital.sst.app-debug-31:/drawable_bg_icon.xml.flat",
-        "source": "com.provital.sst.app-main-33:/drawable/bg_icon.xml"
+        "merged": "com.provital.sst.app-debug-31:/layout_activity_web_modulo.xml.flat",
+        "source": "com.provital.sst.app-main-33:/layout/activity_web_modulo.xml"
     },
     {
-        "merged": "com.provital.sst.app-debug-31:/drawable_bg_card.xml.flat",
-        "source": "com.provital.sst.app-main-33:/drawable/bg_card.xml"
+        "merged": "C:\\Users\\Vivobook\\.gradle\\daemon\\9.3.0\\com.provital.sst.app-debug-31:\\drawable_bg_card.xml.flat",
+        "source": "C:\\Users\\Vivobook\\.gradle\\daemon\\9.3.0\\com.provital.sst.app-main-33:\\drawable\\bg_card.xml"
     },
     {
-        "merged": "com.provital.sst.app-debug-31:/drawable_bg_avatar.xml.flat",
-        "source": "com.provital.sst.app-main-33:/drawable/bg_avatar.xml"
+        "merged": "C:\\Users\\Vivobook\\.gradle\\daemon\\9.3.0\\com.provital.sst.app-debug-31:\\drawable_bg_avatar.xml.flat",
+        "source": "C:\\Users\\Vivobook\\.gradle\\daemon\\9.3.0\\com.provital.sst.app-main-33:\\drawable\\bg_avatar.xml"
     },
     {
-        "merged": "com.provital.sst.app-debug-31:/layout_activity_persona_detalle.xml.flat",
-        "source": "com.provital.sst.app-main-33:/layout/activity_persona_detalle.xml"
+        "merged": "C:\\Users\\Vivobook\\.gradle\\daemon\\9.3.0\\com.provital.sst.app-debug-31:\\drawable_bg_icon.xml.flat",
+        "source": "C:\\Users\\Vivobook\\.gradle\\daemon\\9.3.0\\com.provital.sst.app-main-33:\\drawable\\bg_icon.xml"
+    },
+    {
+        "merged": "C:\\Users\\Vivobook\\.gradle\\daemon\\9.3.0\\com.provital.sst.app-debug-31:\\layout_activity_login.xml.flat",
+        "source": "C:\\Users\\Vivobook\\.gradle\\daemon\\9.3.0\\com.provital.sst.app-main-33:\\layout\\activity_login.xml"
+    },
+    {
+        "merged": "C:\\Users\\Vivobook\\.gradle\\daemon\\9.3.0\\com.provital.sst.app-debug-31:\\layout_activity_persona_detalle.xml.flat",
+        "source": "C:\\Users\\Vivobook\\.gradle\\daemon\\9.3.0\\com.provital.sst.app-main-33:\\layout\\activity_persona_detalle.xml"
     }
 ]

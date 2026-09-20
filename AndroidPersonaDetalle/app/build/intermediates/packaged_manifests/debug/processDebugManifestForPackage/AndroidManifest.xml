@@ -8,6 +8,8 @@
         android:minSdkVersion="24"
         android:targetSdkVersion="35" />
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <permission
         android:name="com.provital.sst.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
         android:protectionLevel="signature" />
@@ -22,9 +24,16 @@
         android:label="PROVITAL SST"
         android:supportsRtl="true"
         android:testOnly="true"
-        android:theme="@style/Theme.ProvitalSST" >
+        android:theme="@style/Theme.ProvitalSST"
+        android:usesCleartextTraffic="true" >
         <activity
             android:name="com.provital.sst.PersonaDetalleActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.provital.sst.WebModuloActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.provital.sst.LoginActivity"
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

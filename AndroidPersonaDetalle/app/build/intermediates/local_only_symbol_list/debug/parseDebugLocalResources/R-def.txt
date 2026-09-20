@@ -12,9 +12,15 @@ drawable bg_icon
 id btnCertificado
 id btnEstudios
 id btnFicha
+id btnIngresar
 id btnVolver
 id cardFicha
+id contenedorLogin
+id etContrasena
+id etCorreo
 id filaEmpresa
+id tilContrasena
+id tilCorreo
 id tvCategoria
 id tvCi
 id tvEmpresa
@@ -22,6 +28,9 @@ id tvIniciales
 id tvNombre
 id tvTipo
 id tvTitulo
+id webModulo
+layout activity_login
 layout activity_persona_detalle
+layout activity_web_modulo
 string app_name
 style Theme.ProvitalSST

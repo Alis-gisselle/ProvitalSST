@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.button.MaterialButton;
 import com.provital.sst.model.Persona;
+import com.provital.sst.network.ApiConfig;
 
 /** Equivalente Android nativo de personaDetalle.jsp. */
 public class PersonaDetalleActivity extends AppCompatActivity {
@@ -59,15 +60,26 @@ public class PersonaDetalleActivity extends AppCompatActivity {
 
     private void configurarAcciones() {
         findViewById(R.id.btnVolver).setOnClickListener(v -> finish());
-        findViewById(R.id.btnFicha).setOnClickListener(v -> abrirModulo("Ficha médica"));
-        findViewById(R.id.btnEstudios).setOnClickListener(v -> abrirModulo("Estudios"));
-        findViewById(R.id.btnCertificado).setOnClickListener(v -> abrirModulo("Certificado"));
+        findViewById(R.id.btnFicha).setOnClickListener(v -> abrirModulo("ficha"));
+        findViewById(R.id.btnEstudios).setOnClickListener(v -> abrirModulo("estudio"));
+        findViewById(R.id.btnCertificado).setOnClickListener(v -> abrirModulo(
+                persona.esAdmisional() ? "certifMed" : "certifManipulador"));
     }
 
     private void abrirModulo(String modulo) {
-        // Sustituir por Intent a la Activity correspondiente cuando esos módulos se incorporen.
-        Toast.makeText(this, modulo + " de " + persona.getNombreCompleto()
-                + " (ID: " + persona.getIdPersona() + ")", Toast.LENGTH_SHORT).show();
+        String cookie = getSharedPreferences("sesion_provital", MODE_PRIVATE)
+                .getString("cookie", null);
+        if (cookie == null) {
+            Toast.makeText(this, "La sesión expiró. Inicie sesión nuevamente.", Toast.LENGTH_LONG).show();
+            startActivity(new Intent(this, LoginActivity.class));
+            finish();
+            return;
+        }
+        Intent intent = new Intent(this, WebModuloActivity.class);
+        intent.putExtra(WebModuloActivity.EXTRA_URL,
+                ApiConfig.BASE_URL + modulo + "?idPersona=" + persona.getIdPersona());
+        intent.putExtra(WebModuloActivity.EXTRA_COOKIE, cookie);
+        startActivity(intent);
     }
 
     private String obtenerIniciales() {
