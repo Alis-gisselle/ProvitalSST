@@ -18,7 +18,7 @@ import java.sql.SQLException;
 public class EPPDAO {
 
     public boolean insertar(EPP e) {
-        String sql = "INSERT INTO EPP (idFicha, tapaboca, proteccionAuditiva, casco, gafas, botas, guantes, delantal, otros) " +
+        String sql = "INSERT INTO epp (idFicha, tapaboca, proteccionAuditiva, casco, gafas, botas, guantes, delantal, otros) " +
                      "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (Connection con = Conexion.conectar();
              PreparedStatement ps = con.prepareStatement(sql)) {
@@ -38,7 +38,7 @@ public class EPPDAO {
         }
     }
     public EPP buscarPorId(int idFicha) {
-        String sql = "SELECT * FROM EPP WHERE idFicha = ?";
+        String sql = "SELECT * FROM epp WHERE idFicha = ?";
         try (Connection con = Conexion.conectar();
             PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, idFicha);
@@ -63,7 +63,7 @@ public class EPPDAO {
     }
 
     public boolean actualizar(EPP e) {
-        String sql = "UPDATE EPP SET tapaboca=?, proteccionAuditiva=?, casco=?, gafas=?, botas=?, guantes=?, delantal=?, otros=? WHERE idFicha=?";
+        String sql = "UPDATE epp SET tapaboca=?, proteccionAuditiva=?, casco=?, gafas=?, botas=?, guantes=?, delantal=?, otros=? WHERE idFicha=?";
         try (Connection con = Conexion.conectar();
             PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setBoolean(1, e.isTapaboca());

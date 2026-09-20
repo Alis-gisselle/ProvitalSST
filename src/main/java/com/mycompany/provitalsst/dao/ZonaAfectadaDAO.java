@@ -21,7 +21,7 @@ import java.util.List;
 public class ZonaAfectadaDAO {
 
     public boolean insertar(ZonaAfectada z) {
-        String sql = "INSERT INTO ZonaAfectada (idFicha, zona, intensidad) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO zonaafectada (idFicha, zona, intensidad) VALUES (?, ?, ?)";
         try (Connection con = Conexion.conectar();
              PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, z.getIdFicha());
@@ -36,7 +36,7 @@ public class ZonaAfectadaDAO {
 
     // Borra todas las zonas de esta ficha (para volver a insertarlas al editar)
     public void eliminarPorFicha(int idFicha) {
-        String sql = "DELETE FROM ZonaAfectada WHERE idFicha = ?";
+        String sql = "DELETE FROM zonaafectada WHERE idFicha = ?";
         try (Connection con = Conexion.conectar();
              PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, idFicha);
@@ -48,7 +48,7 @@ public class ZonaAfectadaDAO {
 
     public List<ZonaAfectada> listarPorFicha(int idFicha) {
         List<ZonaAfectada> lista = new ArrayList<>();
-        String sql = "SELECT * FROM ZonaAfectada WHERE idFicha = ?";
+        String sql = "SELECT * FROM zonaafectada WHERE idFicha = ?";
         try (Connection con = Conexion.conectar();
              PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, idFicha);

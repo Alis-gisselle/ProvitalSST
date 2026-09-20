@@ -55,7 +55,7 @@ public class PersonaDAO {
 
     // Nombre de la empresa, solo si es empleado
     public String obtenerNombreEmpresa(int idPersona) {
-        String sql = "SELECT ec.Nombre FROM empleado e JOIN EmpresaCliente ec ON e.idEmpresaCliente = ec.idEmpresaCliente WHERE e.idPersona = ?";
+        String sql = "SELECT ec.Nombre FROM empleado e JOIN empresacliente ec ON e.idEmpresaCliente = ec.idEmpresaCliente WHERE e.idPersona = ?";
         try (Connection con = Conexion.conectar();
              PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, idPersona);
@@ -124,9 +124,9 @@ public class PersonaDAO {
    public List<Persona> buscarPacientesGlobal(String criterio) { 
     List<Persona> lista = new ArrayList<>(); 
     String sql = "SELECT p.idPersona, p.nombre, p.apellido, p.ci, p.categoria, ec.Nombre AS nombreEmpresa " + 
-                 "FROM Persona p " + 
-                 "LEFT JOIN Empleado e ON p.idPersona = e.idPersona " + 
-                 "LEFT JOIN EmpresaCliente ec ON e.idEmpresaCliente = ec.idEmpresaCliente " + 
+                 "FROM persona p " +
+                 "LEFT JOIN empleado e ON p.idPersona = e.idPersona " +
+                 "LEFT JOIN empresacliente ec ON e.idEmpresaCliente = ec.idEmpresaCliente " +
                  "WHERE p.nombre LIKE ? OR p.apellido LIKE ? OR CAST(p.ci AS CHAR) LIKE ? " + 
                  "ORDER BY p.apellido ASC"; 
 

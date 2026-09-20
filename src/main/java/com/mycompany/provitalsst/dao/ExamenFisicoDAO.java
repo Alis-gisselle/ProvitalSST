@@ -20,7 +20,7 @@ import java.sql.Types;
 public class ExamenFisicoDAO {
 
     public boolean insertar(ExamenFisico e) {
-        String sql = "INSERT INTO ExamenFisico (idFicha, peso, estatura, presionArterial, frecuenciaCardiaca, agudezaVisualDerecho, agudezaVisualIzquierdo) " +
+        String sql = "INSERT INTO examenfisico (idFicha, peso, estatura, presionArterial, frecuenciaCardiaca, agudezaVisualDerecho, agudezaVisualIzquierdo) " +
                      "VALUES (?, ?, ?, ?, ?, ?, ?)";
         try (Connection con = Conexion.conectar();
              PreparedStatement ps = con.prepareStatement(sql)) {
@@ -39,7 +39,7 @@ public class ExamenFisicoDAO {
     }
 
     public boolean actualizar(ExamenFisico e) {
-        String sql = "UPDATE ExamenFisico SET peso=?, estatura=?, presionArterial=?, frecuenciaCardiaca=?, agudezaVisualDerecho=?, agudezaVisualIzquierdo=? WHERE idFicha=?";
+        String sql = "UPDATE examenfisico SET peso=?, estatura=?, presionArterial=?, frecuenciaCardiaca=?, agudezaVisualDerecho=?, agudezaVisualIzquierdo=? WHERE idFicha=?";
         try (Connection con = Conexion.conectar();
              PreparedStatement ps = con.prepareStatement(sql)) {
             setDecimalONull(ps, 1, e.getPeso());
@@ -57,7 +57,7 @@ public class ExamenFisicoDAO {
     }
 
     public ExamenFisico buscarPorId(int idFicha) {
-        String sql = "SELECT * FROM ExamenFisico WHERE idFicha = ?";
+        String sql = "SELECT * FROM examenfisico WHERE idFicha = ?";
         try (Connection con = Conexion.conectar();
              PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, idFicha);

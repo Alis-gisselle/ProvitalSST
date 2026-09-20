@@ -20,7 +20,7 @@ import java.sql.Types;
 public class FirmaFichaDAO {
 
     public boolean insertar(FirmaFicha f) {
-        String sql = "INSERT INTO FirmaFicha (idFicha, ciTrabajador, fechaFirmaTrabajador, ciTecnico, fechaFirmaTecnico) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO firmaficha (idFicha, ciTrabajador, fechaFirmaTrabajador, ciTecnico, fechaFirmaTecnico) VALUES (?, ?, ?, ?, ?)";
         try (Connection con = Conexion.conectar();
              PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, f.getIdFicha());
@@ -36,7 +36,7 @@ public class FirmaFichaDAO {
     }
 
     public boolean actualizar(FirmaFicha f) {
-        String sql = "UPDATE FirmaFicha SET ciTrabajador=?, fechaFirmaTrabajador=?, ciTecnico=?, fechaFirmaTecnico=? WHERE idFicha=?";
+        String sql = "UPDATE firmaficha SET ciTrabajador=?, fechaFirmaTrabajador=?, ciTecnico=?, fechaFirmaTecnico=? WHERE idFicha=?";
         try (Connection con = Conexion.conectar();
              PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setString(1, f.getCiTrabajador());
@@ -52,7 +52,7 @@ public class FirmaFichaDAO {
     }
 
     public FirmaFicha buscarPorId(int idFicha) {
-        String sql = "SELECT * FROM FirmaFicha WHERE idFicha = ?";
+        String sql = "SELECT * FROM firmaficha WHERE idFicha = ?";
         try (Connection con = Conexion.conectar();
              PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, idFicha);

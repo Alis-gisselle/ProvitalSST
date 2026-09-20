@@ -20,7 +20,7 @@ import java.util.List;
 public class RiesgoLaboralDAO {
 
     public boolean insertar(RiesgoLaboral r) {
-        String sql = "INSERT INTO RiesgoLaboral (idFicha, factor, expuesto, tiempoExposicion) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO riesgolaboral (idFicha, factor, expuesto, tiempoExposicion) VALUES (?, ?, ?, ?)";
         try (Connection con = Conexion.conectar();
              PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, r.getIdFicha());
@@ -34,7 +34,7 @@ public class RiesgoLaboralDAO {
         }
     }
     public void eliminarPorFicha(int idFicha) {
-        String sql = "DELETE FROM RiesgoLaboral WHERE idFicha = ?";
+        String sql = "DELETE FROM riesgolaboral WHERE idFicha = ?";
         try (Connection con = Conexion.conectar();
             PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, idFicha);
@@ -46,7 +46,7 @@ public class RiesgoLaboralDAO {
 
     public List<RiesgoLaboral> listarPorFicha(int idFicha) {
         List<RiesgoLaboral> lista = new ArrayList<>();
-        String sql = "SELECT * FROM RiesgoLaboral WHERE idFicha = ?";
+        String sql = "SELECT * FROM riesgolaboral WHERE idFicha = ?";
         try (Connection con = Conexion.conectar();
             PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, idFicha);

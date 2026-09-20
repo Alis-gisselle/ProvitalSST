@@ -18,8 +18,8 @@ import java.util.List;
 public class EmpleadoDAO {
 
     public boolean insertar(Empleado e) {
-        String sqlPersona = "INSERT INTO Persona (nombre, apellido, ci, fechaNacimiento, categoria) VALUES (?, ?, ?, ?, ?)";
-        String sqlEmpleado = "INSERT INTO Empleado (idPersona, idEmpresaCliente, cargo) VALUES (?, ?, ?)";
+        String sqlPersona = "INSERT INTO persona (nombre, apellido, ci, fechaNacimiento, categoria) VALUES (?, ?, ?, ?, ?)";
+        String sqlEmpleado = "INSERT INTO empleado (idPersona, idEmpresaCliente, cargo) VALUES (?, ?, ?)";
 
         try (Connection con = Conexion.conectar()) {
             con.setAutoCommit(false);
@@ -56,8 +56,8 @@ public class EmpleadoDAO {
     }
 
     public boolean actualizar(Empleado e) {
-        String sqlPersona = "UPDATE Persona SET nombre=?, apellido=?, ci=?, fechaNacimiento=?, categoria=? WHERE idPersona=?";
-        String sqlEmpleado = "UPDATE Empleado SET idEmpresaCliente=?, cargo=? WHERE idPersona=?";
+        String sqlPersona = "UPDATE persona SET nombre=?, apellido=?, ci=?, fechaNacimiento=?, categoria=? WHERE idPersona=?";
+        String sqlEmpleado = "UPDATE empleado SET idEmpresaCliente=?, cargo=? WHERE idPersona=?";
 
         try (Connection con = Conexion.conectar()) {
             con.setAutoCommit(false);
@@ -90,8 +90,8 @@ public class EmpleadoDAO {
 
     public boolean eliminar(int idPersona) {
         // Elimina primero Empleado (por la FK), luego Persona
-        String sqlEmpleado = "DELETE FROM Empleado WHERE idPersona=?";
-        String sqlPersona = "DELETE FROM Persona WHERE idPersona=?";
+        String sqlEmpleado = "DELETE FROM empleado WHERE idPersona=?";
+        String sqlPersona = "DELETE FROM persona WHERE idPersona=?";
 
         try (Connection con = Conexion.conectar()) {
             con.setAutoCommit(false);
@@ -116,7 +116,7 @@ public class EmpleadoDAO {
 
     public Empleado buscarPorId(int idPersona) {
         String sql = "SELECT p.*, e.idEmpresaCliente, e.cargo " +
-                     "FROM Persona p JOIN Empleado e ON p.idPersona = e.idPersona " +
+                     "FROM persona p JOIN empleado e ON p.idPersona = e.idPersona " +
                      "WHERE p.idPersona = ?";
         try (Connection con = Conexion.conectar();
              PreparedStatement ps = con.prepareStatement(sql)) {
@@ -134,7 +134,7 @@ public class EmpleadoDAO {
     public List<Empleado> listarPorEmpresa(int idEmpresaCliente) {
         List<Empleado> lista = new ArrayList<>();
         String sql = "SELECT p.*, e.idEmpresaCliente, e.cargo " +
-                     "FROM Persona p JOIN Empleado e ON p.idPersona = e.idPersona " +
+                     "FROM persona p JOIN empleado e ON p.idPersona = e.idPersona " +
                      "WHERE e.idEmpresaCliente = ?";
         try (Connection con = Conexion.conectar();
              PreparedStatement ps = con.prepareStatement(sql)) {
@@ -152,7 +152,7 @@ public class EmpleadoDAO {
     public List<Empleado> buscarPorNombreOCI(int idEmpresaCliente, String texto) {
         List<Empleado> lista = new ArrayList<>();
         String sql = "SELECT p.*, e.idEmpresaCliente, e.cargo " +
-                     "FROM Persona p JOIN Empleado e ON p.idPersona = e.idPersona " +
+                     "FROM persona p JOIN empleado e ON p.idPersona = e.idPersona " +
                      "WHERE e.idEmpresaCliente = ? AND (p.nombre LIKE ? OR p.apellido LIKE ? OR p.ci LIKE ?)";
         try (Connection con = Conexion.conectar();
              PreparedStatement ps = con.prepareStatement(sql)) {
@@ -183,7 +183,7 @@ public class EmpleadoDAO {
         return e;
     }
     public String obtenerCargo(int idPersona) {
-        String sql = "SELECT cargo FROM Empleado WHERE idPersona = ?";
+        String sql = "SELECT cargo FROM empleado WHERE idPersona = ?";
         try (Connection con = Conexion.conectar();
             PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, idPersona);

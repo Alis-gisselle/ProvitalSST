@@ -16,7 +16,7 @@ import java.sql.*;
 public class PuestoErgonomiaDAO {
 
     public boolean insertar(PuestoErgonomia p) {
-        String sql = "INSERT INTO PuestoErgonomia (idFicha, descripcionGeneral, tareasPrincipales, tipoActividad, esfuerzoFisico, levantaCargas, pesoAprox) " +
+        String sql = "INSERT INTO puestoergonomia (idFicha, descripcionGeneral, tareasPrincipales, tipoActividad, esfuerzoFisico, levantaCargas, pesoAprox) " +
                      "VALUES (?, ?, ?, ?, ?, ?, ?)";
         try (Connection con = Conexion.conectar();
              PreparedStatement ps = con.prepareStatement(sql)) {
@@ -34,7 +34,7 @@ public class PuestoErgonomiaDAO {
         }
     }
     public boolean actualizar(PuestoErgonomia p) {
-        String sql = "UPDATE PuestoErgonomia SET descripcionGeneral=?, tareasPrincipales=?, tipoActividad=?, esfuerzoFisico=?, levantaCargas=?, pesoAprox=? WHERE idFicha=?";
+        String sql = "UPDATE puestoergonomia SET descripcionGeneral=?, tareasPrincipales=?, tipoActividad=?, esfuerzoFisico=?, levantaCargas=?, pesoAprox=? WHERE idFicha=?";
         try (Connection con = Conexion.conectar();
             PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setString(1, p.getDescripcionGeneral());
@@ -55,7 +55,7 @@ public class PuestoErgonomiaDAO {
     }
 
     public PuestoErgonomia buscarPorId(int idFicha) {
-        String sql = "SELECT * FROM PuestoErgonomia WHERE idFicha = ?";
+        String sql = "SELECT * FROM puestoergonomia WHERE idFicha = ?";
         try (Connection con = Conexion.conectar();
             PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, idFicha);
