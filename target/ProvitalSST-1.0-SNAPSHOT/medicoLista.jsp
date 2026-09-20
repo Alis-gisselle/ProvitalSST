@@ -6,6 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<% request.setAttribute("paginaActiva", "configuracion"); %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -39,64 +40,70 @@
     </style>
 </head>
 <body>
-    <div class="container mt-4">
-        <nav class="breadcrumb-custom small mb-3">
-            <a href="dashboard">Dashboard</a> <i class="bi bi-chevron-right small mx-1"></i>
-            <a href="configuracion">Configuración</a> <i class="bi bi-chevron-right small mx-1"></i>
-            <span class="text-muted">Médicos Laborales</span>
-        </nav>
+    <div class="layout-admin">
+        <jsp:include page="sidebar.jsp" />
+        <div class="contenido-admin">
+            <jsp:include page="topbar.jsp" />
+                <div class="container mt-4">
+                    <nav class="breadcrumb-custom small mb-3">
+                        <a href="dashboard">Dashboard</a> <i class="bi bi-chevron-right small mx-1"></i>
+                        <a href="configuracion">Configuración</a> <i class="bi bi-chevron-right small mx-1"></i>
+                        <span class="text-muted">Médicos Laborales</span>
+                    </nav>
 
-        <div class="d-flex gap-3 mb-4">
-            <div class="icono-circulo"><i class="bi bi-person-badge"></i></div>
-            <div>
-                <h2 class="fw-bold mb-0">Médicos Laborales</h2>
-                <p class="text-muted mb-0">Gestiona los médicos laborales del sistema.</p>
-            </div>
-        </div>
+                    <div class="d-flex gap-3 mb-4">
+                        <div class="icono-circulo"><i class="bi bi-person-badge"></i></div>
+                        <div>
+                            <h2 class="fw-bold mb-0">Médicos Laborales</h2>
+                            <p class="text-muted mb-0">Gestiona los médicos laborales del sistema.</p>
+                        </div>
+                    </div>
 
-        <div class="d-flex gap-2 mb-4">
-            <a href="configuracion" class="btn btn-outline-secondary"><i class="bi bi-arrow-left"></i> Volver a Configuración</a>
-            <a href="medico?accion=nuevo" class="btn btn-provital">
-                <i class="bi bi-plus-lg"></i> Nuevo Médico
-            </a>
-        </div>
+                    <div class="d-flex gap-2 mb-4">
+                        <a href="configuracion" class="btn btn-outline-secondary"><i class="bi bi-arrow-left"></i> Volver a Configuración</a>
+                        <a href="medico?accion=nuevo" class="btn btn-provital">
+                            <i class="bi bi-plus-lg"></i> Nuevo Médico
+                        </a>
+                    </div>
 
-        <div class="card border-0 shadow-sm">
-            <table class="table table-hover mb-0">
-                <thead>
-                    <tr>
-                        <th></th>
-                        <th>Nombre</th>
-                        <th>Apellido</th>
-                        <th>Especialidad</th>
-                        <th>Matrícula</th>
-                        <th>Correo</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <c:forEach var="med" items="${listaMedicos}">
-                        <tr>
-                            <td>
-                                <div class="avatar-iniciales">${med.nombre.substring(0,1)}${med.apellido.substring(0,1)}</div>
-                            </td>
-                            <td>${med.nombre}</td>
-                            <td>${med.apellido}</td>
-                            <td>${med.especialidad}</td>
-                            <td>${med.matricula}</td>
-                            <td>${med.correo}</td>
-                            <td>
-                                <a href="medico?accion=editar&id=${med.idMedicoLaboral}" class="btn btn-sm btn-outline-warning"><i class="bi bi-pencil"></i> Editar</a>
-                                <a href="medico?accion=eliminar&id=${med.idMedicoLaboral}"
-                                   class="btn btn-sm btn-outline-danger"
-                                   onclick="return confirm('¿Seguro que deseas eliminar este médico?');">
-                                    <i class="bi bi-trash"></i> Eliminar
-                                </a>
-                            </td>
-                        </tr>
-                    </c:forEach>
-                </tbody>
-            </table>
+                    <div class="card border-0 shadow-sm">
+                        <table class="table table-hover mb-0">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>Nombre</th>
+                                    <th>Apellido</th>
+                                    <th>Especialidad</th>
+                                    <th>Matrícula</th>
+                                    <th>Correo</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <c:forEach var="med" items="${listaMedicos}">
+                                    <tr>
+                                        <td>
+                                            <div class="avatar-iniciales">${med.nombre.substring(0,1)}${med.apellido.substring(0,1)}</div>
+                                        </td>
+                                        <td>${med.nombre}</td>
+                                        <td>${med.apellido}</td>
+                                        <td>${med.especialidad}</td>
+                                        <td>${med.matricula}</td>
+                                        <td>${med.correo}</td>
+                                        <td>
+                                            <a href="medico?accion=editar&id=${med.idMedicoLaboral}" class="btn btn-sm btn-outline-warning"><i class="bi bi-pencil"></i> Editar</a>
+                                            <a href="medico?accion=eliminar&id=${med.idMedicoLaboral}"
+                                               class="btn btn-sm btn-outline-danger"
+                                               onclick="return confirm('¿Seguro que deseas eliminar este médico?');">
+                                                <i class="bi bi-trash"></i> Eliminar
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
         </div>
     </div>
 </body>

@@ -38,8 +38,10 @@ public class FichaDatosPersonalesServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8"); // agrega esta línea, antes de leer cualquier parámetro
 
         int idFicha = Integer.parseInt(request.getParameter("idFicha"));
+        
 
         DatosPersonalesFicha d = new DatosPersonalesFicha();
         d.setIdFicha(idFicha);

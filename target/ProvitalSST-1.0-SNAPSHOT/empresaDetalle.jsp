@@ -6,6 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<% request.setAttribute("paginaActiva", "empresas"); %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -41,110 +42,115 @@
     </style>
 </head>
 <body>
-    <div class="container mt-4">
-        <nav class="breadcrumb-custom small mb-3">
-            <a href="empresa">Empresas</a> <i class="bi bi-chevron-right small mx-1"></i>
-            <span>${empresa.nombre}</span> <i class="bi bi-chevron-right small mx-1"></i>
-            <span class="text-muted">Empleados</span>
-        </nav>
+     <div class="layout-admin">
+        <jsp:include page="sidebar.jsp" />
+        <div class="contenido-admin">
+            <jsp:include page="topbar.jsp" />
+                <div class="container mt-4">
+                    <nav class="breadcrumb-custom small mb-3">
+                        <a href="empresa">Empresas</a> <i class="bi bi-chevron-right small mx-1"></i>
+                        <span>${empresa.nombre}</span> <i class="bi bi-chevron-right small mx-1"></i>
+                        <span class="text-muted">Empleados</span>
+                    </nav>
 
-        <div class="d-flex gap-3 mb-4">
-            <div class="icono-circulo"><i class="bi bi-briefcase"></i></div>
-            <div>
-                <div class="text-muted">Empleados de</div>
-                <h2 class="fw-bold mb-0">${empresa.nombre}</h2>
-                <p class="text-muted mb-0">Gestiona la información de los empleados de esta empresa.</p>
-            </div>
-        </div>
-
-        <div class="d-flex gap-2 mb-4">
-            <a href="empresa" class="btn btn-outline-secondary"><i class="bi bi-arrow-left"></i> Volver a Empresas</a>
-            <a href="empleado?accion=nuevo&idEmpresa=${empresa.idEmpresaCliente}" class="btn btn-provital">
-                <i class="bi bi-plus-lg"></i> Nuevo Empleado
-            </a>
-        </div>
-
-        <div class="card border-0 shadow-sm mb-4">
-            <div class="card-body">
-                <form action="empresa" method="get" class="row g-2 align-items-center">
-                    <input type="hidden" name="accion" value="empleados" />
-                    <input type="hidden" name="id" value="${empresa.idEmpresaCliente}" />
-                    <div class="col">
-                        <input type="text" name="buscar" class="form-control" placeholder="Buscar por nombre o CI..." value="${buscar}" />
+                    <div class="d-flex gap-3 mb-4">
+                        <div class="icono-circulo"><i class="bi bi-briefcase"></i></div>
+                        <div>
+                            <div class="text-muted">Empleados de</div>
+                            <h2 class="fw-bold mb-0">${empresa.nombre}</h2>
+                            <p class="text-muted mb-0">Gestiona la información de los empleados de esta empresa.</p>
+                        </div>
                     </div>
-                  
-                    <div class="col-auto">
-                        <button type="submit" class="btn btn-provital">Buscar</button>
+
+                    <div class="d-flex gap-2 mb-4">
+                        <a href="empresa" class="btn btn-outline-secondary"><i class="bi bi-arrow-left"></i> Volver a Empresas</a>
+                        <a href="empleado?accion=nuevo&idEmpresa=${empresa.idEmpresaCliente}" class="btn btn-provital">
+                            <i class="bi bi-plus-lg"></i> Nuevo Empleado
+                        </a>
                     </div>
-                    <div class="col-auto">
-                        <select id="filtroCategoria" class="form-select" onchange="renderizarTabla()">
-                            <option value="">Filtrar por categoría</option>
-                            <option value="admisional">Admisional</option>
-                            <option value="manipulador">Manipulador</option>
-                        </select>
+
+                    <div class="card border-0 shadow-sm mb-4">
+                        <div class="card-body">
+                            <form action="empresa" method="get" class="row g-2 align-items-center">
+                                <input type="hidden" name="accion" value="empleados" />
+                                <input type="hidden" name="id" value="${empresa.idEmpresaCliente}" />
+                                <div class="col">
+                                    <input type="text" name="buscar" class="form-control" placeholder="Buscar por nombre o CI..." value="${buscar}" />
+                                </div>
+
+                                <div class="col-auto">
+                                    <button type="submit" class="btn btn-provital">Buscar</button>
+                                </div>
+                                <div class="col-auto">
+                                    <select id="filtroCategoria" class="form-select" onchange="renderizarTabla()">
+                                        <option value="">Filtrar por categoría</option>
+                                        <option value="admisional">Admisional</option>
+                                        <option value="manipulador">Manipulador</option>
+                                    </select>
+                                </div>
+                            </form>
+                        </div>
                     </div>
-                </form>
-            </div>
-        </div>
 
-        <div class="card border-0 shadow-sm">
-            <table class="table table-hover mb-0" id="tablaEmpleados">
-                <thead>
-                    <tr>
-                        <th></th>
-                        <th>Nombre</th>
-                        <th>Apellido</th>
-                        <th>CI</th>
-                        <th>Cargo</th>
-                        <th>Categoría</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <c:forEach var="emp" items="${listaEmpleados}">
-                        <tr data-categoria="${emp.categoria}">
-                            <td>
-                                <div class="avatar-iniciales">${emp.nombre.substring(0,1)}${emp.apellido.substring(0,1)}</div>
-                            </td>
-                            <td>${emp.nombre}</td>
-                            <td>${emp.apellido}</td>
-                            <td>${emp.ci}</td>
-                            <td>${emp.cargo}</td>
-                            <td>
-                                <span class="badge rounded-pill ${emp.categoria == 'manipulador' ? 'badge-manipulador' : 'badge-admisional'}">
-                                    ${emp.categoria == 'manipulador' ? 'Manipulador' : 'Admisional'}
-                                </span>
-                            </td>
-                            <td>
-                                <a href="persona?id=${emp.idPersona}" class="btn btn-sm btn-outline-primary"><i class="bi bi-eye"></i> Ver Detalle</a>
-                                <a href="empleado?accion=editar&id=${emp.idPersona}" class="btn btn-sm btn-outline-warning"><i class="bi bi-pencil"></i> Editar</a>
-                                <a href="empleado?accion=eliminar&id=${emp.idPersona}&idEmpresa=${empresa.idEmpresaCliente}"
-                                   class="btn btn-sm btn-outline-danger"
-                                   onclick="return confirm('¿Seguro que deseas eliminar este empleado?');">
-                                    <i class="bi bi-trash"></i> Eliminar
-                                </a>
-                            </td>
-                        </tr>
-                    </c:forEach>
-                </tbody>
-            </table>
-        </div>
+                    <div class="card border-0 shadow-sm">
+                        <table class="table table-hover mb-0" id="tablaEmpleados">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>Nombre</th>
+                                    <th>Apellido</th>
+                                    <th>CI</th>
+                                    <th>Cargo</th>
+                                    <th>Categoría</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <c:forEach var="emp" items="${listaEmpleados}">
+                                    <tr data-categoria="${emp.categoria}">
+                                        <td>
+                                            <div class="avatar-iniciales">${emp.nombre.substring(0,1)}${emp.apellido.substring(0,1)}</div>
+                                        </td>
+                                        <td>${emp.nombre}</td>
+                                        <td>${emp.apellido}</td>
+                                        <td>${emp.ci}</td>
+                                        <td>${emp.cargo}</td>
+                                        <td>
+                                            <span class="badge rounded-pill ${emp.categoria == 'manipulador' ? 'badge-manipulador' : 'badge-admisional'}">
+                                                ${emp.categoria == 'manipulador' ? 'Manipulador' : 'Admisional'}
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <a href="persona?id=${emp.idPersona}" class="btn btn-sm btn-outline-primary"><i class="bi bi-eye"></i> Ver Detalle</a>
+                                            <a href="empleado?accion=editar&id=${emp.idPersona}" class="btn btn-sm btn-outline-warning"><i class="bi bi-pencil"></i> Editar</a>
+                                            <a href="empleado?accion=eliminar&id=${emp.idPersona}&idEmpresa=${empresa.idEmpresaCliente}"
+                                               class="btn btn-sm btn-outline-danger"
+                                               onclick="return confirm('¿Seguro que deseas eliminar este empleado?');">
+                                                <i class="bi bi-trash"></i> Eliminar
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
+                            </tbody>
+                        </table>
+                    </div>
 
-        <div class="d-flex justify-content-between align-items-center mt-3 pb-4">
-            <span id="infoPaginacion" class="text-muted small"></span>
-            <div class="d-flex align-items-center gap-2">
-                <button class="btn btn-sm btn-outline-secondary" onclick="cambiarPagina(-1)">←</button>
-                <span id="numeroPagina" class="fw-bold"></span>
-                <button class="btn btn-sm btn-outline-secondary" onclick="cambiarPagina(1)">→</button>
-                <select id="filasPorPagina" class="form-select form-select-sm" style="width: auto;" onchange="paginaActual = 1; renderizarTabla();">
-                    <option value="10">10 por página</option>
-                    <option value="25">25 por página</option>
-                    <option value="50">50 por página</option>
-                </select>
-            </div>
+                    <div class="d-flex justify-content-between align-items-center mt-3 pb-4">
+                        <span id="infoPaginacion" class="text-muted small"></span>
+                        <div class="d-flex align-items-center gap-2">
+                            <button class="btn btn-sm btn-outline-secondary" onclick="cambiarPagina(-1)">←</button>
+                            <span id="numeroPagina" class="fw-bold"></span>
+                            <button class="btn btn-sm btn-outline-secondary" onclick="cambiarPagina(1)">→</button>
+                            <select id="filasPorPagina" class="form-select form-select-sm" style="width: auto;" onchange="paginaActual = 1; renderizarTabla();">
+                                <option value="10">10 por página</option>
+                                <option value="25">25 por página</option>
+                                <option value="50">50 por página</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
         </div>
-    </div>
-
+     </div>
     <script>
         let paginaActual = 1;
 

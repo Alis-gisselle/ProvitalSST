@@ -6,6 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<% request.setAttribute("paginaActiva", "configuracion"); %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -42,75 +43,81 @@
     </style>
 </head>
 <body>
-    <div class="container mt-4" style="max-width: 700px;">
-        <a href="usuario" class="btn btn-outline-secondary btn-sm mb-3">← Volver</a>
+    <div class="layout-admin">
+        <jsp:include page="sidebar.jsp" />
+        <div class="contenido-admin">
+            <jsp:include page="topbar.jsp" />
+                <div class="container mt-4" style="max-width: 700px;">
+                    <a href="usuario" class="btn btn-outline-secondary btn-sm mb-3">← Volver</a>
 
-        <div class="card border-0 shadow-sm">
-            <div class="card-body p-4">
-                <form action="usuario" method="post" id="formUsuario" novalidate>
-                    <c:if test="${usuario != null}">
-                        <input type="hidden" name="idUsuario" value="${usuario.idUsuario}" />
-                    </c:if>
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-body p-4">
+                            <form action="usuario" method="post" id="formUsuario" novalidate>
+                                <c:if test="${usuario != null}">
+                                    <input type="hidden" name="idUsuario" value="${usuario.idUsuario}" />
+                                </c:if>
 
-                    <div class="row">
-                        <div class="col-md-3 text-center mb-4">
-                            <div class="icono-circulo mx-auto">
-                                <i class="bi bi-shield-lock"></i>
-                                <div class="badge-plus"><i class="bi bi-plus"></i></div>
-                            </div>
-                            <h5 class="fw-bold mt-3 mb-1">${usuario != null ? "Editar" : "Nuevo"} Usuario</h5>
-                        </div>
+                                <div class="row">
+                                    <div class="col-md-3 text-center mb-4">
+                                        <div class="icono-circulo mx-auto">
+                                            <i class="bi bi-shield-lock"></i>
+                                            <div class="badge-plus"><i class="bi bi-plus"></i></div>
+                                        </div>
+                                        <h5 class="fw-bold mt-3 mb-1">${usuario != null ? "Editar" : "Nuevo"} Usuario</h5>
+                                    </div>
 
-                        <div class="col-md-9">
-                            <div class="mb-3">
-                                <label class="form-label fw-semibold"><i class="bi bi-envelope"></i> Correo <span>*</span></label>
-                                <input type="email" name="correo" class="form-control" placeholder="correo@ejemplo.com" value="${usuario.correo}" required />
-                                <div class="invalid-feedback">Ingrese un correo válido.</div>
-                            </div>
+                                    <div class="col-md-9">
+                                        <div class="mb-3">
+                                            <label class="form-label fw-semibold"><i class="bi bi-envelope"></i> Correo <span>*</span></label>
+                                            <input type="email" name="correo" class="form-control" placeholder="correo@ejemplo.com" value="${usuario.correo}" required />
+                                            <div class="invalid-feedback">Ingrese un correo válido.</div>
+                                        </div>
 
-                            <c:if test="${usuario == null}">
-                                <div class="mb-3">
-                                    <label class="form-label fw-semibold"><i class="bi bi-key"></i> Contraseña <span>*</span></label>
-                                    <input type="password" name="contrasenia" class="form-control" placeholder="Mínimo 6 caracteres" required minlength="6" />
-                                    <div class="invalid-feedback">La contraseña debe tener al menos 6 caracteres.</div>
+                                        <c:if test="${usuario == null}">
+                                            <div class="mb-3">
+                                                <label class="form-label fw-semibold"><i class="bi bi-key"></i> Contraseña <span>*</span></label>
+                                                <input type="password" name="contrasenia" class="form-control" placeholder="Mínimo 6 caracteres" required minlength="6" />
+                                                <div class="invalid-feedback">La contraseña debe tener al menos 6 caracteres.</div>
+                                            </div>
+                                        </c:if>
+
+                                        <div class="mb-3">
+                                            <label class="form-label fw-semibold"><i class="bi bi-person-badge"></i> Rol <span>*</span></label>
+                                            <select name="rol" id="rol" class="form-select" required onchange="mostrarEmpresa()">
+                                                <option value="" ${empty usuario ? 'selected' : ''} disabled>-- Seleccione --</option>
+                                                <option value="admin" ${usuario.rol == 'admin' ? 'selected' : ''}>Admin</option>
+                                                <option value="rrhh" ${usuario.rol == 'rrhh' ? 'selected' : ''}>RRHH</option>
+                                                <option value="medico" ${usuario.rol == 'medico' ? 'selected' : ''}>Médico</option>
+                                            </select>
+                                            <div class="invalid-feedback">Seleccione un rol.</div>
+                                        </div>
+
+                                        <div class="mb-3" id="divEmpresa" style="${usuario != null && usuario.rol == 'rrhh' ? 'display:block;' : 'display:none;'}">
+                                            <label class="form-label fw-semibold"><i class="bi bi-building"></i> Empresa (solo para RRHH)</label>
+                                            <select name="idEmpresaCliente" class="form-select">
+                                                <option value="">-- Seleccione --</option>
+                                                <c:forEach var="e" items="${listaEmpresas}">
+                                                    <option value="${e.idEmpresaCliente}" ${usuario != null && usuario.idEmpresaCliente == e.idEmpresaCliente ? 'selected' : ''}>${e.nombre}</option>
+                                                </c:forEach>
+                                            </select>
+                                        </div>
+                                    </div>
                                 </div>
-                            </c:if>
 
-                            <div class="mb-3">
-                                <label class="form-label fw-semibold"><i class="bi bi-person-badge"></i> Rol <span>*</span></label>
-                                <select name="rol" id="rol" class="form-select" required onchange="mostrarEmpresa()">
-                                    <option value="" ${empty usuario ? 'selected' : ''} disabled>-- Seleccione --</option>
-                                    <option value="admin" ${usuario.rol == 'admin' ? 'selected' : ''}>Admin</option>
-                                    <option value="rrhh" ${usuario.rol == 'rrhh' ? 'selected' : ''}>RRHH</option>
-                                    <option value="medico" ${usuario.rol == 'medico' ? 'selected' : ''}>Médico</option>
-                                </select>
-                                <div class="invalid-feedback">Seleccione un rol.</div>
-                            </div>
+                                <hr class="my-4">
 
-                            <div class="mb-3" id="divEmpresa" style="${usuario != null && usuario.rol == 'rrhh' ? 'display:block;' : 'display:none;'}">
-                                <label class="form-label fw-semibold"><i class="bi bi-building"></i> Empresa (solo para RRHH)</label>
-                                <select name="idEmpresaCliente" class="form-select">
-                                    <option value="">-- Seleccione --</option>
-                                    <c:forEach var="e" items="${listaEmpresas}">
-                                        <option value="${e.idEmpresaCliente}" ${usuario != null && usuario.idEmpresaCliente == e.idEmpresaCliente ? 'selected' : ''}>${e.nombre}</option>
-                                    </c:forEach>
-                                </select>
-                            </div>
+                                <div class="d-flex justify-content-end gap-2">
+                                    <a href="usuario" class="btn btn-outline-secondary">
+                                        <i class="bi bi-x-lg"></i> Cancelar
+                                    </a>
+                                    <button type="submit" class="btn btn-guardar">
+                                        <i class="bi bi-save"></i> Guardar Usuario
+                                    </button>
+                                </div>
+                            </form>
                         </div>
                     </div>
-
-                    <hr class="my-4">
-
-                    <div class="d-flex justify-content-end gap-2">
-                        <a href="usuario" class="btn btn-outline-secondary">
-                            <i class="bi bi-x-lg"></i> Cancelar
-                        </a>
-                        <button type="submit" class="btn btn-guardar">
-                            <i class="bi bi-save"></i> Guardar Usuario
-                        </button>
-                    </div>
-                </form>
-            </div>
+                </div>
         </div>
     </div>
 

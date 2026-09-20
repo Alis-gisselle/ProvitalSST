@@ -11,78 +11,136 @@
 <head>
     <title>Certificado Manipulador - ${persona.nombre} ${persona.apellido}</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="icon" type="image/png" href="imagenes/logo-entero.png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        :root {
+            --verde-principal: #075B42;
+            --verde-claro: #E8F5EF;
+            --verde-boton: #087F4F;
+            --fondo: #F8FAFC;
+            --texto: #172B3A;
+        }
+        body { background-color: var(--fondo); color: var(--texto); margin: 0; }
+        .topbar-simple {
+            background: var(--verde-principal); color: white;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 14px 28px;
+        }
+        .topbar-simple .marca { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 18px; }
+        .topbar-simple .usuario { display: flex; align-items: center; gap: 8px; opacity: 0.9; }
+        .icono-circulo {
+            width: 40px; height: 40px; border-radius: 50%;
+            background-color: var(--verde-claro); color: var(--verde-principal);
+            display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0;
+        }
+        .btn-volver { border-color: var(--verde-principal); color: var(--verde-principal); }
+        .btn-volver:hover { background-color: var(--verde-claro); color: var(--verde-principal); }
+        .btn-provital { background-color: var(--verde-boton); border-color: var(--verde-boton); color: white; }
+        .btn-provital:hover { background-color: #066a41; border-color: #066a41; color: white; }
+        table thead { background-color: var(--verde-principal); color: white; }
+        .badge-apto { background-color: var(--verde-claro); color: var(--verde-principal); }
+        .badge-no-apto { background-color: #fde2e4; color: #dc3545; }
+        .badge-recomendacion { background-color: #fff3cd; color: #d9a400; }
+        label { font-weight: 600; }
+    </style>
 </head>
 <body>
-    <div class="container mt-4">
-        <a href="persona?id=${persona.idPersona}" class="btn btn-secondary btn-sm mb-3">← Volver</a>
-        <h2>Certificado Manipulador de Alimentos - ${persona.nombre} ${persona.apellido}</h2>
+    <div class="topbar-simple">
+        <div class="marca"><i class="bi bi-shield-fill-check"></i> PROVITAL SST</div>
+        <div class="usuario"><i class="bi bi-person-circle"></i> ${sessionScope.usuarioLogueado.correo}</div>
+    </div>
 
-        <div class="card mb-4">
-            <div class="card-body">
-                <c:if test="${!soloLectura}">
-                <h5>Nuevo Certificado</h5>
-                <form action="certifManipulador" method="post">
-                    <input type="hidden" name="idPersona" value="${persona.idPersona}" />
+    <div class="container mt-4 mb-4">
+        <a href="persona?id=${persona.idPersona}" class="btn btn-outline-secondary btn-volver btn-sm mb-3">
+            <i class="bi bi-arrow-left"></i> Volver
+        </a>
 
-                    <div class="mb-3">
-                        <label class="form-label">Médico Laboral</label>
-                        <select name="idMedicoLaboral" class="form-select" required>
-                            <option value="">-- Seleccione --</option>
-                            <c:forEach var="m" items="${listaMedicos}">
-                                <option value="${m.idMedicoLaboral}">${m.nombre} ${m.apellido}</option>
-                            </c:forEach>
-                        </select>
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="form-label">Aptitud</label>
-                        <select name="aptitud" class="form-select" required>
-                            <option value="apto">APTO</option>
-                            <option value="no_apto">NO APTO</option>
-                            <option value="apto_con_recomendacion">Apto con Recomendación</option>
-                        </select>
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="form-label">Recomendaciones</label>
-                        <textarea name="recomendaciones" class="form-control"></textarea>
-                    </div>
-
-                    <button type="submit" class="btn btn-primary">Guardar Certificado</button>
-                </form>
-                </c:if>
-            </div>
+        <div class="d-flex align-items-center gap-2 mb-4">
+            <div class="icono-circulo"><i class="bi bi-shield-check"></i></div>
+            <h3 class="fw-bold mb-0">Certificado Manipulador de Alimentos - ${persona.nombre} ${persona.apellido}</h3>
         </div>
 
-        <h5>Historial</h5>
-        <table class="table table-striped table-bordered">
-            <thead class="table-dark">
-                <tr>
-                    <th>Emisión</th>
-                    <th>Vencimiento</th>
-                    <th>Aptitud</th>
-                    <th>Médico</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                <c:forEach var="cert" items="${listaCertificados}">
+        <c:if test="${!soloLectura}">
+            <div class="card border-0 shadow-sm mb-4">
+                <div class="card-body p-4">
+                    <h6 class="fw-bold mb-3"><i class="bi bi-file-earmark-plus"></i> Nuevo Certificado</h6>
+                    <form action="certifManipulador" method="post">
+                        <input type="hidden" name="idPersona" value="${persona.idPersona}" />
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Médico Laboral</label>
+                                <select name="idMedicoLaboral" class="form-select" required>
+                                    <option value="">-- Seleccione --</option>
+                                    <c:forEach var="m" items="${listaMedicos}">
+                                        <option value="${m.idMedicoLaboral}">${m.nombre} ${m.apellido}</option>
+                                    </c:forEach>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Aptitud</label>
+                                <select name="aptitud" class="form-select" required>
+                                    <option value="" selected disabled>Seleccione</option>
+                                    <option value="apto">APTO</option>
+                                    <option value="no_apto">NO APTO</option>
+                                    <option value="apto_con_recomendacion">Apto con Recomendación</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Recomendaciones</label>
+                            <textarea name="recomendaciones" class="form-control" rows="3" placeholder="Ingrese las recomendaciones..."></textarea>
+                        </div>
+
+                        <button type="submit" class="btn btn-provital">
+                            <i class="bi bi-save"></i> Guardar Certificado
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </c:if>
+
+        <h6 class="fw-bold mb-3"><i class="bi bi-clock-history"></i> Historial</h6>
+        <div class="card border-0 shadow-sm">
+            <table class="table table-hover mb-0">
+                <thead>
                     <tr>
-                        <td>${cert.fechaEmision}</td>
-                        <td>${cert.fechaVenc}</td>
-                        <td>${cert.aptitud}</td>
-                        <td>${cert.nombreMedico}</td>
-                        <td>
-                            <a href="certifManipulador?accion=descargar&id=${cert.idCertifManipulador}" target="_blank" class="btn btn-sm btn-success">Descargar PDF</a>
-                            <c:if test="${!soloLectura}">
-                                <a href="certifManipulador?accion=eliminar&id=${cert.idCertifManipulador}&idPersona=${persona.idPersona}" class="btn btn-sm btn-danger" onclick="return confirm('¿Seguro que deseas eliminar este certificado?');">Eliminar</a>
-                            </c:if>
-                        </td>
+                        <th><i class="bi bi-calendar3"></i> Emisión</th>
+                        <th><i class="bi bi-calendar-x"></i> Vencimiento</th>
+                        <th><i class="bi bi-patch-check"></i> Aptitud</th>
+                        <th><i class="bi bi-person-badge"></i> Médico</th>
+                        <th><i class="bi bi-lightning-fill"></i> Acciones</th>
                     </tr>
-                </c:forEach>
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    <c:forEach var="cert" items="${listaCertificados}">
+                        <tr>
+                            <td>${cert.fechaEmision}</td>
+                            <td>${cert.fechaVenc}</td>
+                            <td>
+                                <span class="badge rounded-pill ${cert.aptitud == 'apto' ? 'badge-apto' : cert.aptitud == 'no_apto' ? 'badge-no-apto' : 'badge-recomendacion'}">
+                                    ${cert.aptitud}
+                                </span>
+                            </td>
+                            <td>${cert.nombreMedico}</td>
+                            <td>
+                                <a href="certifManipulador?accion=descargar&id=${cert.idCertifManipulador}" target="_blank" class="btn btn-sm btn-provital">
+                                    <i class="bi bi-file-earmark-arrow-down"></i> Descargar PDF
+                                </a>
+                                <c:if test="${!soloLectura}">
+                                    <a href="certifManipulador?accion=eliminar&id=${cert.idCertifManipulador}&idPersona=${persona.idPersona}"
+                                       class="btn btn-sm btn-danger"
+                                       onclick="return confirm('¿Seguro que deseas eliminar este certificado?');">
+                                        <i class="bi bi-trash"></i> Eliminar
+                                    </a>
+                                </c:if>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                </tbody>
+            </table>
+        </div>
     </div>
 </body>
 </html>

@@ -6,6 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<% request.setAttribute("paginaActiva", "colaboradores"); %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -56,111 +57,101 @@
     </style>
 </head>
 <body>
-    <nav class="navbar navbar-dark navbar-provital">
-        <div class="container-fluid px-4">
-            <span class="navbar-brand"><i class="bi bi-shield-fill-check"></i> PROVITAL SST</span>
-            <div class="d-flex align-items-center gap-3 text-white">
-                <i class="bi bi-bell"></i>
-                <div class="text-end small">
-                    <div class="fw-semibold">${nombreRolMostrar}</div>
-                    <div>${correoUsuario}</div>
-                </div>
-                <a href="logout" class="btn btn-outline-provital">
-                    <i class="bi bi-box-arrow-right"></i> Cerrar Sesión
-                </a>
-            </div>
-        </div>
-    </nav>
-
-    <div class="container mt-4">
-        <c:if test="${rolUsuario != 'colaborador'}">
-            <a href="dashboard" class="btn btn-outline-secondary btn-sm mb-3">← Volver al Dashboard</a>
-        </c:if>
-
-        <div class="card border-0 shadow-sm p-4 mb-4">
-            <div class="d-flex gap-4 align-items-center flex-wrap">
-                <div class="avatar-grande">
-                    ${persona.nombre.substring(0,1)}${persona.apellido.substring(0,1)}
-                    <div class="badge-tipo">
-                        <i class="bi ${tipo == 'empleado' ? 'bi-person-badge' : 'bi-person-workspace'}"></i>
-                    </div>
-                </div>
-
-                <div class="flex-grow-1">
-                    <h2 class="fw-bold mb-3">${persona.nombre} ${persona.apellido}</h2>
-
-                    <div class="info-row">
-                        <i class="bi bi-person-vcard"></i>
-                        <span class="label">CI</span>
-                        <span>${persona.ci}</span>
-                    </div>
-                    <div class="info-row">
-                        <i class="bi bi-person"></i>
-                        <span class="label">Tipo</span>
-                        <span>${tipo == 'empleado' ? 'Empleado' : 'Colaborador'}</span>
-                    </div>
-                    <c:if test="${nombreEmpresa != null}">
-                        <div class="info-row">
-                            <i class="bi bi-building"></i>
-                            <span class="label">Empresa</span>
-                            <span>${nombreEmpresa}</span>
-                        </div>
+    <div class="layout-admin">
+        <jsp:include page="sidebar.jsp" />
+        <div class="contenido-admin">
+            <jsp:include page="topbar.jsp" />
+                <div class="container mt-4">
+                    <c:if test="${rolUsuario != 'colaborador'}">
+                        <a href="dashboard" class="btn btn-outline-secondary btn-sm mb-3">← Volver al Dashboard</a>
                     </c:if>
-                    <div class="info-row">
-                        <i class="bi bi-tag"></i>
-                        <span class="label">Categoría</span>
-                        <span>${persona.categoria == 'admisional' ? 'Admisional' : 'Manipulador de Alimentos'}</span>
+
+                    <div class="card border-0 shadow-sm p-4 mb-4">
+                        <div class="d-flex gap-4 align-items-center flex-wrap">
+                            <div class="avatar-grande">
+                                ${persona.nombre.substring(0,1)}${persona.apellido.substring(0,1)}
+                                <div class="badge-tipo">
+                                    <i class="bi ${tipo == 'empleado' ? 'bi-person-badge' : 'bi-person-workspace'}"></i>
+                                </div>
+                            </div>
+
+                            <div class="flex-grow-1">
+                                <h2 class="fw-bold mb-3">${persona.nombre} ${persona.apellido}</h2>
+
+                                <div class="info-row">
+                                    <i class="bi bi-person-vcard"></i>
+                                    <span class="label">CI</span>
+                                    <span>${persona.ci}</span>
+                                </div>
+                                <div class="info-row">
+                                    <i class="bi bi-person"></i>
+                                    <span class="label">Tipo</span>
+                                    <span>${tipo == 'empleado' ? 'Empleado' : 'Colaborador'}</span>
+                                </div>
+                                <c:if test="${nombreEmpresa != null}">
+                                    <div class="info-row">
+                                        <i class="bi bi-building"></i>
+                                        <span class="label">Empresa</span>
+                                        <span>${nombreEmpresa}</span>
+                                    </div>
+                                </c:if>
+                                <div class="info-row">
+                                    <i class="bi bi-tag"></i>
+                                    <span class="label">Categoría</span>
+                                    <span>${persona.categoria == 'admisional' ? 'Admisional' : 'Manipulador de Alimentos'}</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
-        </div>
 
-        <div class="row g-4">
-            <c:if test="${persona.categoria == 'admisional'}">
-                <div class="col-md-4">
-                    <div class="accion-card shadow-sm">
-                        <div class="accion-icono mb-3"><i class="bi bi-clipboard2-pulse"></i></div>
-                        <h6 class="fw-bold">Ficha Médica</h6>
-                        <p class="text-muted small">Consulta, crea y descarga la ficha médica ocupacional.</p>
-                        <a href="ficha?idPersona=${persona.idPersona}" class="btn btn-accion">
-                            Ver / Crear Ficha <i class="bi bi-chevron-right"></i>
-                        </a>
+                    <div class="row g-4">
+                        <c:if test="${persona.categoria == 'admisional'}">
+                            <div class="col-md-4">
+                                <div class="accion-card shadow-sm">
+                                    <div class="accion-icono mb-3"><i class="bi bi-clipboard2-pulse"></i></div>
+                                    <h6 class="fw-bold">Ficha Médica</h6>
+                                    <p class="text-muted small">Consulta, crea y descarga la ficha médica ocupacional.</p>
+                                    <a href="ficha?idPersona=${persona.idPersona}" class="btn btn-accion">
+                                        ${rolUsuario == 'colaborador' || rolUsuario == 'rrhh' ? 'Ver Ficha' : 'Ver / Crear Ficha'} <i class="bi bi-chevron-right"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </c:if>
+
+                        <div class="col-md-4">
+                            <div class="accion-card shadow-sm">
+                                <div class="accion-icono mb-3"><i class="bi bi-file-earmark-medical"></i></div>
+                                <h6 class="fw-bold">Estudios</h6>
+                                <p class="text-muted small">Consulta, gestiona y sube los estudios médicos.</p>
+                                <a href="estudio?idPersona=${persona.idPersona}" class="btn btn-accion">
+                                    ${rolUsuario == 'colaborador' || rolUsuario == 'rrhh' ? 'Ver Estudios' : 'Ver / Subir Estudios'} <i class="bi bi-chevron-right"></i>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="accion-card shadow-sm">
+                                <div class="accion-icono mb-3"><i class="bi bi-patch-check"></i></div>
+                                <h6 class="fw-bold">Certificado</h6>
+                                <p class="text-muted small">Crea o visualiza los certificados médicos.</p>
+                                <c:choose>
+                                    <c:when test="${persona.categoria == 'admisional'}">
+                                        <a href="certifMed?idPersona=${persona.idPersona}" class="btn btn-accion">
+                                            ${rolUsuario == 'colaborador' || rolUsuario == 'rrhh' ? 'Ver Certificado' : 'Ver / Crear Certificado'} <i class="bi bi-chevron-right"></i>
+                                        </a>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <a href="certifManipulador?idPersona=${persona.idPersona}" class="btn btn-accion">
+                                            ${rolUsuario == 'colaborador' || rolUsuario == 'rrhh' ? 'Ver Certificado' : 'Ver / Crear Certificado'} <i class="bi bi-chevron-right"></i>
+                                        </a>
+                                    </c:otherwise>
+                                </c:choose>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </c:if>
-
-            <div class="col-md-4">
-                <div class="accion-card shadow-sm">
-                    <div class="accion-icono mb-3"><i class="bi bi-file-earmark-medical"></i></div>
-                    <h6 class="fw-bold">Estudios</h6>
-                    <p class="text-muted small">Consulta, gestiona y sube los estudios médicos.</p>
-                    <a href="estudio?idPersona=${persona.idPersona}" class="btn btn-accion">
-                        Ver / Crear Estudios <i class="bi bi-chevron-right"></i>
-                    </a>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="accion-card shadow-sm">
-                    <div class="accion-icono mb-3"><i class="bi bi-patch-check"></i></div>
-                    <h6 class="fw-bold">Certificado</h6>
-                    <p class="text-muted small">Crea o visualiza los certificados médicos.</p>
-                    <c:choose>
-                        <c:when test="${persona.categoria == 'admisional'}">
-                            <a href="certifMed?idPersona=${persona.idPersona}" class="btn btn-accion">
-                                Ver / Crear Certificado <i class="bi bi-chevron-right"></i>
-                            </a>
-                        </c:when>
-                        <c:otherwise>
-                            <a href="certifManipulador?idPersona=${persona.idPersona}" class="btn btn-accion">
-                                Ver / Crear Certificado <i class="bi bi-chevron-right"></i>
-                            </a>
-                        </c:otherwise>
-                    </c:choose>
-                </div>
-            </div>
+                </div>  
         </div>
-    </div>  
+    </div>
         <script>
         if ('serviceWorker' in navigator) {
           window.addEventListener('load', () => {
