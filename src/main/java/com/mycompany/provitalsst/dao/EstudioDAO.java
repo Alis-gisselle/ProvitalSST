@@ -18,7 +18,7 @@ import java.util.List;
 public class EstudioDAO {
 
     public boolean insertar(Estudio e) {
-        String sql = "INSERT INTO Estudio (fecha, archivoPdf, idPersona, idMedicoLaboral) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO estudio (fecha, archivoPdf, idPersona, idMedicoLaboral) VALUES (?, ?, ?, ?)";
         try (Connection con = Conexion.conectar();
              PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setDate(1, Date.valueOf(e.getFecha()));
@@ -35,7 +35,7 @@ public class EstudioDAO {
     public List<Estudio> listarPorPersona(int idPersona) {
         List<Estudio> lista = new ArrayList<>();
         String sql = "SELECT e.*, m.nombre AS nombreMedico, m.apellido AS apellidoMedico " +
-                     "FROM Estudio e JOIN MedicoLaboral m ON e.idMedicoLaboral = m.idMedicoLaboral " +
+                     "FROM estudio e JOIN medicolaboral m ON e.idMedicoLaboral = m.idMedicoLaboral " +
                      "WHERE e.idPersona = ? ORDER BY e.fecha DESC";
         try (Connection con = Conexion.conectar();
              PreparedStatement ps = con.prepareStatement(sql)) {
@@ -57,7 +57,7 @@ public class EstudioDAO {
         return lista;
     }
     public Estudio buscarPorId(int idEstudio) {
-        String sql = "SELECT * FROM Estudio WHERE idEstudio = ?";
+        String sql = "SELECT * FROM estudio WHERE idEstudio = ?";
         try (Connection con = Conexion.conectar();
             PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, idEstudio);
@@ -78,7 +78,7 @@ public class EstudioDAO {
     }
 
     public boolean eliminar(int idEstudio) {
-        String sql = "DELETE FROM Estudio WHERE idEstudio = ?";
+        String sql = "DELETE FROM estudio WHERE idEstudio = ?";
         try (Connection con = Conexion.conectar();
             PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, idEstudio);

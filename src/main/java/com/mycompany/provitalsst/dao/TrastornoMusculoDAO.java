@@ -15,7 +15,7 @@ import java.sql.*;
 public class TrastornoMusculoDAO {
 
     public boolean insertar(TrastornoMusculo t) {
-        String sql = "INSERT INTO TrastornoMusculo (idFicha, posturasForzadas, movimientosRepetitivos, ritmoElevado, " +
+        String sql = "INSERT INTO trastornomusculo (idFicha, posturasForzadas, movimientosRepetitivos, ritmoElevado, " +
                      "reposoInsuficiente, posturaPredominante, tiempoSintoma, recibioTratamiento, realizaRestricciones, observaciones) " +
                      "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (Connection con = Conexion.conectar();
@@ -38,7 +38,7 @@ public class TrastornoMusculoDAO {
     }
 
     public boolean actualizar(TrastornoMusculo t) {
-        String sql = "UPDATE TrastornoMusculo SET posturasForzadas=?, movimientosRepetitivos=?, ritmoElevado=?, " +
+        String sql = "UPDATE trastornomusculo SET posturasForzadas=?, movimientosRepetitivos=?, ritmoElevado=?, " +
                      "reposoInsuficiente=?, posturaPredominante=?, tiempoSintoma=?, recibioTratamiento=?, realizaRestricciones=?, observaciones=? " +
                      "WHERE idFicha=?";
         try (Connection con = Conexion.conectar();
@@ -61,7 +61,7 @@ public class TrastornoMusculoDAO {
     }
 
     public TrastornoMusculo buscarPorId(int idFicha) {
-        String sql = "SELECT * FROM TrastornoMusculo WHERE idFicha = ?";
+        String sql = "SELECT * FROM trastornomusculo WHERE idFicha = ?";
         try (Connection con = Conexion.conectar();
              PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, idFicha);

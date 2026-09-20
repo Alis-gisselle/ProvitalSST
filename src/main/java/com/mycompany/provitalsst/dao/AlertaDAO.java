@@ -33,8 +33,8 @@ public class AlertaDAO {
 
     private int contarPorCondicion(String condicion) {
         String sql = "SELECT " +
-            "(SELECT COUNT(*) FROM Certif_Med WHERE " + condicion + ") + " +
-            "(SELECT COUNT(*) FROM CertifManipulador WHERE " + condicion + ") AS total";
+            "(SELECT COUNT(*) FROM certif_med WHERE " + condicion + ") + " +
+            "(SELECT COUNT(*) FROM certifmanipulador WHERE " + condicion + ") AS total";
         try (Connection con = Conexion.conectar();
              PreparedStatement ps = con.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
@@ -46,13 +46,13 @@ public class AlertaDAO {
     }
 
     public int contarSinFicha() {
-        String sql = "SELECT COUNT(*) FROM Persona p " +
-                     "WHERE p.categoria = 'admisional' AND p.idPersona NOT IN (SELECT idPersona FROM Ficha)";
+        String sql = "SELECT COUNT(*) FROM persona p " +
+                     "WHERE p.categoria = 'admisional' AND p.idPersona NOT IN (SELECT idPersona FROM ficha)";
         return contarSimple(sql);
     }
 
     public int contarEstudiosPendientes() {
-        String sql = "SELECT COUNT(*) FROM Persona p WHERE p.idPersona NOT IN (SELECT idPersona FROM Estudio)";
+        String sql = "SELECT COUNT(*) FROM persona p WHERE p.idPersona NOT IN (SELECT idPersona FROM estudio)";
         return contarSimple(sql);
     }
 
@@ -79,10 +79,10 @@ public class AlertaDAO {
         List<Alerta> lista = new ArrayList<>();
         String sql =
             "SELECT c.f_venc, p.nombre, p.apellido, 'Certificado Médico' AS tipoAlerta " +
-            "FROM Certif_Med c JOIN Persona p ON c.idPersona = p.idPersona WHERE c." + condicion + " " +
+            "FROM certif_med c JOIN persona p ON c.idPersona = p.idPersona WHERE c." + condicion + " " +
             "UNION ALL " +
             "SELECT c.f_venc, p.nombre, p.apellido, 'Certificado Manipulador' AS tipoAlerta " +
-            "FROM CertifManipulador c JOIN Persona p ON c.idPersona = p.idPersona WHERE c." + condicion + " " +
+            "FROM certifmanipulador c JOIN persona p ON c.idPersona = p.idPersona WHERE c." + condicion + " " +
             "ORDER BY f_venc ASC";
 
         try (Connection con = Conexion.conectar();
@@ -103,18 +103,18 @@ public class AlertaDAO {
     }
 
     public List<Persona> listarSinFicha() {
-        String sql = "SELECT p.*, ec.Nombre AS nombreEmpresa FROM Persona p " +
-                     "LEFT JOIN Empleado e ON p.idPersona=e.idPersona " +
-                     "LEFT JOIN EmpresaCliente ec ON e.idEmpresaCliente=ec.idEmpresaCliente " +
-                     "WHERE p.categoria = 'admisional' AND p.idPersona NOT IN (SELECT idPersona FROM Ficha)";
+        String sql = "SELECT p.*, ec.Nombre AS nombreEmpresa FROM persona p " +
+                     "LEFT JOIN empleado e ON p.idPersona=e.idPersona " +
+                     "LEFT JOIN empresacliente ec ON e.idEmpresaCliente=ec.idEmpresaCliente " +
+                     "WHERE p.categoria = 'admisional' AND p.idPersona NOT IN (SELECT idPersona FROM ficha)";
         return listarPersonas(sql);
     }
 
     public List<Persona> listarEstudiosPendientes() {
-        String sql = "SELECT p.*, ec.Nombre AS nombreEmpresa FROM Persona p " + //gloria fijate que si vas a usar estos tipos de consulta siempre tenes que dejar un espacio antes que se cierre la doble comilla
-                     "LEFT JOIN Empleado e ON p.idPersona=e.idPersona " + 
-                     "LEFT JOIN EmpresaCliente ec ON e.idEmpresaCliente=ec.idEmpresaCliente " + 
-                     "WHERE p.idPersona NOT IN (SELECT idPersona FROM Estudio)";
+        String sql = "SELECT p.*, ec.Nombre AS nombreEmpresa FROM persona p " + //gloria fijate que si vas a usar estos tipos de consulta siempre tenes que dejar un espacio antes que se cierre la doble comilla
+                     "LEFT JOIN empleado e ON p.idPersona=e.idPersona " +
+                     "LEFT JOIN empresacliente ec ON e.idEmpresaCliente=ec.idEmpresaCliente " +
+                     "WHERE p.idPersona NOT IN (SELECT idPersona FROM estudio)";
         return listarPersonas(sql);
     }
 
@@ -150,8 +150,8 @@ public class AlertaDAO {
 
     private int contarPorCondicionYEmpresa(String condicion, int idEmpresa) {
         String sql = "SELECT " +
-            "(SELECT COUNT(*) FROM Certif_Med c JOIN Empleado e ON c.idPersona = e.idPersona WHERE e.idEmpresaCliente = ? AND c." + condicion + ") + " +
-            "(SELECT COUNT(*) FROM CertifManipulador c JOIN Empleado e ON c.idPersona = e.idPersona WHERE e.idEmpresaCliente = ? AND c." + condicion + ") AS total";
+            "(SELECT COUNT(*) FROM certif_med c JOIN empleado e ON c.idPersona = e.idPersona WHERE e.idEmpresaCliente = ? AND c." + condicion + ") + " +
+            "(SELECT COUNT(*) FROM certifmanipulador c JOIN empleado e ON c.idPersona = e.idPersona WHERE e.idEmpresaCliente = ? AND c." + condicion + ") AS total";
         try (Connection con = Conexion.conectar();
              PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, idEmpresa);
@@ -178,15 +178,15 @@ public class AlertaDAO {
         List<Alerta> lista = new ArrayList<>();
         String sql =
             "SELECT c.f_venc, p.nombre, p.apellido, 'Certificado Médico' AS tipoAlerta " +
-            "FROM Certif_Med c " +
-            "JOIN Persona p ON c.idPersona = p.idPersona " +
-            "JOIN Empleado e ON p.idPersona = e.idPersona " +
+            "FROM certif_med c " +
+            "JOIN persona p ON c.idPersona = p.idPersona " +
+            "JOIN empleado e ON p.idPersona = e.idPersona " +
             "WHERE e.idEmpresaCliente = ? AND c." + condicion + " " +
             "UNION ALL " +
             "SELECT c.f_venc, p.nombre, p.apellido, 'Certificado Manipulador' AS tipoAlerta " +
-            "FROM CertifManipulador c " +
-            "JOIN Persona p ON c.idPersona = p.idPersona " +
-            "JOIN Empleado e ON p.idPersona = e.idPersona " +
+            "FROM certifmanipulador c " +
+            "JOIN persona p ON c.idPersona = p.idPersona " +
+            "JOIN empleado e ON p.idPersona = e.idPersona " +
             "WHERE e.idEmpresaCliente = ? AND c." + condicion + " " +
             "ORDER BY f_venc ASC";
 
@@ -211,19 +211,19 @@ public class AlertaDAO {
     }
     // Contar personas sin ficha técnica filtrando por empresa
     public int contarSinFichaPorEmpresa(int idEmpresa) {
-        String sql = "SELECT COUNT(*) FROM Persona p " +
-                     "JOIN Empleado e ON p.idPersona = e.idPersona " +
+        String sql = "SELECT COUNT(*) FROM persona p " +
+                     "JOIN empleado e ON p.idPersona = e.idPersona " +
                      "WHERE e.idEmpresaCliente = ? AND p.categoria = 'admisional' " +
-                     "AND p.idPersona NOT IN (SELECT idPersona FROM Ficha)";
+                     "AND p.idPersona NOT IN (SELECT idPersona FROM ficha)";
         return contarSimplePorEmpresa(sql, idEmpresa);
     }
 
     // Contar personas con estudios/informes pendientes filtrando por empresa
     public int contarEstudiosPendientesPorEmpresa(int idEmpresa) {
-        String sql = "SELECT COUNT(*) FROM Persona p " +
-                     "JOIN Empleado e ON p.idPersona = e.idPersona " +
+        String sql = "SELECT COUNT(*) FROM persona p " +
+                     "JOIN empleado e ON p.idPersona = e.idPersona " +
                      "WHERE e.idEmpresaCliente = ? " +
-                     "AND p.idPersona NOT IN (SELECT idPersona FROM Estudio)";
+                     "AND p.idPersona NOT IN (SELECT idPersona FROM estudio)";
         return contarSimplePorEmpresa(sql, idEmpresa);
     }
 
@@ -242,21 +242,21 @@ public class AlertaDAO {
     }
     // Listar personas sin ficha técnica por empresa
     public List<Persona> listarSinFichaPorEmpresa(int idEmpresa) {
-        String sql = "SELECT p.*, ec.Nombre AS nombreEmpresa FROM Persona p " +
-                     "JOIN Empleado e ON p.idPersona = e.idPersona " +
-                     "LEFT JOIN EmpresaCliente ec ON e.idEmpresaCliente = ec.idEmpresaCliente " +
+        String sql = "SELECT p.*, ec.Nombre AS nombreEmpresa FROM persona p " +
+                     "JOIN empleado e ON p.idPersona = e.idPersona " +
+                     "LEFT JOIN empresacliente ec ON e.idEmpresaCliente = ec.idEmpresaCliente " +
                      "WHERE e.idEmpresaCliente = ? AND p.categoria = 'admisional' " +
-                     "AND p.idPersona NOT IN (SELECT idPersona FROM Ficha)";
+                     "AND p.idPersona NOT IN (SELECT idPersona FROM ficha)";
         return listarPersonasPorEmpresa(sql, idEmpresa);
     }
 
     // Listar personas con estudios pendientes por empresa
     public List<Persona> listarEstudiosPendientesPorEmpresa(int idEmpresa) {
-        String sql = "SELECT p.*, ec.Nombre AS nombreEmpresa FROM Persona p " +
-                     "JOIN Empleado e ON p.idPersona = e.idPersona " +
-                     "LEFT JOIN EmpresaCliente ec ON e.idEmpresaCliente = ec.idEmpresaCliente " +
+        String sql = "SELECT p.*, ec.Nombre AS nombreEmpresa FROM persona p " +
+                     "JOIN empleado e ON p.idPersona = e.idPersona " +
+                     "LEFT JOIN empresacliente ec ON e.idEmpresaCliente = ec.idEmpresaCliente " +
                      "WHERE e.idEmpresaCliente = ? " +
-                     "AND p.idPersona NOT IN (SELECT idPersona FROM Estudio)";
+                     "AND p.idPersona NOT IN (SELECT idPersona FROM estudio)";
         return listarPersonasPorEmpresa(sql, idEmpresa);
     }
 

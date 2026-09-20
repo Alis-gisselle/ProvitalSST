@@ -18,7 +18,7 @@ import java.sql.SQLException;
 public class AntecedentePersonalDAO {
 
     public boolean insertar(AntecedentePersonal a) {
-        String sql = "INSERT INTO AntecedentePersonal (idFicha, enfermedades, cirugias, medicamentos, alergias, otrosRelevantes, observaciones) " +
+        String sql = "INSERT INTO antecedentepersonal (idFicha, enfermedades, cirugias, medicamentos, alergias, otrosRelevantes, observaciones) " +
                      "VALUES (?, ?, ?, ?, ?, ?, ?)";
         try (Connection con = Conexion.conectar();
              PreparedStatement ps = con.prepareStatement(sql)) {
@@ -36,7 +36,7 @@ public class AntecedentePersonalDAO {
         }
     }
     public boolean actualizar(AntecedentePersonal a) {
-        String sql = "UPDATE AntecedentePersonal SET enfermedades=?, cirugias=?, medicamentos=?, alergias=?, otrosRelevantes=?, observaciones=? WHERE idFicha=?";
+        String sql = "UPDATE antecedentepersonal SET enfermedades=?, cirugias=?, medicamentos=?, alergias=?, otrosRelevantes=?, observaciones=? WHERE idFicha=?";
         try (Connection con = Conexion.conectar();
             PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setBoolean(1, a.isEnfermedades());
@@ -54,7 +54,7 @@ public class AntecedentePersonalDAO {
     }
 
     public AntecedentePersonal buscarPorId(int idFicha) {
-        String sql = "SELECT * FROM AntecedentePersonal WHERE idFicha = ?";
+        String sql = "SELECT * FROM antecedentepersonal WHERE idFicha = ?";
         try (Connection con = Conexion.conectar();
             PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, idFicha);

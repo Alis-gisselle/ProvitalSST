@@ -20,7 +20,7 @@ import java.util.List;
 public class EmpresaClienteDAO {
 
     public boolean insertar(EmpresaCliente e) {
-        String sql = "INSERT INTO EmpresaCliente (ruc, Nombre, Direccion) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO empresacliente (ruc, Nombre, Direccion) VALUES (?, ?, ?)";
         try (Connection con = Conexion.conectar();
             PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, e.getRuc());
@@ -34,7 +34,7 @@ public class EmpresaClienteDAO {
     }
 
     public boolean actualizar(EmpresaCliente e) {
-        String sql = "UPDATE EmpresaCliente SET ruc=?, Nombre=?, Direccion=? WHERE idEmpresaCliente=?";
+        String sql = "UPDATE empresacliente SET ruc=?, Nombre=?, Direccion=? WHERE idEmpresaCliente=?";
         try (Connection con = Conexion.conectar();
              PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, e.getRuc());
@@ -49,7 +49,7 @@ public class EmpresaClienteDAO {
     }
 
     public boolean eliminar(int id) {
-        String sql = "DELETE FROM EmpresaCliente WHERE idEmpresaCliente=?";
+        String sql = "DELETE FROM empresacliente WHERE idEmpresaCliente=?";
         try (Connection con = Conexion.conectar();
              PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, id);
@@ -61,7 +61,7 @@ public class EmpresaClienteDAO {
     }
 
     public EmpresaCliente buscarPorId(int id) {
-        String sql = "SELECT * FROM EmpresaCliente WHERE idEmpresaCliente=?";
+        String sql = "SELECT * FROM empresacliente WHERE idEmpresaCliente=?";
         try (Connection con = Conexion.conectar();
              PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, id);
@@ -82,7 +82,7 @@ public class EmpresaClienteDAO {
 
     public List<EmpresaCliente> listarTodos() {
         List<EmpresaCliente> lista = new ArrayList<>();
-        String sql = "SELECT * FROM EmpresaCliente";
+        String sql = "SELECT * FROM empresacliente";
         try (Connection con = Conexion.conectar();
              PreparedStatement ps = con.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {

@@ -15,7 +15,7 @@ import java.sql.*;
 public class DatosPersonalesFichaDAO {
 
     public boolean insertar(DatosPersonalesFicha d) {
-        String sql = "INSERT INTO DatosPersonalesFicha (idFicha, sexo, estadoCivil, fum, area, antiguedadCargo, " +
+        String sql = "INSERT INTO datospersonalesficha (idFicha, sexo, estadoCivil, fum, area, antiguedadCargo, " +
                      "gradoFormacion, telefono, domicilio, contactoEmergencia, telefonoEmergencia, numHijos, edadesHijos) " +
                      "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (Connection con = Conexion.conectar();
@@ -40,7 +40,7 @@ public class DatosPersonalesFichaDAO {
         }
     }
     public boolean actualizar(DatosPersonalesFicha d) {
-        String sql = "UPDATE DatosPersonalesFicha SET sexo=?, estadoCivil=?, fum=?, area=?, antiguedadCargo=?, " +
+        String sql = "UPDATE datospersonalesficha SET sexo=?, estadoCivil=?, fum=?, area=?, antiguedadCargo=?, " +
                  "gradoFormacion=?, telefono=?, domicilio=?, contactoEmergencia=?, telefonoEmergencia=?, numHijos=?, edadesHijos=? " +
                  "WHERE idFicha=?";
         try (Connection con = Conexion.conectar();
@@ -70,7 +70,7 @@ public class DatosPersonalesFichaDAO {
     }
 
     public DatosPersonalesFicha buscarPorId(int idFicha) {
-        String sql = "SELECT * FROM DatosPersonalesFicha WHERE idFicha = ?";
+        String sql = "SELECT * FROM datospersonalesficha WHERE idFicha = ?";
         try (Connection con = Conexion.conectar();
             PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, idFicha);

@@ -21,7 +21,7 @@ public class CertifMedDAO {
     public boolean insertar(CertifMed c) {
         LocalDate fVenc = c.getFechaEmision().plusMonths(12);
 
-        String sql = "INSERT INTO Certif_Med (tipoEvaluacion, aptitud, recomendacion, observaciones, f_emision, f_venc, idPersona, idMedicoLaboral) " +
+        String sql = "INSERT INTO certif_med (tipoEvaluacion, aptitud, recomendacion, observaciones, f_emision, f_venc, idPersona, idMedicoLaboral) " +
                      "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         try (Connection con = Conexion.conectar();
              PreparedStatement ps = con.prepareStatement(sql)) {
@@ -41,7 +41,7 @@ public class CertifMedDAO {
     }
 
     public boolean eliminar(int idCertifMed) {
-        String sql = "DELETE FROM Certif_Med WHERE idCertif_Med = ?";
+        String sql = "DELETE FROM certif_med WHERE idCertif_Med = ?";
         try (Connection con = Conexion.conectar();
              PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, idCertifMed);
@@ -55,7 +55,7 @@ public class CertifMedDAO {
     public List<CertifMed> listarPorPersona(int idPersona) {
         List<CertifMed> lista = new ArrayList<>();
         String sql = "SELECT c.*, m.nombre AS nombreMedico, m.apellido AS apellidoMedico " +
-                     "FROM Certif_Med c JOIN MedicoLaboral m ON c.idMedicoLaboral = m.idMedicoLaboral " +
+                     "FROM certif_med c JOIN medicolaboral m ON c.idMedicoLaboral = m.idMedicoLaboral " +
                      "WHERE c.idPersona = ? ORDER BY c.f_emision DESC";
         try (Connection con = Conexion.conectar();
              PreparedStatement ps = con.prepareStatement(sql)) {
@@ -86,7 +86,7 @@ public class CertifMedDAO {
     }
     public CertifMed buscarPorId(int idCertifMed) {
         String sql = "SELECT c.*, m.nombre AS nombreMedico, m.apellido AS apellidoMedico " +
-                    "FROM Certif_Med c JOIN MedicoLaboral m ON c.idMedicoLaboral = m.idMedicoLaboral " +
+                    "FROM certif_med c JOIN medicolaboral m ON c.idMedicoLaboral = m.idMedicoLaboral " +
                     "WHERE c.idCertif_Med = ?";
         try (Connection con = Conexion.conectar();
              PreparedStatement ps = con.prepareStatement(sql)) {

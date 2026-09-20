@@ -19,8 +19,8 @@ import java.util.List;
 public class MedicoLaboralDAO {
 
     public boolean insertar(MedicoLaboral m, String contrasenia) {
-        String sqlUsuario = "INSERT INTO Usuario (correo, contrasenia, rol, idEmpresaCliente) VALUES (?, ?, 'medico', NULL)";
-        String sqlMedico = "INSERT INTO MedicoLaboral (nombre, apellido, especialidad, matricula, idUsuario) VALUES (?, ?, ?, ?, ?)";
+        String sqlUsuario = "INSERT INTO usuario (correo, contrasenia, rol, idEmpresaCliente) VALUES (?, ?, 'medico', NULL)";
+        String sqlMedico = "INSERT INTO medicolaboral (nombre, apellido, especialidad, matricula, idUsuario) VALUES (?, ?, ?, ?, ?)";
 
         try (Connection con = Conexion.conectar()) {
             con.setAutoCommit(false);//desactivar el guardado automatico
@@ -53,7 +53,7 @@ public class MedicoLaboralDAO {
     }
 
     public boolean actualizar(MedicoLaboral m) {
-        String sql = "UPDATE MedicoLaboral SET nombre=?, apellido=?, especialidad=?, matricula=? WHERE idMedicoLaboral=?";
+        String sql = "UPDATE medicolaboral SET nombre=?, apellido=?, especialidad=?, matricula=? WHERE idMedicoLaboral=?";
         try (Connection con = Conexion.conectar();
              PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setString(1, m.getNombre());
@@ -72,8 +72,8 @@ public class MedicoLaboralDAO {
         MedicoLaboral m = buscarPorId(idMedicoLaboral);
         if (m == null) return false;
 
-        String sqlMedico = "DELETE FROM MedicoLaboral WHERE idMedicoLaboral=?";
-        String sqlUsuario = "DELETE FROM Usuario WHERE idUsuario=?";
+        String sqlMedico = "DELETE FROM medicolaboral WHERE idMedicoLaboral=?";
+        String sqlUsuario = "DELETE FROM usuario WHERE idUsuario=?";
 
         try (Connection con = Conexion.conectar()) {
             con.setAutoCommit(false);
@@ -97,7 +97,7 @@ public class MedicoLaboralDAO {
     }
 
     public MedicoLaboral buscarPorId(int idMedicoLaboral) {
-        String sql = "SELECT m.*, u.correo FROM MedicoLaboral m JOIN Usuario u ON m.idUsuario = u.idUsuario WHERE m.idMedicoLaboral = ?";
+        String sql = "SELECT m.*, u.correo FROM medicolaboral m JOIN usuario u ON m.idUsuario = u.idUsuario WHERE m.idMedicoLaboral = ?";
         try (Connection con = Conexion.conectar();
              PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, idMedicoLaboral);
@@ -111,7 +111,7 @@ public class MedicoLaboralDAO {
 
     public List<MedicoLaboral> listarTodos() {
         List<MedicoLaboral> lista = new ArrayList<>();
-        String sql = "SELECT m.*, u.correo FROM MedicoLaboral m JOIN Usuario u ON m.idUsuario = u.idUsuario";
+        String sql = "SELECT m.*, u.correo FROM medicolaboral m JOIN usuario u ON m.idUsuario = u.idUsuario";
         try (Connection con = Conexion.conectar();
              PreparedStatement ps = con.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {

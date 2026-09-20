@@ -18,9 +18,9 @@ import java.util.List;
 public class ColaboradorDAO {
 
     public boolean insertar(Colaborador c, String contrasenia) {
-        String sqlUsuario = "INSERT INTO Usuario (correo, contrasenia, rol, idEmpresaCliente) VALUES (?, ?, 'colaborador', NULL)";
-        String sqlPersona = "INSERT INTO Persona (nombre, apellido, ci, fechaNacimiento, categoria) VALUES (?, ?, ?, ?, ?)";
-        String sqlColaborador = "INSERT INTO Colaborador (idPersona, idUsuario) VALUES (?, ?)";
+        String sqlUsuario = "INSERT INTO usuario (correo, contrasenia, rol, idEmpresaCliente) VALUES (?, ?, 'colaborador', NULL)";
+        String sqlPersona = "INSERT INTO persona (nombre, apellido, ci, fechaNacimiento, categoria) VALUES (?, ?, ?, ?, ?)";
+        String sqlColaborador = "INSERT INTO colaborador (idPersona, idUsuario) VALUES (?, ?)";
 
         try (Connection con = Conexion.conectar()) {
             con.setAutoCommit(false);
@@ -62,7 +62,7 @@ public class ColaboradorDAO {
     }
 
     public boolean actualizar(Colaborador c) {
-        String sqlPersona = "UPDATE Persona SET nombre=?, apellido=?, ci=?, fechaNacimiento=?, categoria=? WHERE idPersona=?";
+        String sqlPersona = "UPDATE persona SET nombre=?, apellido=?, ci=?, fechaNacimiento=?, categoria=? WHERE idPersona=?";
         try (Connection con = Conexion.conectar();
              PreparedStatement ps = con.prepareStatement(sqlPersona)) {
             ps.setString(1, c.getNombre());
@@ -83,9 +83,9 @@ public class ColaboradorDAO {
         Colaborador c = buscarPorId(idPersona);
         if (c == null) return false;
 
-        String sqlColaborador = "DELETE FROM Colaborador WHERE idPersona=?";
-        String sqlPersona = "DELETE FROM Persona WHERE idPersona=?";
-        String sqlUsuario = "DELETE FROM Usuario WHERE idUsuario=?";
+        String sqlColaborador = "DELETE FROM colaborador WHERE idPersona=?";
+        String sqlPersona = "DELETE FROM persona WHERE idPersona=?";
+        String sqlUsuario = "DELETE FROM usuario WHERE idUsuario=?";
 
         try (Connection con = Conexion.conectar()) {
             con.setAutoCommit(false);
@@ -114,9 +114,9 @@ public class ColaboradorDAO {
 
     public Colaborador buscarPorId(int idPersona) {
         String sql = "SELECT p.*, c.idUsuario, u.correo " +
-                     "FROM Persona p " +
-                     "JOIN Colaborador c ON p.idPersona = c.idPersona " +
-                     "JOIN Usuario u ON c.idUsuario = u.idUsuario " +
+                     "FROM persona p " +
+                     "JOIN colaborador c ON p.idPersona = c.idPersona " +
+                     "JOIN usuario u ON c.idUsuario = u.idUsuario " +
                      "WHERE p.idPersona = ?";
         try (Connection con = Conexion.conectar();
              PreparedStatement ps = con.prepareStatement(sql)) {
@@ -132,9 +132,9 @@ public class ColaboradorDAO {
     public List<Colaborador> listarTodos() {
         List<Colaborador> lista = new ArrayList<>();
         String sql = "SELECT p.*, c.idUsuario, u.correo " +
-                     "FROM Persona p " +
-                     "JOIN Colaborador c ON p.idPersona = c.idPersona " +
-                     "JOIN Usuario u ON c.idUsuario = u.idUsuario";
+                     "FROM persona p " +
+                     "JOIN colaborador c ON p.idPersona = c.idPersona " +
+                     "JOIN usuario u ON c.idUsuario = u.idUsuario";
         try (Connection con = Conexion.conectar();
              PreparedStatement ps = con.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
@@ -148,9 +148,9 @@ public class ColaboradorDAO {
     public List<Colaborador> buscarPorNombreOCI(String texto) {
         List<Colaborador> lista = new ArrayList<>();
         String sql = "SELECT p.*, c.idUsuario, u.correo " +
-                     "FROM Persona p " +
-                     "JOIN Colaborador c ON p.idPersona = c.idPersona " +
-                     "JOIN Usuario u ON c.idUsuario = u.idUsuario " +
+                     "FROM persona p " +
+                     "JOIN colaborador c ON p.idPersona = c.idPersona " +
+                     "JOIN usuario u ON c.idUsuario = u.idUsuario " +
                      "WHERE p.nombre LIKE ? OR p.apellido LIKE ? OR p.ci LIKE ?";
         try (Connection con = Conexion.conectar();
              PreparedStatement ps = con.prepareStatement(sql)) {
@@ -179,7 +179,7 @@ public class ColaboradorDAO {
     }
     
     public Integer obtenerIdPersonaPorUsuario(int idUsuario) {
-        String sql = "SELECT idPersona FROM Colaborador WHERE idUsuario = ?";
+        String sql = "SELECT idPersona FROM colaborador WHERE idUsuario = ?";
         try (Connection con = Conexion.conectar();
             PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, idUsuario);

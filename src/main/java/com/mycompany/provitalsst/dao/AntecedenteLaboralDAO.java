@@ -20,7 +20,7 @@ import java.sql.Types;
 public class AntecedenteLaboralDAO {
 
     public boolean insertar(AntecedenteLaboral a) {
-        String sql = "INSERT INTO AntecedenteLaboral (idFicha, empresaAnterior, puestoAnterior, periodoDesde, periodoHasta) " +
+        String sql = "INSERT INTO antecedentelaboral (idFicha, empresaAnterior, puestoAnterior, periodoDesde, periodoHasta) " +
                      "VALUES (?, ?, ?, ?, ?)";
         try (Connection con = Conexion.conectar();
              PreparedStatement ps = con.prepareStatement(sql)) {
@@ -36,7 +36,7 @@ public class AntecedenteLaboralDAO {
         }
     }
     public boolean actualizar(AntecedenteLaboral a) {
-        String sql = "UPDATE AntecedenteLaboral SET empresaAnterior=?, puestoAnterior=?, periodoDesde=?, periodoHasta=? WHERE idFicha=?";
+        String sql = "UPDATE antecedentelaboral SET empresaAnterior=?, puestoAnterior=?, periodoDesde=?, periodoHasta=? WHERE idFicha=?";
         try (Connection con = Conexion.conectar();
             PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setString(1, a.getEmpresaAnterior());
@@ -58,7 +58,7 @@ public class AntecedenteLaboralDAO {
     }
 
     public AntecedenteLaboral buscarPorId(int idFicha) {
-        String sql = "SELECT * FROM AntecedenteLaboral WHERE idFicha = ?";
+        String sql = "SELECT * FROM antecedentelaboral WHERE idFicha = ?";
         try (Connection con = Conexion.conectar();
             PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, idFicha);

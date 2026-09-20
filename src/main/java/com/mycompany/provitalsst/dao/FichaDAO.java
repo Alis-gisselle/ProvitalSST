@@ -22,7 +22,7 @@ import java.util.List;
 public class FichaDAO {
 
     public int insertar(Ficha f) {
-        String sql = "INSERT INTO Ficha (numeroFicha, fecha, tipoEvaluacion, idPersona) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO ficha (numeroFicha, fecha, tipoEvaluacion, idPersona) VALUES (?, ?, ?, ?)";
         try (Connection con = Conexion.conectar();
              PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, f.getNumeroFicha());
@@ -38,7 +38,7 @@ public class FichaDAO {
         }
     }
     public boolean actualizar(Ficha f) {
-        String sql = "UPDATE Ficha SET numeroFicha=?, tipoEvaluacion=? WHERE idFicha=?";
+        String sql = "UPDATE ficha SET numeroFicha=?, tipoEvaluacion=? WHERE idFicha=?";
         try (Connection con = Conexion.conectar();
             PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setString(1, f.getNumeroFicha());
@@ -52,7 +52,7 @@ public class FichaDAO {
     }
 
     public Ficha buscarPorId(int idFicha) {
-        String sql = "SELECT * FROM Ficha WHERE idFicha = ?";
+        String sql = "SELECT * FROM ficha WHERE idFicha = ?";
         try (Connection con = Conexion.conectar();
              PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, idFicha);
@@ -66,7 +66,7 @@ public class FichaDAO {
 
     public List<Ficha> listarPorPersona(int idPersona) {
         List<Ficha> lista = new ArrayList<>();
-        String sql = "SELECT * FROM Ficha WHERE idPersona = ? ORDER BY fecha DESC";
+        String sql = "SELECT * FROM ficha WHERE idPersona = ? ORDER BY fecha DESC";
         try (Connection con = Conexion.conectar();
              PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, idPersona);
@@ -90,9 +90,9 @@ public class FichaDAO {
     
     public boolean eliminar(int idFicha) {
         String[] tablasHijas = {
-            "DatosPersonalesFicha", "AntecedentePersonal", "Habito", "AntecedenteLaboral",
-            "PuestoErgonomia", "RiesgoLaboral", "EPP", "TrastornoMusculo", "ZonaAfectada",
-            "ExamenFisico", "FirmaFicha"
+            "datospersonalesficha", "antecedentepersonal", "habito", "antecedentelaboral",
+            "puestoergonomia", "riesgolaboral", "epp", "trastornomusculo", "zonaafectada",
+            "examenfisico", "firmaficha"
         };
 
         try (Connection con = Conexion.conectar()) {
@@ -106,7 +106,7 @@ public class FichaDAO {
                 }
             }
 
-            try (PreparedStatement ps = con.prepareStatement("DELETE FROM Ficha WHERE idFicha = ?")) {
+            try (PreparedStatement ps = con.prepareStatement("DELETE FROM ficha WHERE idFicha = ?")) {
                 ps.setInt(1, idFicha);
                 ps.executeUpdate();
             }
