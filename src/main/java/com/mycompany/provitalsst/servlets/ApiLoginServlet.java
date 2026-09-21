@@ -13,6 +13,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import javax.servlet.http.Cookie;
 
 import org.json.JSONObject;
 
@@ -161,6 +163,30 @@ public class ApiLoginServlet extends HttpServlet {
                 respuesta.put(
                         "idEmpresaCliente",
                         JSONObject.NULL
+                );
+                
+                // Crear sesión para el usuario autenticado
+                HttpSession sesion = request.getSession(true);
+
+                sesion.setAttribute("usuarioLogueado", usuario);
+
+                // Enviar cookie de sesión
+                Cookie cookie = new Cookie(
+                        "JSESSIONID",
+                        sesion.getId()
+                );
+
+                cookie.setPath(request.getContextPath());
+                cookie.setHttpOnly(true);
+
+                response.addCookie(cookie);
+
+                System.out.println(
+                        "SESSION ID CREADA: " + sesion.getId()
+                );
+
+                System.out.println(
+                        "USUARIO EN SESION: " + usuario.getIdUsuario()
                 );
             }
 
