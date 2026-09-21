@@ -10,7 +10,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.button.MaterialButton;
 import com.provital.sst.model.Persona;
-import com.provital.sst.network.ApiConfig;
 
 /** Equivalente Android nativo de personaDetalle.jsp. */
 public class PersonaDetalleActivity extends AppCompatActivity {
@@ -75,10 +74,9 @@ public class PersonaDetalleActivity extends AppCompatActivity {
             finish();
             return;
         }
-        Intent intent = new Intent(this, WebModuloActivity.class);
-        intent.putExtra(WebModuloActivity.EXTRA_URL,
-                ApiConfig.BASE_URL + modulo + "?idPersona=" + persona.getIdPersona());
-        intent.putExtra(WebModuloActivity.EXTRA_COOKIE, cookie);
+        Intent intent = new Intent(this, HistorialActivity.class);
+        intent.putExtra(HistorialActivity.EXTRA_PERSONA, persona);
+        intent.putExtra(HistorialActivity.EXTRA_MODULO, modulo);
         startActivity(intent);
     }
 

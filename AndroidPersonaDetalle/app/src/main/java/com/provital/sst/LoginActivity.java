@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import org.json.JSONObject;
 
 /** Pantalla inicial de autenticación de la aplicación. */
 public class LoginActivity extends AppCompatActivity {
@@ -67,30 +68,74 @@ public class LoginActivity extends AppCompatActivity {
 
     private void autenticarEnServidor(String correo, String contrasena) {
         ExecutorService executor = Executors.newSingleThreadExecutor();
+
         executor.execute(() -> {
             HttpURLConnection conexion = null;
+
             try {
                 URL url = new URL(ApiConfig.BASE_URL + "api/login");
+
                 conexion = (HttpURLConnection) url.openConnection();
                 conexion.setRequestMethod("POST");
                 conexion.setConnectTimeout(10000);
                 conexion.setReadTimeout(10000);
                 conexion.setDoOutput(true);
-                conexion.setRequestProperty("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
-                String cuerpo = "correo=" + URLEncoder.encode(correo, StandardCharsets.UTF_8.name())
-                        + "&contrasenia=" + URLEncoder.encode(contrasena, StandardCharsets.UTF_8.name());
-                try (BufferedWriter salida = new BufferedWriter(new OutputStreamWriter(
-                        conexion.getOutputStream(), StandardCharsets.UTF_8))) {
+
+                // El servidor espera JSON
+                conexion.setRequestProperty(
+                        "Content-Type",
+                        "application/json; charset=UTF-8"
+                );
+
+                conexion.setRequestProperty(
+                        "Accept",
+                        "application/json"
+                );
+
+                // Crear el JSON que recibirá ApiLoginServlet
+                JSONObject json = new JSONObject();
+                json.put("correo", correo);
+                json.put("contrasenia", contrasena);
+
+                String cuerpo = json.toString();
+
+                // Enviar el JSON
+                try (BufferedWriter salida = new BufferedWriter(
+                        new OutputStreamWriter(
+                                conexion.getOutputStream(),
+                                StandardCharsets.UTF_8))) {
+
                     salida.write(cuerpo);
+                    salida.flush();
                 }
+
                 int codigo = conexion.getResponseCode();
-                String cookie = obtenerCookie(conexion.getHeaderFields());
-                runOnUiThread(() -> procesarRespuesta(codigo, cookie));
-            } catch (IOException e) {
-                runOnUiThread(() -> Toast.makeText(this,
-                        "No se pudo conectar al servidor. Verifique ApiConfig.BASE_URL.", Toast.LENGTH_LONG).show());
+
+                String cookie = obtenerCookie(
+                        conexion.getHeaderFields()
+                );
+
+                runOnUiThread(() ->
+                        procesarRespuesta(codigo, cookie)
+                );
+
+            } catch (Exception e) {
+
+                runOnUiThread(() ->
+                        Toast.makeText(
+                                this,
+                                "Error al iniciar sesión: "
+                                        + e.getMessage(),
+                                Toast.LENGTH_LONG
+                        ).show()
+                );
+
             } finally {
-                if (conexion != null) conexion.disconnect();
+
+                if (conexion != null) {
+                    conexion.disconnect();
+                }
+
                 executor.shutdown();
             }
         });

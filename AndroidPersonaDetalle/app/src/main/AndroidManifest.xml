@@ -10,9 +10,7 @@
         <activity
             android:name=".PersonaDetalleActivity"
             android:exported="false" />
-        <activity
-            android:name=".WebModuloActivity"
-            android:exported="false" />
+        <activity android:name=".HistorialActivity" android:exported="false" />
         <activity
             android:name=".LoginActivity"
             android:exported="true">
